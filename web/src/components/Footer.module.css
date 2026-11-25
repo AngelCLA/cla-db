@@ -1,0 +1,30 @@
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--font-size-l);
+    flex-wrap: wrap;
+    padding: calc(var(--font-size-l) * 1.4) calc(var(--font-size-3xl) * 1.5);
+    border-top: 1px solid var(--color-text);
+    color: var(--color-text-gray);
+    font-size: var(--font-size-xs);
+}
+
+.note {
+    max-width: 46rem;
+}
+
+.links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--font-size-m);
+}
+
+.link {
+    color: var(--color-text-gray);
+    text-decoration: none;
+}
+
+.link:hover {
+    color: var(--color-primary);
+}

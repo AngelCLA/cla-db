@@ -3,6 +3,11 @@
 This file tracks modifications specific to the CLA DB fork (`@clatech/db`).
 For upstream RxDB history, see `CHANGELOG.md`.
 
+## [Unreleased]
+
+- Expand the Spanish landing with offline workflows, backend replication, storage options, and reactive data modeling. Link to CLA DB and upstream RxDB documentation.
+- Refine the Spanish landing page hero and link its example button to the code sample.
+
 ## [0.1.1] - 2026-11-25
 
 - Bump the npm package version because npm does not allow publishing `0.1.0` again after it was unpublished.

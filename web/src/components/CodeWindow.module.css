@@ -1,0 +1,60 @@
+.window {
+    background-color: var(--color-bg-code);
+    border: 1px solid var(--color-bg);
+    border-radius: var(--radius-surface);
+    overflow: hidden;
+}
+
+.bar {
+    display: flex;
+    align-items: center;
+    gap: var(--font-size-xs);
+    padding: calc(var(--font-size-xs) * 1.1) var(--font-size-m);
+    border-bottom: 1px solid var(--color-bg);
+}
+
+.dot {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background-color: var(--color-bg);
+}
+
+.fileName {
+    margin-left: var(--font-size-xs);
+    color: var(--color-text-gray);
+    font-size: var(--font-size-xs);
+}
+
+.code {
+    margin: 0;
+    padding: var(--font-size-l);
+    overflow-x: auto;
+    color: var(--color-code-fg);
+    font-size: var(--font-size-s);
+    line-height: 1.9;
+}
+
+.line {
+    display: inline;
+}
+
+.comment {
+    color: var(--color-code-comment);
+}
+
+.keyword {
+    color: var(--color-code-keyword);
+}
+
+.function {
+    color: var(--color-code-function);
+}
+
+.string {
+    color: var(--color-code-string);
+}
+
+.constant {
+    color: var(--color-code-constant);
+}

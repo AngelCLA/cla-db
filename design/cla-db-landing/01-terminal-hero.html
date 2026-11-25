@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CLA DB - Terminal hero</title>
+<style>
+    :root {
+        --primary: #ED168F;
+        --primary-darker: #8d2089;
+        --bg: #0D0F18;
+        --bg-tone: #20293C;
+        --bg-code: #282330;
+        --text: #ffffff;
+        --text-gray: lightgray;
+        --shiki-fg: #F8F8F2;
+        --shiki-comment: #6272A4;
+        --shiki-keyword: #BD93F9;
+        --shiki-function: #50FA7B;
+        --shiki-string: #F1FA8C;
+        --shiki-constant: #8BE9FD;
+    }
+    * { box-sizing: border-box; }
+    body {
+        margin: 0;
+        width: 1440px;
+        min-height: 900px;
+        background: var(--bg);
+        color: var(--text);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', 'DejaVu Sans Mono', monospace;
+    }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+    header {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 20px 64px;
+        border-bottom: 1px solid var(--bg-tone);
+    }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: bold; font-size: 1.25rem; text-decoration: none; color: var(--text); }
+    .brand .dot { width: 14px; height: 14px; background: linear-gradient(180deg, #ED168F, #b2218b, #752a8a); }
+    nav { display: flex; gap: 32px; }
+    nav a { color: var(--text-gray); text-decoration: none; font-size: 0.9rem; }
+    nav a:hover { color: var(--primary); }
+
+    main { max-width: 1120px; margin: 0 auto; padding: 72px 64px; }
+    h1 { font-size: 2.5rem; line-height: 1.25; margin: 0 0 16px; }
+    h1 .accent { color: var(--primary); }
+    .lede { font-size: 1.25rem; color: var(--text-gray); max-width: 46rem; margin: 0 0 32px; }
+    .lede strong { color: var(--text); }
+
+    .cta-row { display: flex; gap: 16px; margin: 0 0 20px; }
+    .btn {
+        display: inline-block; text-decoration: none; text-align: center;
+        background: var(--primary); border: 1px solid var(--primary); border-radius: 8px;
+        color: #fff; font-weight: bold; font-size: 1rem; padding: 12px 24px; cursor: pointer;
+        font-family: inherit;
+    }
+    .btn:hover { background: var(--primary-darker); border-color: var(--primary-darker); }
+    .btn.ghost { background: transparent; color: var(--primary); }
+    .btn.ghost:hover { background: rgba(237,22,143,0.12); }
+    .install { color: var(--text-gray); font-size: 0.9rem; }
+    .install code { color: var(--shiki-constant); background: var(--bg-code); padding: 4px 8px; border-radius: 4px; }
+
+    .terminal {
+        margin-top: 48px;
+        background: var(--bg-code);
+        border: 1px solid var(--bg-tone);
+    }
+    .terminal .bar {
+        display: flex; align-items: center; gap: 8px;
+        padding: 10px 16px; border-bottom: 1px solid var(--bg-tone);
+        color: var(--shiki-comment); font-size: 0.75rem;
+    }
+    .terminal .bar .k { width: 10px; height: 10px; border-radius: 50%; background: var(--bg-tone); }
+    .terminal pre { margin: 0; padding: 24px; font-size: 0.9rem; line-height: 1.7; color: var(--shiki-fg); overflow: auto; }
+    .c { color: var(--shiki-comment); }
+    .k { color: var(--shiki-keyword); }
+    .f { color: var(--shiki-function); }
+    .s { color: var(--shiki-string); }
+    .n { color: var(--shiki-constant); }
+
+    .facts { display: flex; gap: 48px; margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--bg-tone); }
+    .fact .num { font-size: 2rem; font-weight: bold; color: var(--primary); }
+    .fact .lbl { color: var(--text-gray); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+    <header>
+        <a class="brand" href="#"><span class="dot" aria-hidden="true"></span>CLA DB</a>
+        <nav aria-label="Main">
+            <a href="#">Docs</a>
+            <a href="#">Roadmap</a>
+            <a href="#">GitHub</a>
+            <a href="#">npm</a>
+        </nav>
+    </header>
+    <main>
+        <h1>A fast, local-first, reactive database for JavaScript.<br /><span class="accent">Open source, uncapped.</span></h1>
+        <p class="lede"><strong>CLA DB</strong> (<code>@clatech/db</code>) is a minimal Apache 2.0 fork of RxDB, anchored on the RxDB <strong>17.6.0</strong> codebase. Same reactive API, same on-disk format, and no artificial collection limit.</p>
+        <div class="cta-row">
+            <a class="btn" href="#">Get started</a>
+            <a class="btn ghost" href="#">View on GitHub</a>
+        </div>
+        <p class="install">npm install <code>@clatech/db</code></p>
+
+        <section class="terminal" aria-label="Code example">
+            <div class="bar"><span class="k"></span><span class="k"></span><span class="k"></span> app.ts</div>
+            <pre><span class="c">// One reactive query. It re-emits on every change, in every tab.</span>
+<span class="k">import</span> { createRxDatabase } <span class="k">from</span> <span class="s">'@clatech/db'</span>;
+
+<span class="k">const</span> db = <span class="k">await</span> <span class="f">createRxDatabase</span>({
+  name: <span class="s">'receipts'</span>,
+  storage: <span class="f">getRxStorageDexie</span>()  <span class="c">// or memory, localstorage, sqlite</span>
+});
+<span class="k">await</span> db.<span class="f">addCollections</span>({ receipts: { schema: receiptSchema } });
+<span class="k">await</span> db.receipts.<span class="f">insert</span>({ id: <span class="s">'r-001'</span>, total: <span class="n">1990</span>, device: <span class="s">'pos-07'</span> });
+
+db.receipts.<span class="f">find</span>({ selector: { total: { $gt: <span class="n">0</span> } } })
+  .$.<span class="f">subscribe</span>(docs =&gt; <span class="f">render</span>(docs));</pre>
+        </section>
+
+        <section class="facts" aria-label="Fork facts">
+            <div class="fact"><div class="num">0</div><div class="lbl">collection limit<br />(upstream caps free RxDB)</div></div>
+            <div class="fact"><div class="num">100</div><div class="lbl">collections verified<br />in the benchmark suite</div></div>
+            <div class="fact"><div class="num">100%</div><div class="lbl">RxDB public API<br />and on-disk compatibility</div></div>
+            <div class="fact"><div class="num">Apache 2.0</div><div class="lbl">license, no proprietary<br />plugins bundled</div></div>
+        </section>
+    </main>
+</body>
+</html>

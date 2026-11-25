@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "chosen": "04-replica-espanol.html",
+  "handoffs": {
+    "04-replica-espanol.html": {
+      "status": "implemented",
+      "queued": false,
+      "sentAt": "2026-11-25T09:02:55.890Z",
+      "startedAt": "2026-11-25T09:11:57.912Z",
+      "implementedAt": "2026-11-25T09:17:04.927Z",
+      "feature": "odd/tasks/project-website.md",
+      "note": "Hero refined against the supplied reference: sans headline, layered SVG wireframe and a direct code-example CTA.",
+      "previewUrl": "http://127.0.0.1:4321/"
+    }
+  }
+}

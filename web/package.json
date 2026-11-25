@@ -1,0 +1,26 @@
+{
+  "name": "@clatech/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Public landing site for CLA DB (@clatech/db)",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "check": "node --import ./scripts/register-css-stub.mjs --import tsx scripts/check-render.tsx",
+    "test": "npm run check"
+  },
+  "dependencies": {
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.4",
+    "@vitejs/plugin-react": "6.3.0",
+    "tsx": "4.23.15",
+    "typescript": "6.0.3",
+    "vite": "8.3.8"
+  }
+}

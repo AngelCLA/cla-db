@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CLA DB - Tus datos, local-first</title>
+<style>
+    :root {
+        --bg: #0B0709;
+        --bg-header: rgba(11, 7, 9, 0.82);
+        --card: #14101A;
+        --border: #241B2A;
+        --border-soft: #1C1522;
+        --pink: #FF2E9E;
+        --pink-core: #ED168F;
+        --pink-dim: rgba(255, 46, 158, 0.12);
+        --text: #F4F1F5;
+        --text-gray: #A79FAE;
+        --text-dim: #6E6578;
+        --sans: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', 'DejaVu Sans Mono', monospace;
+    }
+    * { box-sizing: border-box; }
+    body {
+        margin: 0;
+        width: 1440px;
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--sans);
+    }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--pink); outline-offset: 2px; }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+    header {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 18px 48px;
+        background: var(--bg-header);
+        border-bottom: 1px solid var(--border-soft);
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.3rem; letter-spacing: -0.02em; text-decoration: none; color: var(--text); }
+    .brand svg { display: block; }
+    .brand .db { color: var(--pink); }
+    nav { display: flex; gap: 28px; align-items: center; }
+    nav a.link { color: var(--text-gray); text-decoration: none; font-size: 0.95rem; font-weight: 500; }
+    nav a.link:hover { color: var(--text); }
+    .gh-btn {
+        display: inline-flex; align-items: center; gap: 8px;
+        background: #FFFFFF; color: #0B0709; text-decoration: none;
+        font-weight: 700; font-size: 0.9rem;
+        padding: 10px 18px; border-radius: 10px;
+    }
+    .gh-btn:hover { background: #EDE9EF; }
+
+    .hero {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 56px;
+        align-items: center;
+        padding: 72px 64px 88px;
+    }
+    .badge {
+        display: inline-flex; align-items: center; gap: 10px;
+        font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.14em;
+        color: var(--text); text-transform: uppercase;
+        background: var(--pink-dim);
+        border: 1px solid rgba(255, 46, 158, 0.35);
+        border-radius: 8px;
+        padding: 8px 14px;
+        margin-bottom: 32px;
+    }
+    .badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--pink); box-shadow: 0 0 8px var(--pink); }
+    .badge .sep { color: var(--pink); }
+    h1 {
+        font-size: 5rem;
+        line-height: 1.02;
+        letter-spacing: -0.035em;
+        font-weight: 800;
+        margin: 0 0 28px;
+    }
+    h1 .accent { color: var(--pink); }
+    .lede {
+        font-size: 1.15rem;
+        line-height: 1.7;
+        color: var(--text-gray);
+        max-width: 30rem;
+        margin: 0 0 36px;
+    }
+    .lede strong { color: var(--text); font-weight: 600; }
+    .cta-row { display: flex; gap: 14px; }
+    .btn {
+        display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
+        font-weight: 700; font-size: 0.95rem; cursor: pointer;
+        border-radius: 10px; padding: 14px 24px; font-family: inherit;
+        border: 1px solid transparent;
+    }
+    .btn.primary { background: var(--pink); color: #17060F; }
+    .btn.primary:hover { background: var(--pink-core); }
+    .btn.secondary { background: #171218; border-color: var(--border); color: var(--text); font-family: var(--mono); font-weight: 600; font-size: 0.85rem; }
+    .btn.secondary:hover { border-color: var(--pink); color: var(--pink); }
+
+    .hero-art { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+    .hero-art figcaption {
+        display: flex; align-items: center; gap: 10px;
+        font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.14em;
+        color: var(--text-gray); text-transform: uppercase;
+    }
+    .hero-art figcaption .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--pink); }
+
+    .stack-bar {
+        display: flex; align-items: center;
+        border-top: 1px solid var(--border-soft);
+        border-bottom: 1px solid var(--border-soft);
+        padding: 22px 64px;
+        gap: 24px;
+    }
+    .stack-bar .kicker { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.14em; color: var(--text-dim); width: 220px; }
+    .stack-item { display: flex; align-items: center; gap: 12px; flex: 1; font-weight: 600; font-size: 1rem; }
+    .stack-item .tile {
+        width: 34px; height: 34px; border-radius: 8px;
+        display: inline-flex; align-items: center; justify-content: center;
+        font-size: 0.65rem; font-weight: 800; color: #fff;
+    }
+    .tile.js { background: #E9C931; color: #23211A; }
+    .tile.ts { background: #3178C6; }
+    .stack-item .glyph { color: var(--text-gray); }
+
+    section { padding: 88px 64px; }
+    .kicker { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.16em; color: var(--pink); text-transform: uppercase; margin: 0 0 12px; }
+    h2 { font-size: 3.25rem; font-weight: 800; letter-spacing: -0.03em; margin: 0 0 48px; }
+    h2 .accent { color: var(--pink); }
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .card {
+        background: var(--card);
+        border: 1px solid var(--border-soft);
+        border-radius: 16px;
+        padding: 28px;
+    }
+    .card .icon {
+        width: 44px; height: 44px;
+        border-radius: 10px;
+        background: var(--pink-dim);
+        display: inline-flex; align-items: center; justify-content: center;
+        margin-bottom: 20px;
+        color: var(--pink);
+    }
+    .card h3 { font-size: 1.35rem; font-weight: 700; margin: 0 0 10px; letter-spacing: -0.01em; }
+    .card p { margin: 0; color: var(--text-gray); font-size: 0.98rem; line-height: 1.65; }
+    .card p code { font-family: var(--mono); font-size: 0.85em; color: var(--pink); background: var(--pink-dim); padding: 1px 6px; border-radius: 5px; }
+
+    /* Arquitectura */
+    .arch { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+    .arch p { color: var(--text-gray); font-size: 1rem; line-height: 1.7; margin: 0 0 16px; }
+    .arch p strong { color: var(--text); font-weight: 600; }
+    .delta {
+        background: var(--card);
+        border: 1px solid var(--border-soft);
+        border-radius: 16px;
+        padding: 24px;
+        font-family: var(--mono);
+        font-size: 0.8rem;
+        line-height: 1.8;
+        color: var(--text-gray);
+    }
+    .delta .title { color: var(--text-dim); margin-bottom: 12px; }
+    .delta li { margin-bottom: 6px; }
+    .delta b { color: var(--pink); font-weight: 600; }
+
+    /* Documentacion */
+    .docs-sec { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 56px; align-items: center; }
+    .docs-sec p { color: var(--text-gray); font-size: 1rem; line-height: 1.7; margin: 0 0 24px; }
+    .docs-links { display: flex; flex-direction: column; gap: 10px; }
+    .docs-links a {
+        color: var(--text); text-decoration: none; font-weight: 600; font-size: 0.95rem;
+        display: flex; justify-content: space-between; align-items: center;
+        background: var(--card); border: 1px solid var(--border-soft); border-radius: 12px;
+        padding: 16px 20px;
+    }
+    .docs-links a:hover { border-color: var(--pink); }
+    .docs-links a span.arrow { color: var(--pink); font-family: var(--mono); }
+    .code-win { background: #17090F; border: 1px solid var(--border-soft); border-radius: 16px; overflow: hidden; }
+    .code-win .bar { display: flex; gap: 8px; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--border-soft); }
+    .code-win .bar .k { width: 10px; height: 10px; border-radius: 50%; background: var(--border); }
+    .code-win .bar .name { font-family: var(--mono); font-size: 0.75rem; color: var(--text-dim); margin-left: 8px; }
+    .code-win pre { margin: 0; padding: 24px; font-family: var(--mono); font-size: 0.85rem; line-height: 1.8; color: #F8F8F2; overflow: auto; }
+    .c { color: #6272A4; }
+    .k { color: #BD93F9; }
+    .f { color: #50FA7B; }
+    .s { color: #F1FA8C; }
+    .n { color: #8BE9FD; }
+
+    footer {
+        border-top: 1px solid var(--border-soft);
+        padding: 32px 64px;
+        display: flex; justify-content: space-between; align-items: center;
+        color: var(--text-dim); font-size: 0.85rem;
+    }
+    footer nav { gap: 20px; }
+    footer nav a { color: var(--text-gray); text-decoration: none; font-size: 0.85rem; }
+    footer nav a:hover { color: var(--pink); }
+</style>
+</head>
+<body>
+    <header>
+        <a class="brand" href="#">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+                <path d="M3 6 L13 10.5 L23 6" stroke="#FF2E9E" stroke-width="2.6" stroke-linecap="round"/>
+                <path d="M3 11.5 L13 16 L23 11.5" stroke="#FF2E9E" stroke-width="2.6" stroke-linecap="round" opacity="0.75"/>
+                <path d="M3 17 L13 21.5 L23 17" stroke="#FF2E9E" stroke-width="2.6" stroke-linecap="round" opacity="0.5"/>
+            </svg>
+            <span>CLA&nbsp;<span class="db">DB</span></span>
+        </a>
+        <nav aria-label="Principal">
+            <a class="link" href="#caracteristicas">Características</a>
+            <a class="link" href="#arquitectura">Arquitectura</a>
+            <a class="link" href="#documentacion">Documentación</a>
+            <a class="gh-btn" href="https://github.com/AngelCLA/cla-db">
+                <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+                GitHub
+            </a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div>
+            <span class="badge"><span class="dot" aria-hidden="true"></span> v0.1.1 <span class="sep">/</span> open source</span>
+            <h1>Tus datos,<br /><span class="accent">local-first.</span></h1>
+            <p class="lede">La base de datos NoSQL reactiva para JavaScript y TypeScript. Trabaja sin conexión y supera el límite de 13 colecciones con CLA DB.</p>
+            <div class="cta-row">
+                <a class="btn primary" href="#documentacion">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 3.5 h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M6 8 h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.65"/><path d="M10 12.5 h3" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.4"/></svg>
+                    Empezar ahora
+                </a>
+                <a class="btn secondary" href="#caracteristicas">&lt;/&gt;&nbsp; Ver ejemplo</a>
+            </div>
+        </div>
+        <figure class="hero-art" style="margin:0">
+            <svg width="520" height="440" viewBox="0 0 520 440" role="img" aria-label="Ilustración isométrica del núcleo de CLA DB: capas apiladas de la base de datos">
+                <defs>
+                    <linearGradient id="pinkGrad" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0" stop-color="#FF2E9E"/>
+                        <stop offset="1" stop-color="#8d2089"/>
+                    </linearGradient>
+                    <pattern id="grid" width="14" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(30)">
+                        <path d="M0 0 H14 M0 0 V9" stroke="rgba(255,46,158,0.35)" stroke-width="0.5" fill="none"/>
+                    </pattern>
+                    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+                        <feGaussianBlur stdDeviation="7" result="b"/>
+                        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                    </filter>
+                </defs>
+
+                <!-- glow halo -->
+                <ellipse cx="260" cy="230" rx="200" ry="150" fill="rgba(255,46,158,0.07)" filter="url(#glow)"/>
+
+                <!-- circuit traces left -->
+                <g stroke="rgba(255,46,158,0.5)" stroke-width="1.2" fill="none">
+                    <path d="M60 250 h60 l20 -12 h40"/>
+                    <path d="M50 290 h80 l16 -10 h30"/>
+                    <path d="M70 320 h55"/>
+                </g>
+                <g fill="#FF2E9E" opacity="0.8">
+                    <rect x="56" y="246" width="7" height="7"/>
+                    <rect x="46" y="286" width="7" height="7"/>
+                    <rect x="66" y="316" width="7" height="7"/>
+                </g>
+                <!-- circuit traces right -->
+                <g stroke="rgba(255,46,158,0.5)" stroke-width="1.2" fill="none">
+                    <path d="M460 210 h-55 l-18 10 h-42"/>
+                    <path d="M470 250 h-70 l-14 -8 h-36"/>
+                    <path d="M450 300 h-50"/>
+                </g>
+                <g fill="#FF2E9E" opacity="0.8">
+                    <rect x="456" y="206" width="7" height="7"/>
+                    <rect x="466" y="246" width="7" height="7"/>
+                    <rect x="446" y="296" width="7" height="7"/>
+                </g>
+
+                <!-- plate 4 (top, solid) -->
+                <g>
+                    <polygon points="260,58 408,133 260,208 112,133" fill="#170A12" stroke="url(#pinkGrad)" stroke-width="2" filter="url(#glow)"/>
+                    <polygon points="112,133 260,208 260,222 112,147" fill="#0E060C" stroke="#8d2089" stroke-width="1"/>
+                    <polygon points="408,133 260,208 260,222 408,147" fill="#120710" stroke="#8d2089" stroke-width="1"/>
+                    <polygon points="140,133 260,73 380,133 260,193" fill="url(#grid)" opacity="0.6"/>
+                    <text x="260" y="120" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="26" fill="#FF2E9E" letter-spacing="1">CLA DB</text>
+                </g>
+
+                <!-- plate 3 -->
+                <g>
+                    <polygon points="260,128 398,197 260,266 122,197" fill="rgba(255,46,158,0.05)" stroke="rgba(255,46,158,0.75)" stroke-width="1.6"/>
+                    <polygon points="122,197 260,266 260,278 122,209" fill="#0E060C" stroke="rgba(141,32,137,0.8)" stroke-width="1"/>
+                    <polygon points="398,197 260,266 260,278 398,209" fill="#120710" stroke="rgba(141,32,137,0.8)" stroke-width="1"/>
+                    <polygon points="148,197 260,141 372,197 260,253" fill="url(#grid)" opacity="0.4"/>
+                </g>
+
+                <!-- plate 2 -->
+                <g>
+                    <polygon points="260,176 388,240 260,304 132,240" fill="rgba(255,46,158,0.04)" stroke="rgba(255,46,158,0.6)" stroke-width="1.4"/>
+                    <polygon points="132,240 260,304 260,315 132,251" fill="#0E060C" stroke="rgba(141,32,137,0.7)" stroke-width="1"/>
+                    <polygon points="388,240 260,304 260,315 388,251" fill="#120710" stroke="rgba(141,32,137,0.7)" stroke-width="1"/>
+                    <polygon points="156,240 260,188 364,240 260,292" fill="url(#grid)" opacity="0.3"/>
+                </g>
+
+                <!-- plate 1 (bottom) -->
+                <g>
+                    <polygon points="260,222 378,281 260,340 142,281" fill="rgba(255,46,158,0.03)" stroke="rgba(255,46,158,0.45)" stroke-width="1.2"/>
+                    <polygon points="142,281 260,340 260,350 142,291" fill="#0E060C" stroke="rgba(141,32,137,0.55)" stroke-width="1"/>
+                    <polygon points="378,281 260,340 260,350 378,291" fill="#120710" stroke="rgba(141,32,137,0.55)" stroke-width="1"/>
+                </g>
+            </svg>
+            <figcaption><span class="dot" aria-hidden="true"></span> CLA DB CORE&nbsp;//&nbsp;V0.1.1</figcaption>
+        </figure>
+    </section>
+
+    <div class="stack-bar" role="list" aria-label="Stack nativo">
+        <span class="kicker">STACK NATIVO</span>
+        <span class="stack-item" role="listitem"><span class="tile js" aria-hidden="true">JS</span> JavaScript</span>
+        <span class="stack-item" role="listitem"><span class="tile ts" aria-hidden="true">TS</span> TypeScript</span>
+        <span class="stack-item" role="listitem"><span class="glyph" aria-hidden="true">&#126;</span> RxJS</span>
+        <span class="stack-item" role="listitem"><span class="glyph" aria-hidden="true">&#9671;</span> IndexedDB</span>
+    </div>
+
+    <section id="caracteristicas">
+        <p class="kicker">// Características</p>
+        <h2>Dentro del motor<span class="accent">.</span></h2>
+        <div class="cards">
+            <article class="card">
+                <span class="icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 4 L10 7.5 L18 4 M2 10 L10 13.5 L18 10 M2 16 L10 19.5 L18 16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity="0.9"/></svg></span>
+                <h3>Datos locales</h3>
+                <p>Lee y guarda datos en el dispositivo, incluso sin conexión. La app sigue funcionando completa en el bar, en el campo o en un vuelo.</p>
+            </article>
+            <article class="card">
+                <span class="icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 10 C4 4 7 4 10 10 C13 16 16 16 18 10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+                <h3>Consultas reactivas</h3>
+                <p>Suscríbete con <code>.find().$</code> y actualiza la interfaz en tiempo real: cada inserción, actualización o sincronización re-emite el resultado.</p>
+            </article>
+            <article class="card">
+                <span class="icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="6" cy="10" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="14" cy="10" r="4" stroke="currentColor" stroke-width="1.6"/></svg></span>
+                <h3>Más colecciones</h3>
+                <p>Organiza clientes, ventas y abonos en colecciones separadas. CLA DB elimina el límite artificial de 13 colecciones del core abierto.</p>
+            </article>
+            <article class="card">
+                <span class="icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2 v16 M2 10 h16 M5 5 l10 10 M15 5 L5 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+                <h3>Replicación bidireccional</h3>
+                <p>Sincroniza con tu backend existente mediante la Sync Engine: checkpoints, reintentos y resolución de conflictos incluidos.</p>
+            </article>
+            <article class="card">
+                <span class="icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M7 10 l2 2 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <h3>Persistencia verificada</h3>
+                <p>La suite de verificación comprueba CRUD, reinicios, migraciones de esquema y persistencia tras cerrar la app, con 100 colecciones.</p>
+            </article>
+            <article class="card">
+                <span class="icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M6 4 L2 10 L6 16 M14 4 L18 10 L14 16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <h3>API de RxDB intacta</h3>
+                <p>Fork mínimo con base RxDB 17.6.0: tu código existente se mueve sin cambios. ESM, CJS y tipos de TypeScript listos para usar.</p>
+            </article>
+        </div>
+    </section>
+
+    <section id="arquitectura">
+        <p class="kicker">// Arquitectura</p>
+        <h2>Fork mínimo, marcado<span class="accent">.</span></h2>
+        <div class="arch">
+            <div>
+                <p><strong>CLA DB no reescribe RxDB.</strong> Es un fork Apache 2.0 anclado en RxDB 17.6.0 (commit <strong>9d5849cf</strong>) que mantiene la API pública, el formato en disco y la Sync Engine tal como están.</p>
+                <p>Cada modificación del fork está aislada y marcada con comentarios <strong>// CLA-DB:</strong>, así que las futuras actualizaciones de upstream se aplican con fricción mínima. Las extensiones nuevas llegan como paquetes independientes, nunca dentro del core.</p>
+                <p>Sin plugins propietarios, sin flags de licencia falsificados y sin history rewrites. Solo los cambios que el fork necesita, documentados en <strong>UPSTREAM.md</strong> y <strong>CLA_CHANGELOG.md</strong>.</p>
+            </div>
+            <div class="delta" aria-label="Superficie de delta del fork">
+                <div class="title">// SUPERFICIE DE DELTA</div>
+                <ul style="margin:0;padding-left:18px">
+                    <li><b>rx-collection.ts</b> - remoción del límite COL23</li>
+                    <li><b>cla-db.test.ts</b> - suite de verificación del fork</li>
+                    <li><b>package.json</b> - identidad @clatech/db + metadatos</li>
+                    <li><b>scripts/*</b> - versionado y verificación de consumidor</li>
+                    <li><b>docs del fork</b> - README, ROADMAP, UPSTREAM</li>
+                    <li><b>.github/*</b> - CI propio, sin publish automático</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="documentacion">
+        <p class="kicker">// Documentación</p>
+        <h2>Empezá en cinco minutos<span class="accent">.</span></h2>
+        <div class="docs-sec">
+            <div>
+                <p>Instalá el paquete, creá la base con tu storage preferido y subscribí tu primera consulta reactiva. La documentación hereda el recorrido completo de RxDB: quickstart, storages, replicación y migraciones.</p>
+                <div class="docs-links">
+                    <a href="#">Quickstart <span class="arrow">-&gt;</span></a>
+                    <a href="#">Referencia de la API <span class="arrow">-&gt;</span></a>
+                    <a href="#">Replicación y Sync Engine <span class="arrow">-&gt;</span></a>
+                    <a href="#">Roadmap del fork <span class="arrow">-&gt;</span></a>
+                </div>
+            </div>
+            <div class="code-win">
+                <div class="bar"><span class="k"></span><span class="k"></span><span class="k"></span><span class="name">app.ts</span></div>
+                <pre><span class="c">// Consulta reactiva: se re-emite con cada cambio.</span>
+<span class="k">import</span> { createRxDatabase } <span class="k">from</span> <span class="s">'@clatech/db'</span>;
+
+<span class="k">const</span> db = <span class="k">await</span> <span class="f">createRxDatabase</span>({
+  name: <span class="s">'clientes'</span>,
+  storage: <span class="f">getRxStorageDexie</span>()
+});
+<span class="k">await</span> db.<span class="f">addCollections</span>({ clientes: { schema: clienteSchema } });
+<span class="k">await</span> db.clientes.<span class="f">insert</span>({ id: <span class="s">'c-001'</span>, nombre: <span class="s">'Ana'</span>, plan: <span class="s">'abono'</span> });
+
+db.clientes.<span class="f">find</span>({ selector: { plan: <span class="s">'abono'</span> } })
+  .$.<span class="f">subscribe</span>(docs =&gt; <span class="f">render</span>(docs));</pre>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <span>CLA DB es un fork de RxDB. RxDB es un proyecto de su mantenedor; este sitio no está afiliado a rxdb.info.</span>
+        <nav aria-label="Pie de página">
+            <a href="https://github.com/AngelCLA/cla-db">GitHub</a>
+            <a href="#">npm</a>
+            <a href="#">Licencia Apache 2.0</a>
+        </nav>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,150 @@
+/* CLA-DB: scoped technical sections reuse the landing's tokens and primitives. */
+.section {
+    scroll-margin-top: var(--font-size-3xl);
+}
+
+.section h3 {
+    font-size: var(--font-size-l);
+    line-height: 1.4;
+    margin-bottom: var(--font-size-xs);
+}
+
+.intro,
+.step p,
+.copy p,
+.model p,
+.section dd {
+    color: var(--color-text-gray);
+    font-size: var(--font-size-s);
+}
+
+.section .intro {
+    max-width: 76ch;
+    margin-bottom: var(--font-size-xl);
+}
+
+.section .marker {
+    display: block;
+    color: var(--color-primary);
+    font-size: var(--font-size-xs);
+    letter-spacing: 0.08em;
+    margin-bottom: var(--font-size-xs);
+}
+
+.topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--font-size-m) var(--font-size-xl);
+    margin-bottom: var(--font-size-xl);
+    font-size: var(--font-size-s);
+}
+
+.topics a {
+    text-underline-offset: 0.25em;
+}
+
+.topics a:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+}
+
+.flow,
+.model {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--font-size-l);
+}
+
+.flow {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.step {
+    padding: var(--font-size-l);
+    border-top: 2px solid var(--color-primary);
+}
+
+/* A static connector makes the ordered flow legible without external artwork. */
+.step + .step::before {
+    content: '\2192';
+    display: block;
+    color: var(--color-primary);
+    margin-bottom: var(--font-size-xs);
+}
+
+.split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--font-size-3xl);
+    align-items: start;
+}
+
+.copy {
+    display: grid;
+    gap: var(--font-size-m);
+}
+
+.protocol,
+.storages {
+    margin: 0;
+}
+
+.protocol {
+    padding: var(--font-size-l);
+}
+
+.protocol > div + div {
+    margin-top: var(--font-size-l);
+}
+
+.protocol dt {
+    color: var(--color-primary);
+    font-size: var(--font-size-s);
+    margin-bottom: var(--font-size-xs);
+}
+
+.section dd {
+    margin: 0;
+}
+
+.storageRow {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    gap: var(--font-size-l);
+    padding: var(--font-size-l);
+}
+
+.storageRow + .storageRow {
+    border-top: 1px solid var(--color-bg);
+}
+
+.storageRow strong {
+    font-size: var(--font-size-m);
+}
+
+.model article {
+    min-width: 0;
+    border-left: 2px solid var(--color-bg);
+    padding-left: var(--font-size-l);
+}
+
+.model code {
+    font: inherit;
+    color: var(--color-text);
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 60rem) {
+    .flow,
+    .split,
+    .model,
+    .storageRow {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .step + .step::before {
+        content: '\2193';
+    }
+}

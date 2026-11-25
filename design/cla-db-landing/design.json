@@ -1,0 +1,11 @@
+{
+  "title": "CLA DB landing page",
+  "brief": "Landing page for @clatech/db (CLA DB), a minimal Apache 2.0 fork of RxDB 17.6.0. Spanish copy (user decision). Primary direction: faithful replica of the user's reference site cla-db.lonemerit8.chatgpt.site (artboard 04), sans-serif headlines with monospace accents, dark scheme, brand pink and isometric stack illustration. Artboards 01-03 kept as earlier alternatives.",
+  "feature": "odd/tasks/project-website.md",
+  "artboards": [
+    { "file": "01-terminal-hero.html", "title": "Terminal hero", "tradeoff": "Code-forward and developer-credible; lighter emotional pull and no feature grid", "width": 1440, "height": 900 },
+    { "file": "02-gradient-split.html", "title": "Gradient split hero", "tradeoff": "Strong visual brand with a live reactive demo; marketing feel over density", "width": 1440, "height": 960 },
+    { "file": "03-dense-docs-first.html", "title": "Dense docs-first", "tradeoff": "Most informative: changelog, feature grid, roadmap and CTA band; less dramatic", "width": 1440, "height": 900 },
+    { "file": "04-replica-espanol.html", "title": "Replica espanol", "tradeoff": "Faithful recreation of the user's reference site (hero 'Tus datos, local-first', isometric stack illustration, stack bar, cards); Spanish copy; below-fold sections inferred from fork facts pending user screenshots", "width": 1440, "height": 2600 }
+  ]
+}

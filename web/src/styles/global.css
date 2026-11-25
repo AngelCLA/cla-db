@@ -1,0 +1,129 @@
+@import "./tokens.css";
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    color-scheme: dark;
+}
+
+body {
+    margin: 0;
+    background-color: var(--color-bg-dark);
+    color: var(--color-text);
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-m);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+p,
+ul {
+    margin: 0;
+}
+
+ul {
+    padding-left: var(--font-size-l);
+}
+
+a {
+    color: var(--color-primary);
+}
+
+:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.container {
+    width: 100%;
+    max-width: var(--layout-max-width);
+    margin: 0 auto;
+    padding: 0 calc(var(--font-size-3xl) * 1.5);
+}
+
+.section {
+    padding: calc(var(--font-size-3xl) * 2.5) 0;
+}
+
+.section + .section {
+    border-top: 1px solid var(--color-bg);
+}
+
+.section-title {
+    font-size: var(--font-size-3xl);
+    line-height: 1.15;
+    margin-bottom: var(--heading-margin-bottom);
+}
+
+.section-title .accent {
+    color: var(--color-primary);
+}
+
+.kicker {
+    font-size: var(--font-size-xs);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    margin-bottom: calc(var(--font-size-xs) * 1);
+}
+
+/* Button primitive: solid background from --color-top in the docs system. */
+.button {
+    display: inline-flex;
+    align-items: center;
+    gap: calc(var(--font-size-xs) * 1);
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-m);
+    font-weight: bold;
+    color: var(--color-text);
+    background-color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+    border-radius: var(--radius-button);
+    padding: var(--button-padding);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.button:hover,
+.button:focus-visible {
+    background-color: var(--color-primary-darker);
+    border-color: var(--color-primary-darker);
+}
+
+.button--secondary {
+    background-color: transparent;
+    color: var(--color-text);
+    border-color: var(--color-bg);
+}
+
+.button--secondary:hover,
+.button--secondary:focus-visible {
+    background-color: transparent;
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+/* Surface primitive: background equals the base background, 1px border in the
+   bg-color tone, square corners (see design/system.md component rules). */
+.surface {
+    background-color: var(--color-bg-dark);
+    border: 1px solid var(--color-bg);
+    border-radius: var(--radius-surface);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+    }
+}

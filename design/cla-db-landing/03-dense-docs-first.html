@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CLA DB - Dense docs-first</title>
+<style>
+    :root {
+        --primary: #ED168F;
+        --primary-darker: #8d2089;
+        --grad-top: #ED168F;
+        --grad-middle: #b2218b;
+        --grad-bottom: #752a8a;
+        --bg: #0D0F18;
+        --bg-tone: #20293C;
+        --bg-code: #282330;
+        --text: #ffffff;
+        --text-gray: lightgray;
+        --shiki-fg: #F8F8F2;
+        --shiki-comment: #6272A4;
+        --shiki-keyword: #BD93F9;
+        --shiki-function: #50FA7B;
+        --shiki-string: #F1FA8C;
+        --shiki-constant: #8BE9FD;
+    }
+    * { box-sizing: border-box; }
+    body {
+        margin: 0;
+        width: 1440px;
+        min-height: 900px;
+        background: var(--bg);
+        color: var(--text);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', 'DejaVu Sans Mono', monospace;
+    }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+    header {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 16px 48px;
+        border-bottom: 1px solid var(--bg-tone);
+    }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: bold; font-size: 1.25rem; text-decoration: none; color: var(--text); }
+    .brand .dot { width: 14px; height: 14px; background: linear-gradient(180deg, var(--grad-top), var(--grad-middle), var(--grad-bottom)); }
+    nav { display: flex; gap: 28px; align-items: center; }
+    nav a { color: var(--text-gray); text-decoration: none; font-size: 0.9rem; }
+    nav a:hover { color: var(--primary); }
+    .search {
+        background: var(--bg-code); border: 1px solid var(--bg-tone); border-radius: 8px;
+        color: var(--text-gray); font-size: 0.9rem; padding: 6px 12px; font-family: inherit; width: 220px;
+    }
+
+    main { max-width: 1408px; margin: 0 auto; padding: 56px 48px; }
+
+    .hero-top { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 56px; align-items: start; }
+    h1 { font-size: 2.5rem; line-height: 1.25; margin: 0 0 16px; }
+    h1 .accent { color: var(--primary); }
+    .lede { font-size: 1rem; color: var(--text-gray); line-height: 1.7; margin: 0 0 24px; }
+    .lede strong { color: var(--text); }
+    .cta-row { display: flex; gap: 12px; margin-bottom: 12px; }
+    .btn {
+        display: inline-block; text-decoration: none; text-align: center;
+        background: var(--primary); border: 1px solid var(--primary); border-radius: 8px;
+        color: #fff; font-weight: bold; font-size: 0.9rem; padding: 10px 18px; cursor: pointer;
+        font-family: inherit;
+    }
+    .btn:hover { background: var(--primary-darker); border-color: var(--primary-darker); }
+    .btn.ghost { background: transparent; color: var(--primary); }
+    .badges { display: flex; gap: 8px; flex-wrap: wrap; }
+    .badge { border: 1px solid var(--bg-tone); color: var(--text-gray); font-size: 0.75rem; padding: 4px 10px; border-radius: 4px; }
+    .badge b { color: var(--text); }
+
+    .changelog { background: var(--bg-code); border: 1px solid var(--bg-tone); padding: 16px; font-size: 0.8rem; }
+    .changelog .title { color: var(--shiki-comment); margin-bottom: 12px; }
+    .changelog ul { margin: 0; padding: 0 0 0 16px; color: var(--text-gray); }
+    .changelog li { margin-bottom: 8px; }
+    .changelog li b { color: var(--shiki-function); }
+    .changelog a { color: var(--shiki-constant); }
+
+    h2 { font-size: 1.25rem; margin: 56px 0 16px; color: var(--primary); }
+    .features { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .card { background: var(--bg); border: 1px solid var(--bg-tone); padding: 16px; }
+    .card h3 { margin: 0 0 6px; font-size: 0.9rem; }
+    .card p { margin: 0; color: var(--text-gray); font-size: 0.75rem; line-height: 1.6; }
+
+    .roadmap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .mile { border-left: 3px solid var(--grad-top); background: var(--bg-code); padding: 16px; }
+    .mile .v { color: var(--shiki-constant); font-size: 0.8rem; }
+    .mile .st { color: var(--shiki-comment); font-size: 0.7rem; }
+    .mile h3 { margin: 6px 0; font-size: 0.9rem; }
+    .mile p { margin: 0; color: var(--text-gray); font-size: 0.75rem; line-height: 1.6; }
+
+    .cta-band {
+        margin-top: 56px;
+        background: linear-gradient(180deg, var(--grad-top), var(--grad-middle), var(--grad-bottom));
+        padding: 40px 48px;
+        display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    }
+    .cta-band p { margin: 0; font-size: 1.25rem; font-weight: bold; color: #fff; }
+    .cta-band .btn { background: var(--bg); border-color: var(--bg); color: #fff; }
+
+    footer { border-top: 1px solid #fff; margin-top: 0; padding: 24px 48px; color: var(--text-gray); font-size: 0.75rem; display: flex; justify-content: space-between; }
+</style>
+</head>
+<body>
+    <header>
+        <a class="brand" href="#"><span class="dot" aria-hidden="true"></span>CLA DB</a>
+        <nav aria-label="Main">
+            <a href="#">Docs</a>
+            <a href="#">API</a>
+            <a href="#">Roadmap</a>
+            <a href="#">GitHub</a>
+            <input class="search" type="search" placeholder="Search docs..." aria-label="Search docs" />
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero-top">
+            <div>
+                <h1>The reactive database you know.<br /><span class="accent">With the cap removed.</span></h1>
+                <p class="lede"><strong>CLA DB</strong> (<code>@clatech/db</code>) is a minimal Apache 2.0 fork of RxDB, anchored on the RxDB 17.6.0 codebase (commit <strong>9d5849cf</strong>). It keeps the reactive API, the Sync Engine, and the on-disk format, and removes the artificial collection limit. Deltas are small, isolated, and marked with <code>// CLA-DB:</code> comments so upstream merges stay clean.</p>
+                <div class="cta-row">
+                    <a class="btn" href="#">Quickstart</a>
+                    <a class="btn ghost" href="#">Fork delta surface</a>
+                </div>
+                <div class="badges">
+                    <span class="badge"><b>@clatech/db</b> 0.1.1</span>
+                    <span class="badge"><b>RxDB base</b> 17.6.0+522</span>
+                    <span class="badge"><b>License</b> Apache 2.0</span>
+                    <span class="badge"><b>ESM + CJS</b></span>
+                </div>
+            </div>
+            <aside class="changelog" aria-label="Latest fork changes">
+                <div class="title">// CLA_CHANGELOG.md - latest</div>
+                <ul>
+                    <li><b>v0.1.1</b> - @clatech/db identity, dual ESM/CJS exports, decoupled RXDB_VERSION 17.6.0.</li>
+                    <li><b>COL23 removed</b> - the 13-collection limit in rx-collection.ts; tests assert 14, 20, 50, 100 collections.</li>
+                    <li><b>Verification suite</b> - CRUD, reactive queries, restart persistence, bidirectional replication, conflict handling, schema migration, Dexie compat.</li>
+                    <li><a href="#">Read the full changelog</a></li>
+                </ul>
+            </aside>
+        </section>
+
+        <h2>Features inherited, capabilities verified.</h2>
+        <div class="features">
+            <div class="card"><h3>Reactive queries</h3><p>Subscribe to query results and single document fields, not just the current state.</p></div>
+            <div class="card"><h3>Sync Engine</h3><p>Battle-tested realtime replication with your existing backend infrastructure.</p></div>
+            <div class="card"><h3>Pluggable storage</h3><p>Dexie, memory, localStorage and more via the RxStorage interface.</p></div>
+            <div class="card"><h3>Schema migrations</h3><p>Versioned document schemas with migration strategies.</p></div>
+            <div class="card"><h3>Multi-tab</h3><p>Leader election and cross-tab broadcast for browser apps.</p></div>
+            <div class="card"><h3>Everywhere</h3><p>Browser, Node.js, Electron, React Native, Capacitor, Deno, Bun.</p></div>
+            <div class="card"><h3>No cap</h3><p>Unlimited collections; benchmarks prove 100 collections work.</p></div>
+            <div class="card"><h3>Consumer verified</h3><p>npm pack test installs the package in ESM, CJS and TypeScript projects.</p></div>
+        </div>
+
+        <h2>Roadmap.</h2>
+        <div class="roadmap">
+            <div class="mile"><span class="v">v0.1.1</span> <span class="st">CURRENT</span><h3>Foundation</h3><p>Clean Apache 2.0 fork, @clatech/db identity, verification suite, safe CI pipeline.</p></div>
+            <div class="mile"><span class="v">v0.2.0</span> <span class="st">PLANNED</span><h3>Sync &amp; persistence</h3><p>Cloudflare Workers + D1 replication adapter, R2 blob storage, open-source SQLite and OPFS storages.</p></div>
+            <div class="mile"><span class="v">v0.3.0</span> <span class="st">PLANNED</span><h3>Tooling</h3><p>Diagnostics CLI, visual collection inspector, sync monitor, backup and recovery tooling.</p></div>
+        </div>
+
+        <section class="cta-band">
+            <p>Same API. No cap. Apache 2.0.</p>
+            <a class="btn" href="#">npm install @clatech/db</a>
+        </section>
+    </main>
+
+    <footer>
+        <span>CLA DB is a fork of RxDB. RxDB is a trademark of its maintainer; this site is not affiliated with rxdb.info.</span>
+        <span>GitHub · npm · Apache 2.0</span>
+    </footer>
+</body>
+</html>

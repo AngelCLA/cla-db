@@ -1,0 +1,59 @@
+/**
+ * Design tokens for the CLA DB landing site.
+ * Source of truth: design/system.md (captured from docs-src/src/css/custom.css
+ * and examples/ionic/src/theme/variables.css).
+ * Do not invent values here. Every entry below is traceable to that document.
+ */
+:root {
+    /* Brand colors */
+    --color-primary: #ed168f;
+    --color-primary-dark: #ed168f;
+    --color-primary-darker: #8d2089;
+    --color-gradient-top: #ed168f;
+    --color-gradient-middle: #b2218b;
+    --color-gradient-bottom: #752a8a;
+
+    /* Surfaces */
+    --color-bg: #20293c;
+    --color-bg-dark: #0d0f18;
+    --color-bg-code: #282330;
+
+    /* Text */
+    --color-text: #ffffff;
+    --color-text-gray: lightgray;
+
+    /* Code block palette (shiki tokens) */
+    --color-code-fg: #f8f8f2;
+    --color-code-comment: #6272a4;
+    --color-code-keyword: #bd93f9;
+    --color-code-function: #50fa7b;
+    --color-code-string: #f1fa8c;
+    --color-code-string-expression: #ff79c6;
+    --color-code-constant: #8be9fd;
+    --color-code-parameter: #ffb86c;
+
+    /* Typography */
+    --font-family-base: "Atkinson Hyperlegible Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", "DejaVu Sans Mono", monospace;
+    --font-size-xs: 0.75rem;
+    --font-size-s: 0.9rem;
+    --font-size-m: 1rem;
+    --font-size-l: 1.25rem;
+    --font-size-xl: 1.5rem;
+    --font-size-2xl: 1.75rem;
+    --font-size-3xl: 2rem;
+    --font-size-5xl: 2.5rem;
+    --heading-margin-bottom: 40px;
+
+    /* Spacing */
+    --space-between-blocks: 0px;
+    --button-padding: 10px 18px;
+    --layout-max-width: 92rem;
+
+    /* Radius */
+    --radius-button: 8px;
+    --radius-image: 4px;
+    --radius-image-lg: 10px;
+    --radius-surface: 0px;
+
+    /* Shadows: none recorded in the design system. */
+}
