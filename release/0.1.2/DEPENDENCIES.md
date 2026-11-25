@@ -4,7 +4,7 @@ The tested production consumer has zero known npm advisories. The locked full de
 
 ## Exact Artifact And Reproduction
 
-Observed on November 25, 2026 with Node `24.22.3` / npm `11.19.1`, from HEAD `a6a205a9b7` and existing generated package output. This is a real local candidate, not a registry publication or the final T6 rebuilt release.
+Observed on November 25, 2026 with Node `24.22.3` / npm `11.19.1`. The initial local pack and final clean locked build from `17169c81a5` produced the same bytes. The final tarball was audited again in a detached consumer. This is a local candidate, not a registry publication.
 
 | Identity | Observed value |
 | --- | --- |
@@ -16,7 +16,7 @@ Observed on November 25, 2026 with Node `24.22.3` / npm `11.19.1`, from HEAD `a6
 
 Run the commands in [PUBLISHING.md](PUBLISHING.md). The artifact checker creates and removes a detached system-temporary consumer, clears module/preload overrides, installs the actual tarball plus `rxjs@7.8.2` with scripts disabled, inspects installed manifest identities and lock resolutions/integrities, runs `npm audit --json --omit=dev`, then generates `npm sbom --omit=dev --sbom-format=cyclonedx`. [sbom.cdx.json](sbom.cdx.json) is npm's CycloneDX 1.5 graph with the tarball hashes added to its CLA DB component. It includes the consumer envelope and 75 installed components, not merely a manifest dependency list. Optional plugin peers not selected by this consumer are not certified.
 
-Validation checks the format/version fields, component count against installed lock entries, unique component references, dependency-edge reference closure, candidate identity, and actual tarball hash. This is structural graph validation, not validation against a downloaded official JSON schema. The SBOM timestamp and local distribution URL identify this observation; future resolutions and artifact bytes require new evidence. The earlier parent snapshot counted 73 production, 1 optional, and 2 peer entries. This recheck reports npm counts of 75 production, 1 optional, zero peer, total 75. npm classifications overlap; do not sum them or substitute the earlier snapshot.
+Validation checks the format/version fields, component count against installed lock entries, unique component references, dependency-edge reference closure, candidate identity, and actual tarball hash. This is structural graph validation, not validation against a downloaded official JSON schema. The checked-in SBOM's artifact properties, 75 component package URLs, and all 76 dependency records matched the final detached build's regenerated SBOM. Its timestamp and local distribution URL record the earlier observation of those same bytes. Future resolutions and artifact bytes require new evidence. The earlier parent snapshot counted 73 production, 1 optional, and 2 peer entries. This recheck reports npm counts of 75 production, 1 optional, zero peer, total 75. npm classifications overlap; do not sum them or substitute the earlier snapshot.
 
 ## Production Licenses And Install Behavior
 
@@ -59,6 +59,6 @@ The shipped legacy signaling launcher is retained but not run: it imports develo
 
 ## Coverage And Disposition
 
-The approved web-only change adds development Node type declarations that a fresh standalone build lacked. Root and web locks passed disposable `npm ci`; root build, standalone web build, and web check passed on Node 24.22.3. CI now selects Node 22/24 maintained LTS lines; the retained `>=20` engine floor and remote matrix have not been validated here. Full release suites remain T6-owned. Remote release settings/provenance, production plugin peers, complete secret detection, and viewer notice compliance are unavailable proof, not passing checks.
+The approved web-only change adds development Node type declarations that a fresh standalone build lacked. Root and web locks passed disposable `npm ci`; root build, standalone web build, and web check passed on Node 24.22.3. CI now selects Node 22/24 maintained LTS lines; the retained `>=20` engine floor and remote matrix have not been validated here. The [local test report](TESTS.md) records the required suite. Remote release settings and provenance, optional production plugin peers, complete secret detection, and viewer notice compliance were not validated.
 
-These changes cover T5 portions of S10-S12/S14-S16. Known development findings, deprecations, and metadata gaps are documented residual risks, not permission to publish. Final release-suite evidence, root `CLA_CHANGELOG.md`/roadmap consolidation, and any scope addition for bundled viewer notices remain parent-owned.
+Known development findings, deprecations, and metadata gaps require maintainer disposition before publication. Viewer notices need a separate review before viewer redistribution.

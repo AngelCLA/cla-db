@@ -5,7 +5,7 @@ For upstream RxDB history, see `CHANGELOG.md`.
 
 ## [0.1.2] - Candidate, Unpublished
 
-This section records implemented candidate work, not a publication approval. npm latest remains `0.1.1`. Final suite, package measurements, and security totals belong to the release controller's T6 verification.
+This section records the unpublished candidate, not a publication approval. The registry baseline for this review is CLA DB `0.1.1`.
 
 ### Added
 
@@ -15,12 +15,18 @@ This section records implemented candidate work, not a publication approval. npm
 
 - Public package version is `0.1.2`; storage compatibility stays `17.6.0`. The foundation remains RxDB `17.6.0+522`, commit `9d5849cf4c695ffc27d60e134b2039539e77a9b0`.
 - Nine upstream commits through `d08621c7e26859e017a78a9615f5951fd4803b18` were merged via `515bb00884` / `e41bc43cfb`, not cherry-picked. [UPSTREAM.md](./UPSTREAM.md#exact-012-ancestry) lists every hash. Original RxDB history stays in `CHANGELOG.md`.
+- Root and landing installs now use separate committed lockfiles. CI defines Node 22 and 24 jobs and checks a packed consumer. Publication has a separate manual workflow; its remote protections have not been activated or verified.
 
 ### Fixed
 
 - **Inherited upstream fixes:** `d8ab5eb220` handles primary keys such as `constructor` and `__proto__` during replication/migration; `f53c02d937` restores Google Drive/OneDrive WebRTC reconnect after restart; `31492a4972` prevents storing documents rejected by DOC20 through DOC23; `b3fc33f42c` closes replication change streams on pause and opens new ones on start. These are upstream changes, not CLA Tech implementations.
 - **Fork-specific fixes:** dev-mode registration no longer invokes the inherited marketing iframe. Public documentation tracking callbacks are inert, including the conversion-worker path that lacked a hostname guard. Validation, Premium handling, links, and explicit viewer tooling are preserved.
 - Correct the landing's malformed `createRxDatabase` call and supply missing imports, schema, reactive output, and cleanup. The check executes code extracted from rendered markup.
+
+### Security
+
+- Add the [security reporting policy](SECURITY.md) and a [manual publishing procedure](./release/0.1.2/PUBLISHING.md) using artifact hash verification, npm Trusted Publishing, and provenance. Only the publish job receives OIDC permission.
+- The audited production consumer graph had no known advisories. The separate development audit found 31 issues (25 moderate, 6 high); it requires maintainer disposition before release. See the [dependency report](./release/0.1.2/DEPENDENCIES.md) and [CycloneDX SBOM](./release/0.1.2/sbom.cdx.json).
 
 ### Documentation
 
@@ -32,16 +38,17 @@ This section records implemented candidate work, not a publication approval. npm
 
 ### Testing
 
-- T2/T3 focused evidence remains in their linked reports; it is not a fresh full-suite result. Cross-version reopen and benchmarks use simulated IndexedDB, not browser disk I/O.
+- The required local checks passed in clean locked copies on Node 24, including `1,918` Memory and `1,922` Dexie tests. The detached packed consumer passed its export, module, type, persistence, migration, and replication checks. See the [test report](./release/0.1.2/TESTS.md).
+- Cross-version reopen and benchmarks use simulated IndexedDB, not browser disk I/O.
 - T4 observed RED/GREEN for automatic site conversions and the malformed displayed snippet. README and rendered landing examples passed in an isolated candidate installation. Landing structural checks, production build, and lint passed; Docusaurus built with inherited broken-anchor warnings. See [exact site evidence](./release/0.1.2/SITES.md).
 
 ### Distribution
 
-- Explicit package allowlist preserves public exports, generated shims, source-map resources, license, attribution, and original history while excluding website, design, agent, and internal development files. Final rebuilt artifact totals remain pending; interim figures are in [PACKAGE.md](./release/0.1.2/PACKAGE.md).
+- Explicit package allowlist preserves public exports, generated shims, source-map resources, license, attribution, and original history while excluding website, design, agent, and internal development files. The [rebuilt tarball](./release/0.1.2/PACKAGE.md) contains `2,071` files, at `2,235,705` compressed and `12,782,757` unpacked bytes.
 
 ### Known Limitations
 
-- This is a pre-1.0 candidate. Real-browser durability, full runtime support, credentialed service integrations, final security/license disposition, and the final required suite are not certified by T4.
+- This is a pre-1.0 candidate. Real-browser durability, the full Node engine range, and credentialed service integrations are not certified. The standalone viewer is not in the npm candidate; verify its third-party notices before separate redistribution.
 - The documentation build retains an inherited smartphone iframe pointing at `http://0.0.0.0:4200/` and a LinkedIn release-note embed. The standalone viewer retains hostname-guarded upstream conversion code. No zero-telemetry or deployment-wide audit claim is made. See [NETWORK_AUDIT.md](./release/0.1.2/NETWORK_AUDIT.md).
 
 ## [0.1.1] - 2026-11-25
