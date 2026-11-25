@@ -33,6 +33,8 @@ import {
     OneDriveState,
     replicateMicrosoftOneDrive,
     SignalingState,
+    readMessages,
+    getDriveBaseUrl,
     cleanupOldSignalingMessages,
     SignalingOptions
 } from '../src/plugins/replication-microsoft-onedrive/index.ts';
@@ -775,6 +777,35 @@ describe('replication-microsoft-onedrive.test.ts', function () {
                 );
                 assert.strictEqual(docsFiles.length, 20);
             });
+            it('process a wal file with document ids that are names of Object.prototype members', async () => {
+                const ids = ['constructor', 'toString', 'hasOwnProperty', 'valueOf', '__proto__'];
+                async function processRows(age: number) {
+                    await writeToWal(
+                        options,
+                        options.initData,
+                        ids.map(id => toWriteRow(schemaObjects.humanData(id, age)))
+                    );
+                    await processWalFile(
+                        options,
+                        options.initData,
+                        PRIMARY_PATH
+                    );
+                    const docsFiles = await listFilesInFolder(
+                        options,
+                        options.initData.docsFolderId
+                    );
+                    const contents = await fetchDocumentContents<WithDeletedAndAttachments<HumanDocumentType>>(
+                        options,
+                        docsFiles.map(d => d.id)
+                    );
+                    assert.deepStrictEqual(
+                        contents.ordered.map(doc => doc.passportId + ':' + doc.age).sort(),
+                        ids.map(id => id + ':' + age).sort()
+                    );
+                }
+                await processRows(1);
+                await processRows(2);
+            });
             it('process a non-empty wal file with updates', async () => {
                 const rows = new Array(10).fill(0).map((_, i) => toWriteRow(schemaObjects.humanData('doc-' + i)));
                 await writeToWal(
@@ -1064,6 +1095,51 @@ describe('replication-microsoft-onedrive.test.ts', function () {
             await state1.close();
             await state2.close();
         });
+        it('should not skip a message that was sent in the same millisecond as an already read one', async () => {
+            const processedMessageIds = new Set<string>();
+            async function insertMessage(fileName: string, data: any) {
+                const url = getDriveBaseUrl(options) + '/items/' + options.initData.signalingFolderId + ':/' + encodeURIComponent(fileName) + ':/content';
+                const response = await fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        Authorization: 'Bearer ' + options.authToken,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                assert.ok(response.ok);
+            }
+
+            /**
+             * now() can return the same millisecond with a different
+             * decimal part, like 1794000000000.01 and 1794000000000.02
+             */
+            await insertMessage('sender_1794000000000.01_msgone.json', { nr: 1 });
+            const firstRead = await readMessages(options, options.initData, processedMessageIds);
+            assert.deepStrictEqual(firstRead.map(m => m.data), [{ nr: 1 }]);
+
+            await insertMessage('sender_1794000000000.02_msgtwo.json', { nr: 2 });
+            const secondRead = await readMessages(options, options.initData, processedMessageIds);
+            assert.deepStrictEqual(secondRead.map(m => m.data), [{ nr: 2 }]);
+        });
+        it('a new session should connect to a peer that already has signaling messages for an earlier session', async () => {
+            const signalingOptions: SignalingOptions = { wrtc, config: { iceServers: [] } };
+            const isConnectedTo = (state: SignalingState, other: SignalingState) => {
+                const peer = state.peerBySenderId.get(other.sessionId);
+                return !!peer && peer.connected;
+            };
+            const stayingState = new SignalingState(options, options.initData, signalingOptions);
+            let reconnectingState = new SignalingState(options, options.initData, signalingOptions);
+            for (let i = 0; i < 6; i++) {
+                const state = reconnectingState;
+                await waitUntil(() => isConnectedTo(stayingState, state) && isConnectedTo(state, stayingState), 15000);
+                state.close();
+                reconnectingState = new SignalingState(options, options.initData, signalingOptions);
+                stayingState.resetReadLoop();
+            }
+            reconnectingState.close();
+            stayingState.close();
+        });
     });
     describe('live replication', () => {
         beforeEach(async () => {
@@ -1121,5 +1197,73 @@ describe('replication-microsoft-onedrive.test.ts', function () {
             collectionA.database.close();
             collectionB.database.close();
         }).timeout(1000 * 60);
+        it('pause() directly after the creation should pause the started replication', async () => {
+            const collection = await humansCollection.createHumanWithTimestamp(0, 'aa' + randomToken(10), false);
+            const replicationState = await replicateMicrosoftOneDrive<any>({
+                replicationIdentifier: 'foobar',
+                collection,
+                oneDrive: options,
+                signalingOptions: options.signalingOptions,
+                live: true,
+                pull: {},
+                push: {}
+            });
+            const signalingState = ensureNotFalsy(replicationState.signalingState);
+
+            await replicationState.pause();
+            assert.strictEqual(replicationState.isPaused(), true);
+            assert.strictEqual(signalingState.closed, true);
+
+            const startPromise = replicationState.start();
+            await replicationState.pause();
+            await startPromise;
+            assert.strictEqual(replicationState.isPaused(), true);
+            assert.strictEqual(ensureNotFalsy(replicationState.signalingState).closed, true);
+
+            await replicationState.start();
+            assert.strictEqual(replicationState.isPaused(), false);
+            assert.strictEqual(ensureNotFalsy(replicationState.signalingState).closed, false);
+            await replicationState.awaitInitialReplication();
+
+            await replicationState.cancel();
+            await collection.database.close();
+        });
+        it('pause() should close the signaling state and start() should open a new one', async () => {
+            const collectionA = await humansCollection.createHumanWithTimestamp(0, 'aa' + randomToken(10), false);
+            const collectionB = await humansCollection.createHumanWithTimestamp(0, 'bb' + randomToken(10), false);
+            const collectionC = await humansCollection.createHumanWithTimestamp(0, 'cc' + randomToken(10), false);
+            const collectionD = await humansCollection.createHumanWithTimestamp(0, 'dd' + randomToken(10), false);
+            const replicationState = await sync(collectionA, options, options.signalingOptions);
+            const firstSignalingState = ensureNotFalsy(replicationState.signalingState);
+            assert.strictEqual(firstSignalingState.closed, false);
+
+            await replicationState.pause();
+            assert.strictEqual(firstSignalingState.closed, true);
+
+            await collectionC.insert(schemaObjects.humanWithTimestampData({ id: 'during-pause' }));
+            await syncOnce(collectionC, options);
+
+            await replicationState.start();
+            const secondSignalingState = ensureNotFalsy(replicationState.signalingState);
+            assert.ok(secondSignalingState !== firstSignalingState);
+            assert.strictEqual(secondSignalingState.closed, false);
+            await waitUntil(async () => !!(await collectionA.findOne('during-pause').exec()), 20000);
+
+            await collectionD.insert(schemaObjects.humanWithTimestampData({ id: 'after-resume' }));
+            await syncOnce(collectionD, options);
+            await sync(collectionB, options, options.signalingOptions);
+            await waitUntil(async () => !!(await collectionA.findOne('after-resume').exec()), 20000);
+
+            await replicationState.cancel();
+            assert.strictEqual(secondSignalingState.closed, true);
+
+            await assertThrows(() => replicationState.start(), 'RxError', 'RC_START_CANCELED');
+            assert.ok(replicationState.signalingState === secondSignalingState);
+
+            await collectionA.database.close();
+            await collectionB.database.close();
+            await collectionC.database.close();
+            await collectionD.database.close();
+        });
     });
 });
