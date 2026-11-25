@@ -4,10 +4,10 @@ A minimal, Apache 2.0 fork of [RxDB](https://github.com/pubkey/rxdb) maintained 
 
 CLA DB provides a reactive, local-first, offline-first NoSQL database for JavaScript and TypeScript applications without the artificial 13-collection cap, while preserving full compatibility with RxDB's public API, storage interfaces, and replication protocol.
 
-- **Package**: `@clatech/db` (`v0.1.0`)
+- **Package**: `@clatech/db` (`v0.1.1`)
 - **License**: [Apache-2.0](./LICENSE.txt)
 - **Repository**: `https://github.com/AngelCLA/cla-db`
-- **Upstream**: [pubkey/rxdb](https://github.com/pubkey/rxdb) (v0.1.0 base: RxDB `17.6.0+522`, commit `9d5849cf4c695ffc27d60e134b2039539e77a9b0`)
+- **Upstream**: [pubkey/rxdb](https://github.com/pubkey/rxdb) (RxDB `17.6.0+522`, commit `9d5849cf4c695ffc27d60e134b2039539e77a9b0`)
 
 ## Why CLA DB Exists
 
@@ -48,7 +48,7 @@ npm pack
 Then install the generated tarball alongside `rxjs`:
 
 ```sh
-npm install ./clatech-db-0.1.0.tgz rxjs
+npm install ./clatech-db-0.1.1.tgz rxjs
 ```
 
 ### Usage Example

@@ -1,7 +1,7 @@
 {
   "name": "@clatech/db",
   "description": "CLA DB - A minimal Apache 2.0 local-first reactive NoSQL database fork of RxDB maintained by CLA Tech",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "CLA Tech",
   "repository": {
     "type": "git",
