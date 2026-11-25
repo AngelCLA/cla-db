@@ -749,6 +749,10 @@
     "webpack-dev-server": "6.1.0"
   },
   "overrides": {
+    "rxdb-old@16.21.1": {
+      ".": "$rxdb-old",
+      "ws": "$ws"
+    },
     "eslint": "10.15.0",
     "webpack-dev-server": "6.1.0",
     "dexie": "4.4.2",

@@ -8,6 +8,7 @@ Use a fresh disposable checkout of the exact reviewed revision, with Node 24 and
 
 ```sh
 npm ci --ignore-scripts --no-audit --no-fund
+node scripts/release-supply-chain-fixtures/legacy-ws-resolution.mjs
 npm run lint
 npm run build
 npm run check-types

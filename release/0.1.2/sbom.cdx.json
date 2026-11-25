@@ -2,10 +2,10 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.5.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.5",
-  "serialNumber": "urn:uuid:da4d1c01-8ee0-44ca-abb0-752060fbeb50",
+  "serialNumber": "urn:uuid:7685975b-5f77-4a44-94df-e562a789bfb6",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-11-25T20:31:58.502Z",
+    "timestamp": "2026-11-25T22:16:26.221Z",
     "lifecycles": [
       {
         "phase": "build"
@@ -21,7 +21,7 @@
     "component": {
       "bom-ref": "cla-production-audit@1.0.0",
       "type": "library",
-      "name": "cla-supply-audit-fOAPpP",
+      "name": "cla-supply-audit-bnhQnt",
       "version": "1.0.0",
       "scope": "required",
       "purl": "pkg:npm/cla-production-audit@1.0.0",
@@ -86,7 +86,7 @@
       "externalReferences": [
         {
           "type": "distribution",
-          "url": "file:/tmp/gpmnxDIi/gawwDMuF/cla-final-supply-c6cgrpiv/clatech-db-0.1.2.tgz"
+          "url": "file:/var/tmp/cla-db-ws-override.MyEnqM/pack/clatech-db-0.1.2.tgz"
         },
         {
           "type": "vcs",
@@ -104,11 +104,11 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "617c176b7891e986f41e9f72963a829dc0f279898c2936d1bde95716ca55715b"
+          "content": "6bcb34477e02c14da4e54a8993716f5a72b6d309c9b6d6b7dd7a494f2c40b1ed"
         },
         {
           "alg": "SHA-512",
-          "content": "3a88dbe3f9a5fd5a028186421bc82808e69bf4a28d6cf1800b75ea522d53d66c8c73c8172a8ce1e4bcaf5c673384785448c189bdae4f2276a1e9f4f040edb0c4"
+          "content": "c31cc3eb2c097cafe363a02a957e026a7be7be9e7bc81b25b65d50c760d712e4ea5d1dff8045a1c7d36017cdbda020ceeb1939e71d05e6b6355705cffb2182fc"
         }
       ],
       "licenses": [

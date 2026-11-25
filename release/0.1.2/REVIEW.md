@@ -1,6 +1,6 @@
 # CLA DB 0.1.2 Candidate Review
 
-**Ready for local review. Not cleared for publication.** The unpublished npm tarball was rebuilt from `17169c81a5` and tested on Node `24.22.3`. The [package report](PACKAGE.md) binds the evidence to its SHA-256 and npm integrity.
+**Ready for local review. Not cleared for publication.** The unpublished npm tarball was rebuilt from `66bf60dc4d` plus the scoped legacy `ws` override and tested on Node `24.22.3`. The [package report](PACKAGE.md) binds the evidence to its SHA-256 and npm integrity.
 
 ## Changes And Decisions
 
@@ -14,7 +14,7 @@
 
 ## Open Before Publication
 
-1. Review and explicitly disposition the `31` development audit findings, including `6` high, and the development license metadata gaps. The audited production graph returned zero known advisories; it is not the same graph.
+1. Review and explicitly disposition the `30` development audit findings, including `5` high, and the remaining redistribution questions. The scoped test dependency override removed the legacy `ws` finding. It did not change the Firestore gRPC supplier. The audited production graph returned zero known advisories; it is not the same graph.
 2. Obtain successful CI evidence on the reviewed protected revision, confirm Trusted Publisher and environment protections, and independently compare the exact bytes. A named environment is not proof of approval enforcement.
 3. Obtain separate authorization for publication. [GitHub release notes](RELEASE_NOTES.md) are a draft. No branch was pushed, no workflow was dispatched, and no release or tag was created by this work.
 

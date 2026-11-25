@@ -40,15 +40,15 @@ All sizes are bytes, not rounded KB. Published 0.1.1 numbers were supplied by th
 | --- | ---: | ---: | ---: |
 | Published 0.1.1 baseline | 2,270,333 | 12,889,867 | 2,110 |
 | Local pre-change 0.1.1 baseline | 27,272,149 | 95,484,388 | 2,734 |
-| Unpublished 0.1.2, clean locked build | 2,235,705 | 12,782,757 | 2,071 |
-| Delta vs published | -34,628 | -107,110 | -39 |
-| Delta vs local baseline | -25,036,444 | -82,701,631 | -663 |
+| Unpublished 0.1.2, clean locked build | 2,235,721 | 12,782,832 | 2,071 |
+| Delta vs published | -34,612 | -107,035 | -39 |
+| Delta vs local baseline | -25,036,428 | -82,701,556 | -663 |
 
-Direct production dependencies remain **24**. The clean build from `17169c81a5` produced matching `npm pack --dry-run --json --ignore-scripts` and real npm pack file lists and integrity. The tarball is `release/0.1.2/clatech-db-0.1.2.tgz`, kept as a local deliverable outside Git.
+Direct production dependencies remain **24**. A clean locked build of `66bf60dc4d` plus the scoped legacy test override produced the real tarball `release/0.1.2/clatech-db-0.1.2.tgz`, kept outside Git. Compared with the prior audited candidate, only the `overrides` field of `package.json` changes. The other `2,070` files are byte-identical. The prior tarball is kept separately as `clatech-db-0.1.2.pre-ws-617c176b7891.tgz` and must not be used as the current candidate.
 
-- SHA-256: `617c176b7891e986f41e9f72963a829dc0f279898c2936d1bde95716ca55715b`
-- npm SHA-1: `27821693de38f9aa1bf1459c6f4a279938f7b2d9`
-- npm integrity: `sha512-Oojb4/ml/VoCgYZCG8goCOab9KKNbPGAC3XqUi1T1myMc8gXKozh5LyvXGczhHhUSMGJva5PInah6fTwQO2wxA==`
+- SHA-256: `6bcb34477e02c14da4e54a8993716f5a72b6d309c9b6d6b7dd7a494f2c40b1ed`
+- npm SHA-1: `1cbcbed5a9e653b20e3fe932e501306166541d15`
+- npm integrity: `sha512-wxzD6ywJfK/jY6AqlX4Canvnvp57yBsltl1Qx2DXEuTqXR3/gEWhx9NgF829oCDO6xk55x0F5rY1VwXP+yGC/A==`
 
 The detached consumer checks and [production audit](DEPENDENCIES.md) passed against the clean build. This records the reviewed bytes; it does not establish byte-for-byte equivalence to the older published package or authorize publication.
 

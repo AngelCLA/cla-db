@@ -1,6 +1,6 @@
 # CLA DB 0.1.2 Verification Report
 
-The final local test source was commit `17169c81a52243c652978208e74eaddffce9487f`. The root and `web/` ran in a disposable `git archive` copy, with tracked lockfiles, fresh `npm ci --ignore-scripts --no-audit --no-fund`, and no shared `node_modules`. The runner used Linux, Node `24.22.3`, and npm `11.19.1`. This is local evidence, not GitHub Actions or publication evidence.
+The adopted tarball was verified in a disposable copy of `66bf60dc4d` plus the scoped legacy `ws` manifest and lock change, with fresh `npm ci --ignore-scripts --no-audit --no-fund` and no shared `node_modules`. The web results come from the earlier clean locked run at `17169c81a5`; no web sources or lockfiles changed. The runner used Linux, Node `24.22.3`, and npm `11.19.1`. This is local evidence, not GitHub Actions or publication evidence.
 
 ## Required Commands
 
@@ -19,11 +19,13 @@ Before this run, archive extraction failed with exit 2 because `/tmp` had no fre
 
 ## Targeted Evidence
 
+- **Legacy migration resolution:** `node scripts/release-supply-chain-fixtures/legacy-ws-resolution.mjs` failed against the old lock (`8.18.3` instead of `8.23.0`) and passed with the updated clean install. It checks both the locked graph and actual module resolution. `rxdb-old@16.21.1` and the root `ws@8.23.0` stay fixed.
 - **Storage and replication:** The fast suites include existing coverage for `14`, `20`, `50`, and `100` collections, lifecycle cleanup, reopen, persistence, reactivity, bidirectional replication, conflicts, migration, and repeated pause/restart. The [compatibility report](COMPATIBILITY.md) records the registry baselines and benchmark method. A final rerun with the same npm integrity passed both baseline-to-candidate cases, each verifying `199` documents before candidate writes, reopen, and removal. None of the Dexie runs uses real browser disk I/O.
 - **Privacy:** The dev-mode regression test ran in the Memory suite. Its deterministic browser-like fixture rejects the unsolicited connection path without changing Premium or validation. The [network audit](NETWORK_AUDIT.md) records explicit integrations and residual site embeds.
 - **Sites:** Fresh web locked install, `npm --prefix web run check`, and `npm --prefix web run build` returned exit 0. Five README examples, the rendered landing example, and the Docusaurus production build were separately checked; the documentation build emitted inherited broken-anchor warnings. See [site evidence](SITES.md).
 - **CI:** The workflow policy fixture passed, including YAML parsing and six negative mutations. Independent inspection confirmed manual-only publication, same-run artifact download, hash/manifest gating, and job-scoped OIDC. `actionlint` was unavailable. A further independent probe batch was denied and was not executed or retried.
 - **Supply chain and bytes:** See [package inventory](PACKAGE.md), [SBOM](sbom.cdx.json), and [separate production and development audit results](DEPENDENCIES.md). The development audit is not a passing check.
+- **Independent review of the legacy `ws` adjustment:** The automated verifier stopped with `ENOSPC` before issuing a verdict and was not retried. The maintainer reviewed the scoped manifest and lockfile diff and confirmed that the adopted tarball's SHA-256 matches the SBOM.
 
 ## Not Run Or Not Established
 

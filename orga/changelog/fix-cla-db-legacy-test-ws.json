@@ -1,0 +1,10 @@
+{
+  "text": "FIX the CLA DB development dependency graph by resolving the legacy migration fixture's ws dependency to the existing patched root version without changing the RxDB 16.21.1 migration baseline or runtime dependencies.",
+  "links": [
+    {
+      "url": "https://github.com/advisories/GHSA-96hv-2xvq-fx4p",
+      "linkText": "ws denial-of-service advisory"
+    }
+  ],
+  "priority": 5
+}

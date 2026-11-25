@@ -26,7 +26,8 @@ This section records the unpublished candidate, not a publication approval. The 
 ### Security
 
 - Add the [security reporting policy](SECURITY.md) and a [manual publishing procedure](./release/0.1.2/PUBLISHING.md) using artifact hash verification, npm Trusted Publishing, and provenance. Only the publish job receives OIDC permission.
-- The audited production consumer graph had no known advisories. The separate development audit found 31 issues (25 moderate, 6 high); it requires maintainer disposition before release. See the [dependency report](./release/0.1.2/DEPENDENCIES.md) and [CycloneDX SBOM](./release/0.1.2/sbom.cdx.json).
+- Keep `rxdb-old@16.21.1` for migration tests while resolving its nested `ws` dependency to the existing root `8.23.0`. Remove the affected `ws@8.18.3` resolution without changing production dependencies.
+- The audited production consumer graph had no known advisories. The separate development audit found 30 issues (25 moderate, 5 high), down from 31. The remaining issues require maintainer disposition before release. See the [dependency report](./release/0.1.2/DEPENDENCIES.md) and [CycloneDX SBOM](./release/0.1.2/sbom.cdx.json).
 
 ### Documentation
 
@@ -44,7 +45,7 @@ This section records the unpublished candidate, not a publication approval. The 
 
 ### Distribution
 
-- Explicit package allowlist preserves public exports, generated shims, source-map resources, license, attribution, and original history while excluding website, design, agent, and internal development files. The [rebuilt tarball](./release/0.1.2/PACKAGE.md) contains `2,071` files, at `2,235,705` compressed and `12,782,757` unpacked bytes.
+- Explicit package allowlist preserves public exports, generated shims, source-map resources, license, attribution, and original history while excluding website, design, agent, and internal development files. The [rebuilt tarball](./release/0.1.2/PACKAGE.md) contains `2,071` files, at `2,235,721` compressed and `12,782,832` unpacked bytes.
 
 ### Known Limitations
 
