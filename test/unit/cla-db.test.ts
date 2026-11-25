@@ -115,18 +115,28 @@ describe('cla-db.test.ts', () => {
             );
             assert.strictEqual(RXDB_VERSION, pkg.claDb.upstreamVersion);
 
-            const openBefore = OPEN_COLLECTIONS.size;
             const db = await createRxDatabase({
                 name: 'cla_open_cleanup_' + randomToken(8),
                 storage: createMemoryTestStorage()
             });
+            let added = Object.values(db.collections);
             try {
+                assert.strictEqual(added.length, 0);
                 await db.addCollections(buildCollectionsMap(16));
-                assert.strictEqual(OPEN_COLLECTIONS.size, openBefore + 16);
+                added = Object.values(db.collections);
+                assert.strictEqual(added.length, 16);
+                // Other tests in the same mocha worker mutate the global
+                // OPEN_COLLECTIONS set concurrently, so assert on our own
+                // collection identities instead of the global set size.
+                for (const collection of added) {
+                    assert.strictEqual(OPEN_COLLECTIONS.has(collection), true);
+                }
             } finally {
                 await db.remove();
             }
-            assert.strictEqual(OPEN_COLLECTIONS.size, openBefore);
+            for (const collection of added) {
+                assert.strictEqual(OPEN_COLLECTIONS.has(collection), false);
+            }
         });
     });
 

@@ -1,0 +1,6 @@
+{
+    "$schema": "./schema.json",
+    "text": "FIX flaky collection cleanup test that asserted the global collection registry size while other tests run concurrently",
+    "links": [],
+    "priority": 1
+}
