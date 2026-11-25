@@ -1,0 +1,6 @@
+{
+    "$schema": "./schema.json",
+    "text": "FIX npm packages including local tarballs and agent work files",
+    "links": [],
+    "priority": 1
+}

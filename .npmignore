@@ -12,6 +12,10 @@ docs-src/
 orga/
 test/
 test_tmp/
+# Local tarballs and agent work files are not package contents.
+/*.tgz
+/odd/
+/skills/
 .editorconfig
 .eslintrc.json
 .eslintignore

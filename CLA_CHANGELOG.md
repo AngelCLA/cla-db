@@ -3,6 +3,12 @@
 This file tracks modifications specific to the CLA DB fork (`@clatech/db`).
 For upstream RxDB history, see `CHANGELOG.md`.
 
+## [0.1.1] - Unreleased
+
+- Bump the npm package version because npm does not allow publishing `0.1.0` again after it was unpublished.
+- Exclude local tarballs and agent work files from npm packages.
+- Keep the upstream base at RxDB `17.6.0+522` (`9d5849cf4c695ffc27d60e134b2039539e77a9b0`) and the on-disk compatibility version at `17.6.0`. No database runtime behavior changes.
+
 ## [0.1.0] - 2026-11-24
 
 ### Upstream Base
