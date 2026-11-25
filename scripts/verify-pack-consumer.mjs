@@ -3,6 +3,7 @@
  * execution from an isolated external consumer project (ESM, CommonJS, and TypeScript).
  */
 import assert from 'node:assert';
+import { checkPackage, checkSourceMaps } from './pack-consumer-fixtures/check-package.mjs';
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -17,7 +18,11 @@ function run(cmd, args, cwd) {
     return execFileSync(cmd, args, {
         cwd,
         stdio: 'pipe',
-        encoding: 'utf8'
+        encoding: 'utf8',
+        timeout: 180_000,
+        maxBuffer: 10 * 1024 * 1024,
+        // Do not resolve modules or preload hooks from the invoking repository.
+        env: { ...process.env, NODE_PATH: '', NODE_OPTIONS: '' }
     });
 }
 
@@ -30,14 +35,19 @@ function main() {
 
     try {
         console.log('# Packing @clatech/db...');
-        const packOut = run('npm', ['pack', '--pack-destination', packDir], repoRoot).trim();
-        const tgzName = packOut.split(/\r?\n/).filter(Boolean).pop();
+        const packOut = run('npm', ['pack', '--json', '--pack-destination', packDir], repoRoot).trim();
+        const [metadata] = JSON.parse(packOut);
+        const tgzName = metadata.filename;
         assert.ok(tgzName && tgzName.endsWith('.tgz'), `Unexpected npm pack output: ${packOut}`);
         const tgzPath = path.join(packDir, tgzName);
         const tgzStat = fs.statSync(tgzPath);
         console.log(`# Packed tarball: ${tgzName} (${(tgzStat.size / 1024).toFixed(1)} KB)`);
 
         const repoPkg = JSON.parse(fs.readFileSync(path.join(repoRoot, 'package.json'), 'utf8'));
+        const payloadPaths = run('tar', ['-tzf', tgzPath], packDir).trim().split(/\r?\n/)
+            .filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
+        const packedPkg = JSON.parse(run('tar', ['-xOf', tgzPath, 'package/package.json'], packDir));
+        checkPackage(metadata, packedPkg, payloadPaths);
         const rxjsVersion = repoPkg.peerDependencies?.rxjs || repoPkg.devDependencies?.rxjs || '^7.8.2';
         const dexieVersion = repoPkg.dependencies?.dexie || '^4.0.0';
         const fakeIdbVersion = repoPkg.devDependencies?.['fake-indexeddb'] || '^6.0.0';
@@ -48,6 +58,7 @@ function main() {
             JSON.stringify({
                 name: 'cla-db-external-consumer-test',
                 private: true,
+                type: 'module',
                 version: '0.0.0',
                 dependencies: {
                     '@clatech/db': `file:${tgzPath}`,
@@ -56,7 +67,8 @@ function main() {
                 },
                 devDependencies: {
                     'fake-indexeddb': fakeIdbVersion,
-                    typescript: tsVersion
+                    typescript: tsVersion,
+                    vite: '6.4.1'
                 }
             }, null, 2),
             'utf8'
@@ -64,6 +76,30 @@ function main() {
 
         console.log('# Installing packed @clatech/db into isolated consumer project...');
         run('npm', ['install', '--no-audit', '--no-fund'], appDir);
+        const installedDir = path.join(appDir, 'node_modules/@clatech/db');
+        const installedPkg = JSON.parse(fs.readFileSync(path.join(installedDir, 'package.json'), 'utf8'));
+        assert.equal(installedPkg.version, '0.1.2');
+        assert.deepStrictEqual(installedPkg.exports, repoPkg.exports);
+        checkSourceMaps(installedDir);
+        const graph = JSON.parse(run('npm', ['ls', '--all', '--json'], appDir));
+        function checkGraph(node) {
+            for (const [name, child] of Object.entries(node.dependencies || {})) {
+                assert.notStrictEqual(name, 'rxdb', 'Unexpected rxdb in installed dependency graph');
+                assert.ok(!child.resolved || !/\/rxdb(?:\/|-)/.test(child.resolved), 'Unexpected rxdb alias');
+                checkGraph(child);
+            }
+        }
+        checkGraph(graph);
+        console.log('Installed graph without rxdb: PASS');
+        for (const fixture of ['verify-integrations.mjs', 'verify-vite.mjs']) {
+            fs.copyFileSync(path.join(__dirname, 'pack-consumer-fixtures', fixture), path.join(appDir, fixture));
+        }
+        fs.writeFileSync(path.join(appDir, 'vite-entry.mjs'), `
+export { createRxDatabase } from '@clatech/db';
+export { getRxStorageMemory } from '@clatech/db/plugins/storage-memory';
+export { getRxStorageDexie } from '@clatech/db/plugins/storage-dexie';
+export { replicateRxCollection } from '@clatech/db/plugins/replication';
+`);
 
         // 1. Verify ESM imports, >13 collections, reactive query, and Dexie persistence
         fs.writeFileSync(
@@ -237,6 +273,11 @@ export async function check(): Promise<RxDatabase> {
         console.log(run('node', ['verify-cjs.cjs'], appDir).trim());
         run('npx', ['tsc', '--noEmit'], appDir);
         console.log('TypeScript consumer verification: PASS');
+        console.log('TypeScript NodeNext consumer verification: PASS');
+        run('npx', ['tsc', '--noEmit', '--module', 'ESNext', '--moduleResolution', 'Bundler'], appDir);
+        console.log('TypeScript Bundler consumer verification: PASS');
+        console.log(run('node', ['verify-integrations.mjs'], appDir).trim());
+        console.log(run('node', ['verify-vite.mjs'], appDir).trim());
     } finally {
         fs.rmSync(tmpDir, { recursive: true, force: true });
     }

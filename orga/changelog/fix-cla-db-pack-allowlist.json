@@ -1,0 +1,6 @@
+{
+    "$schema": "./schema.json",
+    "text": "FIX CLA DB package distribution leaking website dependencies and local development files; add real tarball export checks and isolated Bundler, Vite, migration, and custom replication consumer coverage",
+    "links": [],
+    "priority": 5
+}
