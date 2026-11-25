@@ -3,7 +3,7 @@
 ## Overview
 
 CLA DB (`@clatech/db`) is a minimal, Apache 2.0 fork of [RxDB](https://github.com/pubkey/rxdb) maintained by CLA Tech.
-It provides a reactive, local-first, offline-first NoSQL database engine for JavaScript and TypeScript applications across browsers, Node.js, Electron, React Native, Capacitor, Deno, and Bun.
+It provides a reactive, local-first NoSQL database engine for JavaScript and TypeScript. Browser and Node.js usage depends on the selected storage. Electron, React Native, Capacitor, Deno, and Bun remain inherited integration targets, not a verified 0.1.2 support matrix. See [consumer and compatibility evidence](./release/0.1.2/COMPATIBILITY.md).
 
 - **Fork repository**: `https://github.com/AngelCLA/cla-db`
 - **Upstream repository**: `https://github.com/pubkey/rxdb`
@@ -14,7 +14,7 @@ It provides a reactive, local-first, offline-first NoSQL database engine for Jav
 
 1. **Minimal fork, maximum compatibility**: Keep diffs against upstream RxDB small, isolated, and clearly marked with `// CLA-DB:` comments.
 2. **Public API compatibility**: Preserve RxDB public APIs, plugin architecture (`addRxPlugin`), storage interfaces (`RxStorage` / `RxStorageInstance`), and replication protocol.
-3. **Storage-format compatibility**: Keep on-disk internal prefixes (`_rxdb_internal`, `rxdatabase_storage_local`, `BroadcastChannel('RxDB:|...')`) and `plugin.rxdb === true` intact. Decouple `package.json#version` (`0.1.0`) from `RXDB_VERSION` (`17.6.0` via `package.json#claDb.upstreamVersion`) so on-disk compatibility checks in `src/rx-database-internal-store.ts` continue to recognize RxDB 17 format databases without `DM5` errors.
+3. **Storage-format compatibility**: Keep on-disk internal prefixes (`_rxdb_internal`, `rxdatabase_storage_local`, `BroadcastChannel('RxDB:|...')`) and `plugin.rxdb === true` intact. Decouple `package.json#version` (`0.1.2` candidate) from `RXDB_VERSION` (`17.6.0` via `package.json#claDb.upstreamVersion`) so on-disk compatibility checks in `src/rx-database-internal-store.ts` continue to recognize RxDB 17 format databases without `DM5` errors.
 4. **Clean-room open-source boundary**: Do not include, copy, or reverse-engineer proprietary RxDB Premium plugins or falsify Premium flags.
 5. **External extensibility**: Build future CLA Tech adapters and tooling as separate packages over public core interfaces rather than embedding them in `src/`.
 
@@ -73,13 +73,15 @@ All storages implement `RxStorage` and `RxStorageInstance` defined in `src/types
 | MongoDB | `@clatech/db/plugins/storage-mongodb` | Apache 2.0 (open) | Server-side Node.js with MongoDB backend |
 | DenoKV | `@clatech/db/plugins/storage-denokv` | Apache 2.0 (open) | Deno runtime |
 | Remote / Remote WebSocket | `@clatech/db/plugins/storage-remote*` | Apache 2.0 (open) | Shared storage across workers/processes |
-| SQLite (Trial) | `@clatech/db/plugins/storage-sqlite` | Apache 2.0, **500-doc trial cap (`SQL2`)** | Reference/testing only; not for production |
+| SQLite (Trial) | `@clatech/db/plugins/storage-sqlite` | Apache 2.0, **500 live documents (`SQL2`), 500 counted `all()` calls per instance (`SQL3`)** | Reference/testing only; not for production |
+
+SQLite trial counters measure internal reads, not public API calls. Deleted tombstones do not count toward the live-document cap. The 501st `all()` call throws; `run()` does not increment the counter. Indexes and attachments are unavailable (`SQL1` for attachments). This is inherited evaluation code, not an unrestricted CLA Tech adapter.
 
 ### Multi-Collection Resource Considerations
 Removing the artificial 13-collection cap does not eliminate physical runtime limits:
 - Each open collection initializes its own storage instance, internal metadata entry, change-event stream, and query cache.
 - In IndexedDB/Dexie, every collection opens an IndexedDB store/database handle, which increases initialization latency and heap usage linearly with collection count.
-- Production applications should monitor heap usage and startup time as collection counts grow (see benchmark data in `CLA_CHANGELOG.md`).
+- Production applications should monitor heap usage and startup time as collection counts grow. Historical single-run metrics in `CLA_CHANGELOG.md` are not performance guarantees; see [bounded benchmark methodology](./release/0.1.2/COMPATIBILITY.md).
 
 ## Replication Architecture
 
@@ -89,6 +91,12 @@ Removing the artificial 13-collection cap does not eliminate physical runtime li
   2. When connectivity returns, the push stream sends local revisions with assumed master state (`assumedMasterState` + `newDocumentState`).
   3. The server detects concurrent updates and returns conflicting master states, which are resolved locally by the collection conflict handler and re-pushed if needed.
   4. The pull stream fetches incremental remote batches using checkpoints and updates reactive queries automatically.
+
+## Public Sites And Network Boundaries
+
+- `web/` owns the neutral Spanish CLA Tech landing. `docs-src/` owns inherited technical/API reference, including upstream Premium and integration material that is not a promise of fork functionality. Generated `/docs` is not an editing surface.
+- Local memory CRUD requires no configured service. Dev-mode registration no longer launches the inherited marketing iframe. The documentation marketing callback is disabled independently; inert inherited code remains for merge compatibility.
+- Explicit viewer, replication, and storage integrations retain their destinations and trust requirements. This is not a zero-telemetry claim. See [network audit](./release/0.1.2/NETWORK_AUDIT.md) and [site evidence](./release/0.1.2/SITES.md).
 
 ## Packaging and Module Resolution
 

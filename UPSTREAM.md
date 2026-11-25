@@ -29,9 +29,29 @@ Every CLA DB release records the exact upstream version and commit in two places
 1. `package.json` under the `claDb` field (`upstreamVersion`, `upstreamCommit`, `upstreamTagOffset`).
 2. `CLA_CHANGELOG.md` under the release section.
 
+## Exact 0.1.2 Ancestry
+
+The immutable foundation is RxDB `17.6.0+522`, `9d5849cf4c695ffc27d60e134b2039539e77a9b0`, still recorded in `package.json#claDb`. Storage compatibility remains `17.6.0`.
+
+Nine additional upstream commits through `d08621c7e26859e017a78a9615f5951fd4803b18` were **merged**, via `515bb00884` and `e41bc43cfb`. They are not cherry-picks and do not replace the foundation metadata:
+
+| Upstream commit | Inherited change |
+| --- | --- |
+| `134ee9c87724121c53dc660bbe55200eef4aeeea` | Ionic Angular dependency update |
+| `4c65610b87323241bb647913bb38a685fc07d80d` | Electron dependency update |
+| `d8ab5eb2207186a7de945c0c18a35862794a61b2` | Primary keys such as `constructor` and `__proto__` in replication and migration |
+| `f53c02d937dc86cd7fffa28f97ca274859b90c1f` | Google Drive / OneDrive WebRTC reconnect after restart |
+| `88276be6bde0fd4f934038ae85f0c731ea5dbd60` | Angular, Vue, and Svelte integration documentation |
+| `31492a4972819a52cfa4d88755b4ffc358f07a77` | Prevent storing documents rejected by DOC20 through DOC23 |
+| `f09241409142c178c99634fbc7e73429db89f5a2` | Documentation learning-curve guidance |
+| `b3fc33f42cf4ba7ad87760f97b2cec8362ecb997` | Close replication change streams on pause and reopen on start |
+| `d08621c7e26859e017a78a9615f5951fd4803b18` | Correct RxServer `startRxServer()` documentation |
+
+Reproduce the ancestry inventory with `git log --format='%H %s' 9d5849cf4c695ffc27d60e134b2039539e77a9b0..d08621c7e2`. Fork-specific changes are recorded separately in [CLA_CHANGELOG.md](./CLA_CHANGELOG.md), not attributed to these commits. Do not rewrite the original RxDB changelog.
+
 ## CLA DB Delta Surface (Expected Conflict Points)
 
-Keep fork modifications strictly confined to this minimal set of files:
+Keep fork modifications small. The historical conflict surface below is a guide, not a claim that later verified fixes never touch other files. The 0.1.2 candidate also changes dev-mode registration, packed-consumer/compatibility probes, site tracking, and release evidence. Review those explicitly on every sync:
 
 | File | Reason for Fork Delta |
 | --- | --- |
