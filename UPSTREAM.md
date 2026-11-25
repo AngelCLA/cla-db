@@ -38,10 +38,14 @@ Keep fork modifications strictly confined to this minimal set of files:
 | `src/rx-collection.ts` | Removal of the artificial `COL23` collection limit check (marked with `// CLA-DB:`) |
 | `test/unit/rx-collection.test.ts` | Updated test asserting >13 collections work without `COL23` |
 | `test/unit/cla-db.test.ts` | CLA DB-specific test and benchmark suite (fork-only file) |
+| `test/unit.test.ts` | Registers `test/unit/cla-db.test.ts` in the unit test entrypoint |
 | `package.json` | `@clatech/db` identity, version, `publishConfig`, and `claDb` metadata |
 | `scripts/update-version-variable.mjs` | Reads `packageJson.claDb.upstreamVersion` for `RXDB_VERSION` |
 | `scripts/generate-plugins-package-json.mjs` | Plugin shim package naming (`cla-db-plugins-*`) |
-| `.github/workflows/*` & `renovate.json` | CLA DB CI workflow; upstream publish/notify workflows removed |
+| `scripts/verify-pack-consumer.mjs` | Fork-only `npm pack` external consumer verification script (ESM, CJS, TS) |
+| `test/tutorials/package.json`, `test/tutorials/src/typescript.ts` | Updated package import from `rxdb` to `@clatech/db` |
+| `eslint.config.mjs` | Ignore local agent metadata directories (`.atl/*`, `.agent/*`, `odd/*`, `skills/*`) |
+| `.github/workflows/*` & `renovate.json` | CLA DB CI workflow; upstream publish/notify workflows removed; automerge disabled |
 | Top-level fork docs | `README.md`, `AGENTS.md`, `SYSTEM_DESIGN.md`, `ROADMAP.md`, `UPSTREAM.md`, `CLA_CHANGELOG.md`, `CONTRIBUTING.md` |
 
 Avoid editing files outside this surface unless fixing a verified bug required by CLA DB.

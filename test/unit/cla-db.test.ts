@@ -1,4 +1,6 @@
 import assert from 'assert';
+import { readFileSync } from 'fs';
+import path from 'path';
 import {
     indexedDB as fakeIndexedDB,
     IDBKeyRange as fakeIDBKeyRange
@@ -8,6 +10,7 @@ import {
     createRxDatabase,
     hasPremiumFlag,
     NON_PREMIUM_COLLECTION_LIMIT,
+    OPEN_COLLECTIONS,
     randomToken,
     RXDB_VERSION
 } from '../../plugins/core/index.mjs';
@@ -105,6 +108,26 @@ describe('cla-db.test.ts', () => {
             assert.strictEqual(NON_PREMIUM_COLLECTION_LIMIT, 13);
             assert.strictEqual(await hasPremiumFlag(), false);
         });
+
+        it('matches package.json#claDb.upstreamVersion exactly and cleans OPEN_COLLECTIONS after closing >13 collections', async () => {
+            const pkg = JSON.parse(
+                readFileSync(path.resolve(process.cwd(), 'package.json'), 'utf8')
+            );
+            assert.strictEqual(RXDB_VERSION, pkg.claDb.upstreamVersion);
+
+            const openBefore = OPEN_COLLECTIONS.size;
+            const db = await createRxDatabase({
+                name: 'cla_open_cleanup_' + randomToken(8),
+                storage: createMemoryTestStorage()
+            });
+            try {
+                await db.addCollections(buildCollectionsMap(16));
+                assert.strictEqual(OPEN_COLLECTIONS.size, openBefore + 16);
+            } finally {
+                await db.remove();
+            }
+            assert.strictEqual(OPEN_COLLECTIONS.size, openBefore);
+        });
     });
 
     describe('multi-collection scaling without artificial cap', () => {
@@ -122,8 +145,7 @@ describe('cla-db.test.ts', () => {
 
                 const db = await createRxDatabase({
                     name: 'cla_multi_mem_' + count + '_' + randomToken(8),
-                    storage: createMemoryTestStorage(),
-                    ignoreDuplicate: true
+                    storage: createMemoryTestStorage()
                 });
 
                 try {
@@ -179,8 +201,7 @@ describe('cla-db.test.ts', () => {
                 const db = await createRxDatabase({
                     name: 'cla_multi_dexie_' + count + '_' + randomToken(8),
                     storage: createDexieTestStorage(),
-                    multiInstance: false,
-                    ignoreDuplicate: true
+                    multiInstance: false
                 });
 
                 try {
@@ -217,8 +238,7 @@ describe('cla-db.test.ts', () => {
         it('supports insert, update, remove, and reactive query emissions', async () => {
             const db = await createRxDatabase({
                 name: 'cla_crud_' + randomToken(8),
-                storage: createMemoryTestStorage(),
-                ignoreDuplicate: true
+                storage: createMemoryTestStorage()
             });
 
             try {
@@ -285,8 +305,7 @@ describe('cla-db.test.ts', () => {
             const db1 = await createRxDatabase({
                 name: dbName,
                 storage,
-                multiInstance: false,
-                ignoreDuplicate: true
+                multiInstance: false
             });
 
             await db1.addCollections(buildCollectionsMap(16));
@@ -313,8 +332,7 @@ describe('cla-db.test.ts', () => {
             const db2 = await createRxDatabase({
                 name: dbName,
                 storage: createDexieTestStorage(),
-                multiInstance: false,
-                ignoreDuplicate: true
+                multiInstance: false
             });
 
             try {
@@ -340,8 +358,7 @@ describe('cla-db.test.ts', () => {
             const dbV0 = await createRxDatabase({
                 name: dbName,
                 storage: createDexieTestStorage(),
-                multiInstance: false,
-                ignoreDuplicate: true
+                multiInstance: false
             });
             await dbV0.addCollections({
                 orders: { schema: orderSchemaV0 }
@@ -358,8 +375,7 @@ describe('cla-db.test.ts', () => {
             const dbV1 = await createRxDatabase({
                 name: dbName,
                 storage: createDexieTestStorage(),
-                multiInstance: false,
-                ignoreDuplicate: true
+                multiInstance: false
             });
 
             try {
@@ -438,8 +454,7 @@ describe('cla-db.test.ts', () => {
 
             const db = await createRxDatabase({
                 name: 'cla_repl_' + randomToken(8),
-                storage: createMemoryTestStorage(),
-                ignoreDuplicate: true
+                storage: createMemoryTestStorage()
             });
 
             try {
