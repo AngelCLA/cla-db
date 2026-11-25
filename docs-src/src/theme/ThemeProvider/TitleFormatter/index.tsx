@@ -7,16 +7,16 @@ import { HOME_TITLE, JOBS_TITLE } from '../../../constants';
  *
  * Docusaurus renders every page title as `<page title> | <siteConfig.title>`.
  * `siteConfig.title` is therefore the sitewide suffix, and it is deliberately
- * kept short (`RxDB`) so titles stay inside Google's ~60 character budget.
+ * kept short (`CLA DB`) so titles stay inside Google's ~60 character budget.
  *
  * The default formatter skips the suffix only when the page title is exactly
  * equal to `siteConfig.title`. That is too narrow for us: the homepage and
  * /consulting/ carry the longer descriptive HOME_TITLE, and /jobs-en/ carries
  * JOBS_TITLE. Both already contain the brand, so appending the suffix would
- * render `RxDB - JavaScript Database | RxDB` and `Jobs & Open Positions at
- * RxDB | RxDB`. Treat them the way Docusaurus treats the site title.
+ * render `CLA DB - JavaScript Database | CLA DB` and `Jobs & Open Positions at
+ * CLA DB | CLA DB`. Treat them the way Docusaurus treats the site title.
  *
- * This is an explicit list rather than a rule such as `ends with RxDB`, because
+ * This is an explicit list rather than a rule such as `ends with CLA DB`, because
  * 13 documentation pages already end with the brand (`Partial Sync with RxDB`
  * and similar) and rely on the suffix being appended.
  *
@@ -25,9 +25,9 @@ import { HOME_TITLE, JOBS_TITLE } from '../../../constants';
  * `docusaurus swizzle --list`, so it counts as an unsafe swizzle: a Docusaurus
  * upgrade could move or rename it. If it ever stops being picked up, the
  * symptom is the homepage title rendering as
- * `RxDB - JavaScript Database | RxDB`. The fallback is to drop this file and
+ * `CLA DB - JavaScript Database | CLA DB`. The fallback is to drop this file and
  * give the homepage a title that reads correctly with the suffix appended,
- * e.g. `Local-First JavaScript Database` -> `Local-First JavaScript Database | RxDB`.
+ * e.g. `Local-First JavaScript Database` -> `Local-First JavaScript Database | CLA DB`.
  *
  * @link https://docusaurus.io/docs/swizzling
  */

@@ -6,7 +6,7 @@ export const NON_PREMIUM_COLLECTION_LIMIT = 13;
  * Everywhere else the page sets its own topical title and Docusaurus appends
  * ` | RxDB` from the `title` in docusaurus.config.ts.
  */
-export const HOME_TITLE = 'RxDB - JavaScript Database';
+export const HOME_TITLE = 'CLA DB - JavaScript Database';
 
 /**
  * Title of the English /jobs-en/ page. Like HOME_TITLE it already names the brand, so the

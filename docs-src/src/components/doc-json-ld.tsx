@@ -59,7 +59,8 @@ export function DocJsonLd() {
     const imageUrl = useBaseUrl(imagePath ?? '', { absolute: true });
 
     const crumbs: { name: string; url: string; }[] = [
-        { name: 'RxDB', url: siteConfig.url + '/' },
+        // CLA-DB: rebranded breadcrumb root.
+        { name: 'CLA DB', url: siteConfig.url + '/' },
     ];
     categories.forEach(category => {
         if (category.type !== 'category') {
@@ -95,16 +96,16 @@ export function DocJsonLd() {
         inLanguage: 'en',
         about: {
             '@type': 'SoftwareApplication',
-            name: 'RxDB',
-            url: 'https://rxdb.info/',
+            name: 'CLA DB',
+            url: siteConfig.url + '/',
         },
         publisher: {
             '@type': 'Organization',
-            name: 'RxDB',
-            url: 'https://rxdb.info',
+            name: 'CLA DB',
+            url: siteConfig.url,
             logo: {
                 '@type': 'ImageObject',
-                url: 'https://rxdb.info/files/logo/logo.svg',
+                url: siteConfig.url + '/files/logo/cla-db-mark.svg',
             },
         },
     };

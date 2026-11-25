@@ -9,7 +9,7 @@ import type { Config } from '@docusaurus/types';
 import rehypePrettyCode from 'rehype-pretty-code';
 import type { Options as RehypePrettyCodeOptions, Theme } from 'rehype-pretty-code';
 import { createCssVariablesTheme, ThemeRegistrationAny } from 'shiki';
-import { EU_EEA_REGION_CODES } from './src/theme/eu-consent';
+// CLA-DB: the EU consent import was removed with the GA4 script.
 import remarkArticleByline from './src/remark/article-byline';
 
 /**
@@ -51,11 +51,17 @@ const config: Config = {
      * Pages that need the longer descriptive form set it explicitly (the
      * homepage and /consulting/ pass HOME_TITLE below).
      */
-    title: 'RxDB',
-    tagline: 'Realtime JavaScript Database',
-    favicon: '/files/logo/logo.svg',
+    // CLA-DB: rebranded from RxDB to CLA DB. The inherited docs content still
+    // documents the RxDB API that this fork preserves.
+    title: 'CLA DB',
+    tagline: 'Local-first reactive NoSQL database for JavaScript',
+    favicon: '/files/logo/cla-db-mark.svg',
     headTags: [
         /**
+         * CLA-DB: the RxDB GA4 consent-mode script was removed. The fork's
+         * documentation site serves no analytics. The upstream comment below
+         * documents the removed behavior and returns with the next sync.
+         *
          * Google Consent Mode v2 default. For EU/EEA (and UK) regions the
          * analytics and ad storage is denied until the visitor accepts in the
          * client-side consent banner (see src/theme/consent-manager.ts).
@@ -71,47 +77,26 @@ const config: Config = {
          * are sent by the enhanced measurement of the GA4 data stream
          * (browser history events).
          */
-        {
-            tagName: 'script',
-            attributes: { type: 'text/javascript' },
-            innerHTML: `
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('consent', 'default', {
-                    ad_storage: 'denied',
-                    ad_user_data: 'denied',
-                    ad_personalization: 'denied',
-                    analytics_storage: 'denied',
-                    wait_for_update: 500,
-                    region: ${JSON.stringify(EU_EEA_REGION_CODES)}
-                });
-                gtag('set', 'ads_data_redaction', true);
-                gtag('js', new Date());
-                gtag('config', 'G-62D63SY3S0');
-            `.replace(/\s+/g, ' ').trim(),
-        },
         { tagName: 'meta', attributes: { name: 'theme-color', content: '#ed168f' } },
-        // Provide the favicon as .ico in addition to the .svg set via the `favicon`
-        // field above, so browsers that do not support SVG favicons fall back to the .ico.
-        { tagName: 'link', attributes: { rel: 'icon', type: 'image/x-icon', href: '/files/logo/icon.ico' } },
-        { tagName: 'link', attributes: { rel: 'apple-touch-icon', href: '/img/apple-touch-icon.png', sizes: '180x180' } },
+        // CLA-DB: the RxDB .ico/apple-touch fallbacks and the RxDB GA4 consent
+        // script were removed; the fork serves no analytics. Favicon is SVG only.
         {
             tagName: 'script',
             attributes: { type: 'application/ld+json' },
             innerHTML: JSON.stringify({
                 '@context': 'https://schema.org',
                 '@type': 'SoftwareApplication',
-                'name': 'RxDB',
+                'name': 'CLA DB',
                 'applicationCategory': 'DeveloperApplication',
                 'operatingSystem': 'Any',
-                'description': 'A fast, local-first, reactive NoSQL database for JavaScript applications. Supports offline-first sync, real-time replication, and works across browsers, Node.js, Electron, React Native, and Flutter.',
-                'url': 'https://rxdb.info',
+                'description': 'A minimal Apache 2.0 fork of RxDB: a fast, local-first, reactive NoSQL database for JavaScript applications with offline support and explicit replication. Works across browsers, Node.js, Electron, React Native, and Capacitor.',
+                'url': 'https://db.claangel.site',
                 'softwareVersion': rxdbVersion,
-                'license': 'https://github.com/pubkey/rxdb/blob/master/LICENSE.txt',
-                'downloadUrl': 'https://www.npmjs.com/package/rxdb',
+                'license': 'https://github.com/AngelCLA/cla-db/blob/master/LICENSE.txt',
+                'downloadUrl': 'https://www.npmjs.com/package/@clatech/db',
                 'softwareHelp': {
                     '@type': 'CreativeWork',
-                    'url': 'https://rxdb.info/quickstart.html',
+                    'url': 'https://db.claangel.site/quickstart.html',
                 },
                 'offers': {
                     '@type': 'Offer',
@@ -120,13 +105,12 @@ const config: Config = {
                 },
                 'author': {
                     '@type': 'Organization',
-                    'name': 'RxDB',
-                    'url': 'https://rxdb.info',
-                    'logo': 'https://rxdb.info/files/logo/logo.svg',
+                    'name': 'CLA DB',
+                    'url': 'https://db.claangel.site',
+                    'logo': 'https://db.claangel.site/files/logo/cla-db-mark.svg',
                     'sameAs': [
-                        'https://github.com/pubkey/rxdb',
-                        'https://twitter.com/rxdbjs',
-                        'https://www.linkedin.com/company/rxdb',
+                        'https://github.com/AngelCLA/cla-db',
+                        'https://www.npmjs.com/package/@clatech/db',
                     ],
                 },
             }),
@@ -139,46 +123,38 @@ const config: Config = {
                 '@graph': [
                     {
                         '@type': 'Organization',
-                        '@id': 'https://rxdb.info/#organization',
-                        'name': 'RxDB',
-                        'url': 'https://rxdb.info',
-                        'logo': 'https://rxdb.info/files/logo/logo.svg',
-                        'foundingDate': '2016',
-                        'founder': {
-                            '@type': 'Person',
-                            'name': 'Daniel Meyer',
-                            'url': 'https://github.com/pubkey',
-                        },
+                        '@id': 'https://db.claangel.site/#organization',
+                        'name': 'CLA DB',
+                        'url': 'https://db.claangel.site',
+                        'logo': 'https://db.claangel.site/files/logo/cla-db-mark.svg',
                         'sameAs': [
-                            'https://github.com/pubkey/rxdb',
-                            'https://twitter.com/rxdbjs',
-                            'https://www.linkedin.com/company/rxdb',
-                            'https://www.npmjs.com/package/rxdb',
+                            'https://github.com/AngelCLA/cla-db',
+                            'https://www.npmjs.com/package/@clatech/db',
                         ],
                     },
                     {
                         '@type': 'WebSite',
-                        '@id': 'https://rxdb.info/#website',
-                        'name': 'RxDB',
-                        'url': 'https://rxdb.info',
+                        '@id': 'https://db.claangel.site/#website',
+                        'name': 'CLA DB',
+                        'url': 'https://db.claangel.site',
                         'inLanguage': 'en',
-                        'publisher': { '@id': 'https://rxdb.info/#organization' },
+                        'publisher': { '@id': 'https://db.claangel.site/#organization' },
                     },
                 ],
             }),
         },
     ],
 
-    // Set the production url of your site here
-    url: 'https://rxdb.info',
+    // CLA-DB: production domain of the CLA DB documentation site.
+    url: 'https://db.claangel.site',
     // Set the /<baseUrl>/ pathname under which your site is served
     // For GitHub pages deployment, it is often '/<projectName>/'
     baseUrl: '/',
 
     // GitHub pages deployment config.
     // If you aren't using GitHub pages, you don't need these.
-    organizationName: 'pubkey', // Usually your GitHub org/user name.
-    projectName: 'rxdb', // Usually your repo name.
+    organizationName: 'AngelCLA', // Usually your GitHub org/user name.
+    projectName: 'cla-db', // Usually your repo name.
 
     future: {
         /**
@@ -242,21 +218,21 @@ const config: Config = {
                     'docs/adapters.md',
                     'docs/rx-storage-lokijs.md'
                 ],
-                title: 'RxDB Documentation',
-                description: 'Authoritative reference documentation for RxDB, a reactive, local-first NoSQL database for JavaScript with offline support and explicit replication.',
-                rootContent: `RxDB (Reactive Database) is a local-first, NoSQL database for JavaScript applications.
+                title: 'CLA DB Documentation',
+                description: 'Reference documentation for CLA DB, a minimal Apache 2.0 fork of RxDB. Documents the inherited RxDB API: a reactive, local-first NoSQL database for JavaScript with offline support and explicit replication.',
+                rootContent: `CLA DB (@clatech/db) is a minimal Apache 2.0 fork of RxDB.
 It stores data on the client (browser, Node.js, React Native, Electron, Capacitor) and optionally replicates with a backend server.
 Data is modeled as JSON documents inside collections, validated by JSON Schema, and queried with the Mango/MongoDB query syntax.
 All data access is reactive through RxJS Observables so that UI components update automatically when data changes.
 
-Source code: https://github.com/pubkey/rxdb
-Website: https://rxdb.info
-Community and support: For help beyond these docs, the RxDB Discord is the fastest place to reach maintainers: https://rxdb.info/chat/
+Source code: https://github.com/AngelCLA/cla-db
+Website: https://db.claangel.site
+Upstream project: RxDB, https://rxdb.info. These pages document the RxDB API that CLA DB preserves; the upstream documentation remains authoritative for upstream-specific questions.
 
 Topic-specific documentation files:
-- [Core API](https://rxdb.info/llms-api.txt): RxDatabase, RxSchema, RxCollection, RxDocument, RxQuery
-- [Storages](https://rxdb.info/llms-storages.txt): RxStorage layer, all storage backends and wrappers
-- [Replication](https://rxdb.info/llms-replication.txt): Sync engine, HTTP, GraphQL, WebSocket, CouchDB, Firestore, Supabase, WebRTC P2P`,
+- [Core API](https://db.claangel.site/llms-api.txt): RxDatabase, RxSchema, RxCollection, RxDocument, RxQuery
+- [Storages](https://db.claangel.site/llms-storages.txt): RxStorage layer, all storage backends and wrappers
+- [Replication](https://db.claangel.site/llms-replication.txt): Sync engine, HTTP, GraphQL, WebSocket, CouchDB, Firestore, Supabase, WebRTC P2P`,
                 excludeImports: false,
                 removeDuplicateHeadings: true,
                 generateMarkdownFiles: true,
@@ -376,7 +352,7 @@ Topic-specific documentation files:
                             'docs/tutorials/typescript.md',
                         ],
                         fullContent: true,
-                        title: 'RxDB Core API Documentation',
+                        title: 'CLA DB Core API Documentation (RxDB API)',
                         description: 'Reference for the core RxDB API: RxDatabase, RxSchema, RxCollection, RxDocument, RxQuery, and related entities.',
                     },
                     {
@@ -391,7 +367,7 @@ Topic-specific documentation files:
                             'electron.md',
                         ],
                         fullContent: true,
-                        title: 'RxDB Storage Documentation',
+                        title: 'CLA DB Storage Documentation (RxDB RxStorage API)',
                         description: 'Complete reference for the RxDB RxStorage layer, all storage backends (LocalStorage, IndexedDB, OPFS, SQLite, Memory, Dexie.js, MongoDB, FoundationDB, DenoKV) and storage wrappers (encryption, compression, sharding, workers).',
                     },
                     {
@@ -401,7 +377,7 @@ Topic-specific documentation files:
                             'replication-*.md',
                         ],
                         fullContent: true,
-                        title: 'RxDB Replication Documentation',
+                        title: 'CLA DB Replication Documentation (RxDB Sync Engine API)',
                         description: 'Complete reference for RxDB replication and data sync: HTTP, GraphQL, WebSocket, CouchDB, Firestore, Supabase, WebRTC P2P, and more.',
                     },
                 ],
@@ -524,11 +500,10 @@ Topic-specific documentation files:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     {
         // Replace with your project's social card
-        image: 'img/rxdb_social_card.png',
+        // CLA-DB: no default og:image yet; a CLA DB social card is pending.
         metadata: [
-            { name: 'keywords', content: 'RxDB, JavaScript database, local-first, offline-first, reactive database, NoSQL, real-time sync, browser database, IndexedDB, TypeScript' },
+            { name: 'keywords', content: 'CLA DB, RxDB, JavaScript database, local-first, offline-first, reactive database, NoSQL, real-time sync, browser database, IndexedDB, TypeScript' },
             { property: 'og:type', content: 'website' },
-            { name: 'twitter:site', content: '@rxdbjs' },
         ],
         colorMode: {
             defaultMode: 'dark',
@@ -536,12 +511,15 @@ Topic-specific documentation files:
             respectPrefersColorScheme: false,
         },
         navbar: {
-            title: '',
+            // CLA-DB: rebranded navbar. The RxDB logo and the commercial
+            // items (Pricing, Support, Discord) were removed; the fork has
+            // no premium offering and no own community chat yet.
+            title: 'CLA DB',
             logo: {
-                alt: 'RxDB',
-                src: 'files/logo/logo_text_white.svg',
-                width: 107,
-                height: 38,
+                alt: 'CLA DB',
+                src: 'files/logo/cla-db-mark.svg',
+                width: 26,
+                height: 26,
             },
             items: [
                 {
@@ -562,52 +540,22 @@ Topic-specific documentation files:
                     dropdown: 'storages'
                 },
                 {
-                    href: '/premium/',
-                    label: 'Pricing',
-                    position: 'left',
-                },
-                {
-                    href: '/consulting/',
-                    label: 'Support',
-                    position: 'left',
-                },
-                {
-                    to: '/chat/',
+                    href: 'https://github.com/AngelCLA/cla-db',
                     target: '_blank',
-                    label: ' ',
-                    'aria-label': 'Discord',
+                    label: 'GitHub',
                     position: 'right',
-                    className: 'navbar-icon navbar__item navbar-icon-discord'
                 },
                 {
-                    to: '/code/',
+                    href: 'https://www.npmjs.com/package/@clatech/db',
                     target: '_blank',
-                    label: ' ',
-                    'aria-label': 'GitHub',
+                    label: 'npm',
                     position: 'right',
-                    className: 'navbar-icon navbar__item navbar-icon-github'
                 },
-                // {
-                //     to: '/chat',
-                //     target: '_blank',
-                //     label: 'Community',
-                //     position: 'right',
-                //     className: 'navbar-icon-discord'
-                // },
-                // {
-                //   href: '/code/',
-                //   target: '_blank',
-                //   label: 'Code',
-                //   position: 'right',
-                // },
             ],
         },
-        algolia: {
-            appId: 'MFS60LRE5L',
-            apiKey: '22d63ecafdabc681e5c59f767c4ceafa',
-            indexName: 'RxDB Docs Crawler',
-            contextualSearch: true,
-        },
+        // CLA-DB: the RxDB Algolia DocSearch index was removed. The swizzled
+        // src/theme/SearchBar override was deleted with it, so the site has
+        // no search until an own index exists.
         footer: {
             style: 'dark',
             links: [],

@@ -1,6 +1,8 @@
 import React from 'react';
-import { IconNewsletter } from '../../components/icons/newsletter';
-import LinkedInLogo from '@site/static/img/community-links/linkedin-logo.svg';
+
+// CLA-DB: rebranded footer for the CLA DB fork. The RxDB premium/support,
+// newsletter and social links were removed; only destinations that exist for
+// the fork remain. The inherited RxDB documentation stays linked as upstream.
 
 export default function FooterWrapper() {
 
@@ -19,83 +21,29 @@ export default function FooterWrapper() {
         label: 'Storages',
       },
       {
-        label: 'Premium',
+        label: 'GitHub',
         target: '_blank',
-        href: '/premium/',
+        href: 'https://github.com/AngelCLA/cla-db',
       },
       {
-        label: 'Support',
+        label: 'npm',
         target: '_blank',
-        href: '/consulting/',
+        href: 'https://www.npmjs.com/package/@clatech/db',
       }
     ],
     communityLinks: [
       {
-        label: 'Newsletter',
+        label: 'GitHub',
         target: '_blank',
-        href: '/newsletter/',
-        logo: <IconNewsletter />,
-      },
-      {
-        label: 'Twitter',
-        href: 'https://twitter.com/intent/user?screen_name=rxdbjs',
-        target: '_blank',
-        logo: '/files/icons/twitter-blue.svg',
-      },
-      {
-        label: 'LinkedIn',
-        href: 'https://www.linkedin.com/company/rxdb',
-        target: '_blank',
-        logo: <LinkedInLogo />,
-      },
-      {
-        label: 'Github',
-        target: '_blank',
-        href: '/code/',
+        href: 'https://github.com/AngelCLA/cla-db',
         logo: <span className="navbar-icon-github" style={{ width: 22, height: 22, display: 'inline-block' }}></span>
-      },
-      {
-        label: 'Discord',
-        target: '_blank',
-        href: '/chat/',
-        logo: <span className="navbar-icon-discord" style={{ width: 22, height: 22, display: 'inline-block' }}></span>,
       },
     ],
     policyLinks: [
       {
-        label: 'Our Customers',
-        href: '/#reviews',
-      },
-      {
-        label: 'Become a Partner',
-        href: '/consulting#become-partner',
-      },
-      {
-        label: 'Jobs',
-        href: '/jobs-en/',
-      },
-      {
-        label: 'Press',
-        href: '/press/',
-      },
-      {
-        label: 'Brand Guidelines',
-        href: '/brand-guidelines/',
-      },
-      // {
-      //   label: 'About us',
-      //   target: '_blank',
-      //   href: '/legal-notice/',
-      // },
-      {
-        label: 'Legal Notice',
+        label: 'License',
         target: '_blank',
-        href: '/legal-notice/',
-      },
-      {
-        label: 'Privacy Policy',
-        target: '_blank',
-        href: '/privacy/',
+        href: 'https://github.com/AngelCLA/cla-db/blob/master/LICENSE.txt',
       },
       {
         label: 'llms.txt',
@@ -107,7 +55,6 @@ export default function FooterWrapper() {
 
   return (
     <>
-      {/* <Footer {...props} /> */}
       <>
 
         <div className='block footer dark'>
@@ -122,8 +69,10 @@ export default function FooterWrapper() {
                   variant="text"
                   href="/"
                   className="footer-logo-button"
+                  aria-label="CLA DB"
                 >
-                  <img src="/files/logo/logo_text_white.svg" alt="RxDB" loading="lazy" width="140" height="50" className='width-140-120' />
+                  <img src="/files/logo/cla-db-mark.svg" alt="CLA DB" loading="lazy" width="32" height="32" className='width-140-120' />
+                  <b style={{ marginLeft: 10 }}>CLA DB</b>
                 </a>
                 <div className="footer-community-links">
                   {footerConfig.communityLinks.map((link, index) => (

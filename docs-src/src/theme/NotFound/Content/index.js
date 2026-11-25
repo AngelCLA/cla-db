@@ -2,8 +2,8 @@ import React from 'react';
 import clsx from 'clsx';
 import Translate from '@docusaurus/Translate';
 import Heading from '@theme/Heading';
-import { GlitchLogo } from '@site/src/components/animations/glitch-logo';
-import SearchBar from '@theme/SearchBar';
+// CLA-DB: replaced the RxDB GlitchLogo animation with the CLA DB mark and
+// removed the SearchBar, which was deleted together with the Algolia config.
 export default function NotFoundContent({ className }) {
   return (
     <main className={clsx('container margin-vert--xl', className)}>
@@ -12,7 +12,7 @@ export default function NotFoundContent({ className }) {
           <Heading as="h1" className="hero__title">
             <a href="/">
               <div style={{ textAlign: 'center' }}>
-                <GlitchLogo width={120} />
+                <img src="/files/logo/cla-db-mark.svg" alt="CLA DB" width={60} height={60} />
               </div>
             </a>
             <Translate
@@ -30,25 +30,20 @@ export default function NotFoundContent({ className }) {
             </Translate>
           </p>
 
-          <p>Search the documentation:</p>
-          <div className="sidebar-search-container" style={{ marginBottom: 30 }}>
-            <SearchBar />
-          </div>
-
           <p>Maybe one of these can help you to find the desired content:</p>
           <div className="ul-container">
             <ul>
               <li>
-                <a href="https://rxdb.info/overview.html">RxDB Documentation</a>
+                <a href="/overview.html">CLA DB Documentation</a>
               </li>
               <li>
-                <a href="/chat/">RxDB Discord Channel</a>
+                <a href="https://github.com/AngelCLA/cla-db">CLA DB at GitHub</a>
               </li>
               <li>
-                <a href="https://twitter.com/intent/user?screen_name=rxdbjs">RxDB on twitter</a>
+                <a href="https://www.npmjs.com/package/@clatech/db">CLA DB on npm</a>
               </li>
               <li>
-                <a href="/code/">RxDB at Github</a>
+                <a href="https://rxdb.info/overview.html">RxDB upstream documentation</a>
               </li>
             </ul>
           </div>

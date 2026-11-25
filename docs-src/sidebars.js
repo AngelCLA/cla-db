@@ -730,29 +730,24 @@ const sidebars = {
     'contribute',
     {
       type: 'category',
+      // CLA-DB: replaced the RxDB contact links (Consulting, Discord, LinkedIn)
+      // with the fork destinations and the upstream documentation.
       label: 'Contact',
       items: [
         {
           type: 'link',
-          label: 'Consulting',
-          href: '/consulting/'
+          label: 'GitHub',
+          href: 'https://github.com/AngelCLA/cla-db'
         },
         {
           type: 'link',
-          label: 'Discord',
-          href: '/chat/',
-          customProps: {
-            /**
-             * Does not work! Missing feature in docusaurus.
-             * @link https://docusaurus.canny.io/feature-requests/p/support-target-for-sidebar-links
-             */
-            target: '_blank'
-          }
+          label: 'npm',
+          href: 'https://www.npmjs.com/package/@clatech/db'
         },
         {
           type: 'link',
-          label: 'LinkedIn',
-          href: 'https://www.linkedin.com/company/rxdb/'
+          label: 'RxDB upstream docs',
+          href: 'https://rxdb.info/'
         },
       ],
     },
