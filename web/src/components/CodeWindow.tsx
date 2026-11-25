@@ -20,6 +20,16 @@ const sample: readonly (readonly Token[])[] = [
         { text: ' \'@clatech/db\'', kind: 'string' },
         { text: ';' }
     ],
+    [{ text: 'import { getRxStorageDexie } from \'@clatech/db/plugins/storage-dexie\';', kind: 'keyword' }],
+    [{ text: 'import { firstValueFrom, filter } from \'rxjs\';', kind: 'keyword' }],
+    [],
+    [{ text: 'const clienteSchema = {' }],
+    [{ text: '  version: 0, primaryKey: \'id\', type: \'object\',' }],
+    [{ text: '  properties: {' }],
+    [{ text: '    id: { type: \'string\', maxLength: 100 },' }],
+    [{ text: '    nombre: { type: \'string\' }, plan: { type: \'string\' }' }],
+    [{ text: '  }, required: [\'id\', \'nombre\', \'plan\']' }],
+    [{ text: '};' }],
     [],
     [
         { text: 'const', kind: 'keyword' },
@@ -27,7 +37,7 @@ const sample: readonly (readonly Token[])[] = [
         { text: 'await', kind: 'keyword' },
         { text: ' ' },
         { text: 'createRxDatabase', kind: 'function' },
-        { text: '(' }
+        { text: '({' }
     ],
     [
         { text: '  name: ' },
@@ -37,7 +47,7 @@ const sample: readonly (readonly Token[])[] = [
     [
         { text: '  storage: ' },
         { text: 'getRxStorageDexie', kind: 'function' },
-        { text: '()' }
+        { text: '(), multiInstance: false' }
     ],
     [{ text: '});' }],
     [
@@ -49,7 +59,7 @@ const sample: readonly (readonly Token[])[] = [
     [
         { text: 'await', kind: 'keyword' },
         { text: ' db.clientes.' },
-        { text: 'insert', kind: 'function' },
+        { text: 'upsert', kind: 'function' },
         { text: '({ id: ' },
         { text: '\'c-001\'', kind: 'string' },
         { text: ', nombre: ' },
@@ -60,19 +70,17 @@ const sample: readonly (readonly Token[])[] = [
     ],
     [],
     [
-        { text: 'db.clientes.' },
+        { text: 'const consulta = db.clientes.' },
         { text: 'find', kind: 'function' },
         { text: '({ selector: { plan: ' },
         { text: '\'abono\'', kind: 'string' },
-        { text: ' } })' }
+        { text: ' } });' }
     ],
-    [
-        { text: '  .$.' },
-        { text: 'subscribe', kind: 'function' },
-        { text: '(docs => ' },
-        { text: 'render', kind: 'function' },
-        { text: '(docs));' }
-    ]
+    [{ text: 'const sub = consulta.$.subscribe(docs =>' }],
+    [{ text: '  console.log(\'Clientes:\', docs.length));' }],
+    [{ text: 'await firstValueFrom(consulta.$.pipe(filter(docs => docs.length > 0)));' }],
+    [{ text: 'sub.unsubscribe();' }],
+    [{ text: 'await db.close();' }]
 ];
 
 type Props = {

@@ -1,0 +1,5 @@
+{
+    "text": "FIX disable inherited conversion and analytics callbacks in the CLA DB public documentation site while preserving navigation and opt-in viewer tooling; repair and execute the rendered landing example in regression checks.",
+    "links": [{ "url": "https://github.com/AngelCLA/cla-db", "linkText": "CLA DB fork" }],
+    "priority": 5
+}

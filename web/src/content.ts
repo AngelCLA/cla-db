@@ -17,7 +17,7 @@ export const navLinks: readonly NavLink[] = [
 export const repoUrl = 'https://github.com/AngelCLA/cla-db';
 
 export const hero = {
-    badge: 'v0.1.1 / open source',
+    badge: 'v0.1.1 npm / v0.1.2 candidata',
     titleLead: 'Tus datos,',
     titleAccent: 'local-first.',
     lede: 'La base de datos NoSQL reactiva para JavaScript y TypeScript. Trabaja sin conexión y supera el límite de 13 colecciones con CLA DB.',
@@ -68,7 +68,7 @@ export const features: readonly Feature[] = [
     {
         icon: 'check',
         title: 'Persistencia verificada',
-        text: 'La suite de verificación cubre hasta 100 colecciones. También comprueba CRUD, reinicios, migraciones de esquema y persistencia tras cerrar la app.'
+        text: 'La suite incluye hasta 100 colecciones, CRUD y migraciones. Las pruebas de persistencia usan fake-indexeddb en Node.js; no certifican durabilidad en navegadores reales.'
     },
     {
         icon: 'code',
@@ -81,7 +81,7 @@ export const architecture = {
     kicker: '// Arquitectura',
     title: 'Fork mínimo, marcado',
     paragraphs: [
-        'CLA DB no reescribe RxDB. Es un fork Apache 2.0 anclado en RxDB 17.6.0 (commit 9d5849cf) que mantiene la API pública, el formato en disco y la Sync Engine tal como están.',
+        'CLA DB no reescribe RxDB. Es un fork Apache 2.0 con base RxDB 17.6.0 (9d5849cf) y correcciones posteriores integradas por merge. Conserva las interfaces públicas y la versión de compatibilidad 17.6.0; consulta la evidencia y sus límites en el README.',
         'Cada modificación del fork está aislada y marcada con comentarios // CLA-DB:, así que las futuras actualizaciones de upstream se aplican con fricción mínima. Las extensiones nuevas llegan como paquetes independientes, nunca dentro del core.',
         'Sin plugins propietarios, sin flags de licencia falsificados y sin history rewrites. Solo los cambios que el fork necesita, documentados en UPSTREAM.md y CLA_CHANGELOG.md.'
     ],
@@ -99,7 +99,7 @@ export const architecture = {
 export const docs = {
     kicker: '// Documentación',
     title: 'Empieza en cinco minutos',
-    lede: 'Instala el paquete, crea la base con tu storage preferido y suscribe tu primera consulta reactiva. La documentación hereda el recorrido completo de RxDB: quickstart, storages, replicación y migraciones.',
+    lede: 'npm install @clatech/db rxjs instala la versión publicada 0.1.1. La candidata 0.1.2 solo está disponible como tarball de evaluación. El README enlaza la evidencia y distingue funciones heredadas, experimentales, planificadas y Premium no incluidas.',
     links: [
         { label: 'Quickstart de CLA DB (README)', href: `${repoUrl}/blob/master/README.md` },
         { label: 'API de RxDatabase (RxDB upstream)', href: 'https://rxdb.info/rx-database.html' },

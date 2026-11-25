@@ -16,7 +16,7 @@ export default function Home() {
     return (
         <Layout
             title={HOME_TITLE}
-            description={'CLA DB is a minimal Apache 2.0 fork of RxDB: a fast, local-first, reactive NoSQL database for JavaScript applications with offline support and explicit replication.'}
+            description={'CLA DB is a minimal Apache 2.0 fork of RxDB: a local-first, reactive NoSQL database for JavaScript applications with offline support and explicit replication.'}
         >
             <Head>
                 <link rel="canonical" href="https://db.claangel.site/" />
@@ -39,9 +39,14 @@ export default function Home() {
                             the reactive, local-first NoSQL database for JavaScript.
                         </p>
                         <p style={{ maxWidth: 720, margin: '0 auto 32px' }}>
-                            Public API, on-disk format and the Sync Engine stay compatible with RxDB.
-                            The fork removes the open-core collection limit and ships as the npm
-                            package <code>@clatech/db</code>. These pages document the inherited RxDB API.
+                            The fork preserves RxDB public interfaces and storage compatibility version 17.6.0
+                            while removing the artificial 13-collection cap. These pages are inherited API
+                            reference, including experimental integrations and Premium features not included in CLA DB.
+                            See the <a href={`${repoUrl}/blob/master/README.md`}>consumer README and evidence</a> for tested boundaries.
+                        </p>
+                        <p>
+                            <code>npm install @clatech/db rxjs</code> installs published 0.1.1.
+                            Version 0.1.2 is an unpublished candidate tarball preview, not a certified release.
                         </p>
                         <div className="buttons" style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
                             <a className="button button--primary button--lg" href="/overview.html">
