@@ -1,0 +1,6 @@
+{
+    "$schema": "./schema.json",
+    "text": "ADD isolated public-API storage compatibility tests from published CLA DB 0.1.1 and available RxDB 17.6.0 to the packed candidate, with comparable local benchmark samples",
+    "links": [],
+    "priority": 3
+}
