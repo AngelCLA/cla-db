@@ -28,7 +28,6 @@ import { newRxError } from '../../rx-error.ts';
 import { DeepReadonly } from '../../types/util.ts';
 import { deepFreeze } from '../../plugins/utils/index.ts';
 import { checkWriteRows, ensurePrimaryKeyValid } from './check-document.ts';
-import { addDevModeTrackingIframe } from './dev-mode-tracking.ts';
 import {
     rememberResetCollectionOnSchemaChange,
     resetCollectionsWithChangedSchema
@@ -73,7 +72,8 @@ export const RxDBDevModePlugin: RxPlugin = {
     name: DEV_MODE_PLUGIN_NAME,
     rxdb: true,
     init: () => {
-        addDevModeTrackingIframe();
+        // CLA-DB: Do not initiate unsolicited marketing iframe connections.
+        // Keep dev-mode validation and the inherited warning unchanged.
         if (showDevModeWarning) {
             console.warn(
                 [
