@@ -73,7 +73,7 @@ export const features: readonly Feature[] = [
     {
         icon: 'code',
         title: 'API de RxDB intacta',
-        text: 'Fork mínimo con base RxDB 17.6.0: cambiá los imports a @clatech/db, sin mezclar módulos de rxdb y CLA DB en el mismo bundle. ESM, CJS y tipos de TypeScript listos para usar.'
+        text: 'Fork mínimo con base RxDB 17.6.0: cambia los imports a @clatech/db, sin mezclar módulos de rxdb y CLA DB en el mismo bundle. ESM, CJS y tipos de TypeScript listos para usar.'
     }
 ];
 
@@ -98,8 +98,8 @@ export const architecture = {
 
 export const docs = {
     kicker: '// Documentación',
-    title: 'Empezá en cinco minutos',
-    lede: 'Instalá el paquete, creá la base con tu storage preferido y subscribí tu primera consulta reactiva. La documentación hereda el recorrido completo de RxDB: quickstart, storages, replicación y migraciones.',
+    title: 'Empieza en cinco minutos',
+    lede: 'Instala el paquete, crea la base con tu storage preferido y suscribe tu primera consulta reactiva. La documentación hereda el recorrido completo de RxDB: quickstart, storages, replicación y migraciones.',
     links: [
         { label: 'Quickstart de CLA DB (README)', href: `${repoUrl}/blob/master/README.md` },
         { label: 'API de RxDatabase (RxDB upstream)', href: 'https://rxdb.info/rx-database.html' },

@@ -55,7 +55,7 @@ const requiredCopy: readonly (readonly [string, string])[] = [
     ['feature card', 'API de RxDB intacta'],
     ['architecture title', 'Fork mínimo, marcado'],
     ['architecture delta', 'remoción del límite COL23'],
-    ['docs title', 'Empezá en cinco minutos'],
+    ['docs title', 'Empieza en cinco minutos'],
     ['docs link', 'Quickstart'],
     ['code sample', '@clatech/db'],
     ['footer note', 'no está afiliado a rxdb.info']
@@ -80,9 +80,9 @@ check(/<a\b[^>]*href="#documentacion"[^>]*>[\s\S]*?Empezar ahora<\/a>/.test(html
 
 // S10: compact technical sections retain the existing page and CTA contract.
 const technicalSections = [
-    ['offline-first', 'La venta sigue sin señal', ['Guardá la venta', 'Consultá lo local', 'Retomá la replicación']],
+    ['offline-first', 'La venta sigue sin señal', ['Guarda la venta', 'Consulta lo local', 'Retoma la replicación']],
     ['sync-engine', 'Tu backend, conectado por protocolo', ['push', 'pull', 'checkpoints', 'conflictHandler', 'GraphQL', 'WebSocket', 'CouchDB', 'Supabase', 'no se conecta solo']],
-    ['rxstorage', 'Elegí dónde viven los datos', ['RxStorage', 'Dexie', 'IndexedDB', 'Memory', 'efímero', 'Node.js', 'FoundationDB', 'MongoDB', 'DenoKV', 'Remote']],
+    ['rxstorage', 'Elige dónde viven los datos', ['RxStorage', 'Dexie', 'IndexedDB', 'Memory', 'efímero', 'Node.js', 'FoundationDB', 'MongoDB', 'DenoKV', 'Remote']],
     ['modelo-reactivo', 'Del esquema a la pantalla', ['JSON Schema', 'Mango', 'RxJS', 'migrationStrategies']]
 ] as const;
 let previousSection = html.indexOf('id="caracteristicas"');
@@ -97,7 +97,7 @@ for (const [id, title, terms] of technicalSections) {
     previousSection = position;
     check(new RegExp(`<a\\b[^>]*href="#${id}"[^>]*>[^<]+<\\/a>`).test(html), `missing visible navigation to #${id}`);
 }
-check(/<ol\b[\s\S]*?Guardá la venta[\s\S]*?Consultá lo local[\s\S]*?Retomá la replicación[\s\S]*?<\/ol>/.test(html), 'offline-first must have an ordered local-write, local-read, recovery flow');
+check(/<ol\b[\s\S]*?Guarda la venta[\s\S]*?Consulta lo local[\s\S]*?Retoma la replicación[\s\S]*?<\/ol>/.test(html), 'offline-first must have an ordered local-write, local-read, recovery flow');
 for (const id of requiredAnchors) {
     check(html.includes(`href="#${id}"`), `existing navigation to #${id} must remain`);
 }
@@ -120,7 +120,7 @@ for (const [, href, label] of documentationLinks) {
     }
 }
 check(html.includes('hasta 100 colecciones') && html.includes('persistencia') && html.includes('migraciones'), 'verification copy must distinguish collection coverage from persistence and migration checks');
-check(html.includes('cambiá los imports') && html.includes('sin mezclar módulos'), 'compatibility copy must explain package imports and the single-module constraint');
+check(html.includes('cambia los imports') && html.includes('sin mezclar módulos'), 'compatibility copy must explain package imports and the single-module constraint');
 
 const illustrations = html.match(/role="img"/g) ?? [];
 check(illustrations.length >= 1, 'missing the isometric illustration with role="img"');
