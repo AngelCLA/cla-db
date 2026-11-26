@@ -47,6 +47,7 @@ function main() {
         const payloadPaths = run('tar', ['-tzf', tgzPath], packDir).trim().split(/\r?\n/)
             .filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
         const packedPkg = JSON.parse(run('tar', ['-xOf', tgzPath, 'package/package.json'], packDir));
+        assert.equal(packedPkg.version, repoPkg.version, 'Packed artifact version must equal the manifest version');
         checkPackage(metadata, packedPkg, payloadPaths);
         const rxjsVersion = repoPkg.peerDependencies?.rxjs || repoPkg.devDependencies?.rxjs || '^7.8.2';
         const dexieVersion = repoPkg.dependencies?.dexie || '^4.0.0';
@@ -78,7 +79,7 @@ function main() {
         run('npm', ['install', '--no-audit', '--no-fund'], appDir);
         const installedDir = path.join(appDir, 'node_modules/@clatech/db');
         const installedPkg = JSON.parse(fs.readFileSync(path.join(installedDir, 'package.json'), 'utf8'));
-        assert.equal(installedPkg.version, '0.1.2');
+        assert.equal(installedPkg.version, repoPkg.version);
         assert.deepStrictEqual(installedPkg.exports, repoPkg.exports);
         checkSourceMaps(installedDir);
         const graph = JSON.parse(run('npm', ['ls', '--all', '--json'], appDir));

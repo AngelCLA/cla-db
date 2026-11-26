@@ -1,0 +1,6 @@
+{
+    "$schema": "./schema.json",
+    "text": "ADD sequential storage lineage evidence for `@clatech/db@0.1.1`, `@clatech/db@0.1.2`, `rxdb@17.6.0` and the 0.1.3 candidate, with an authenticated `--artifact` and `--sha256` candidate input, exact published version guards, integrity, index, deletion, migration and cleanup steps, and JSON and Markdown reports",
+    "links": [],
+    "priority": 5
+}

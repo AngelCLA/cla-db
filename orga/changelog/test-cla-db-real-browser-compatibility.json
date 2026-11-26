@@ -1,0 +1,6 @@
+{
+    "$schema": "./schema.json",
+    "text": "ADD browser integration tests for `@clatech/db` running in real Chromium, Firefox and WebKit against a prebuilt archive. The lane verifies the archive SHA-256, installs it into an isolated Vite consumer, and drives native IndexedDB through the Dexie storage with CRUD, reactive queries, 14/20/50/100 collections, page reload, orderly browser restart with a persistent profile, schema migration, database removal and resource cleanup. A second slice covers offline-first behavior with a minimal app-shell service worker: offline edits, offline reload, reconnect convergence, conflict resolution and retried pushes without duplicates. Scenarios report PASS, FAIL, SKIP or UNSUPPORTED, and WebKit is explicitly not Safari or iOS certification",
+    "links": [],
+    "priority": 3
+}

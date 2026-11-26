@@ -2,14 +2,22 @@
 
 CLA DB keeps its core fork minimal. New adapters and operational tooling are planned as **independent packages** using public `RxStorage`, `RxStorageInstance`, and replication interfaces. Milestones describe direction, not delivery dates or implemented capabilities.
 
-## v0.1.2 - Consolidation (Candidate)
+## v0.1.2 - Consolidation (Published)
 
 - Preserve public APIs, storage compatibility version `17.6.0`, Premium boundaries, and collection cleanup without the artificial 13-collection cap.
 - Record upstream ancestry and maintenance fixes without rewriting the foundation commit.
 - Validate packed distribution, cross-version reopen behavior, local operation, and documentation with bounded, reproducible evidence.
-- Audit security, licenses, package contents, and safe publication procedures. Final release verification remains pending until the release controller records it.
+- Audit security, licenses, package contents, and safe publication procedures.
 
-Published `0.1.1` remains the registry baseline. Earlier foundation work and its historical checks remain in [CLA_CHANGELOG.md](./CLA_CHANGELOG.md).
+`0.1.2` is the current registry `latest`. Earlier foundation work and its historical checks remain in [CLA_CHANGELOG.md](./CLA_CHANGELOG.md).
+
+## v0.1.3 - Universal Compatibility (Candidate, Unpublished)
+
+- One official package, `@clatech/db`. npm, pnpm, Bun, Yarn, and Deno all install the same distribution artifact, and no duplicate package is published to another registry.
+- Record package-manager, runtime, browser, framework, and storage compatibility per target, each with the exact command, tool versions, and artifact hash that produced the result.
+- Extend simulated IndexedDB evidence to real-browser IndexedDB, and add an offline-first reference application outside the core.
+- Keep the core surface minimal. Compatibility tooling lives in test infrastructure, not in `src/`.
+- A target counts as supported only when its evidence exists. The candidate stays unpublished until an authorized publication step runs.
 
 ## v0.2.0 - Cloudflare Workers And D1 (Planned)
 

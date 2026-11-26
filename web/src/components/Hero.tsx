@@ -13,7 +13,7 @@ export const Hero = () => (
         <div className={styles.copy}>
             <p className={styles.badge}>
                 <span className={styles.badgeDot} aria-hidden="true" />
-                v0.1.1 <span className={styles.badgeSep}>/</span> open source
+                {hero.badgeVersion} <span className={styles.badgeSep}>/</span> {hero.badgeLabel}
             </p>
             <h1 className={styles.title}>
                 {hero.titleLead}

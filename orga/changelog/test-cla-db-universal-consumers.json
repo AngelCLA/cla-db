@@ -1,0 +1,6 @@
+{
+    "$schema": "./schema.json",
+    "text": "ADD detached package and runtime compatibility runner `scripts/compatibility/run.mjs` that verifies one prebuilt tarball by SHA-256 in isolated npm, pnpm, Bun, modern Yarn and Deno consumers and reports PASS, FAIL, SKIP and UNSUPPORTED per check, never counting a skipped check as passed",
+    "links": [],
+    "priority": 2
+}

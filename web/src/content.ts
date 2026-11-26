@@ -9,6 +9,7 @@ export type NavLink = {
 };
 
 export const navLinks: readonly NavLink[] = [
+    { label: 'Instalación', href: '#instalacion' },
     { label: 'Características', href: '#caracteristicas' },
     { label: 'Arquitectura', href: '#arquitectura' },
     { label: 'Documentación', href: '#documentacion' }
@@ -17,13 +18,14 @@ export const navLinks: readonly NavLink[] = [
 export const repoUrl = 'https://github.com/AngelCLA/cla-db';
 
 export const hero = {
-    badge: 'v0.1.1 npm / v0.1.2 candidata',
+    badgeVersion: 'v0.1.2',
+    badgeLabel: 'npm publicado',
     titleLead: 'Tus datos,',
     titleAccent: 'local-first.',
     lede: 'La base de datos NoSQL reactiva para JavaScript y TypeScript. Trabaja sin conexión y supera el límite de 13 colecciones con CLA DB.',
     primaryCta: 'Empezar ahora',
     secondaryCta: 'Ver ejemplo',
-    caption: 'CLA DB CORE // V0.1.1'
+    caption: 'CLA DB CORE // V0.1.2'
 } as const;
 
 export type StackItem = {
@@ -99,7 +101,7 @@ export const architecture = {
 export const docs = {
     kicker: '// Documentación',
     title: 'Empieza en cinco minutos',
-    lede: 'npm install @clatech/db rxjs instala la versión publicada 0.1.1. La candidata 0.1.2 solo está disponible como tarball de evaluación. El README enlaza la evidencia y distingue funciones heredadas, experimentales, planificadas y Premium no incluidas.',
+    lede: 'La versión publicada es 0.1.2 y la candidata 0.1.3 sigue sin publicar: se evalúa como tarball local antes de cualquier anuncio. Arriba tienes los comandos de instalación. El README enlaza la evidencia y distingue funciones heredadas, experimentales, planificadas y Premium no incluidas.',
     links: [
         { label: 'Quickstart de CLA DB (README)', href: `${repoUrl}/blob/master/README.md` },
         { label: 'API de RxDatabase (RxDB upstream)', href: 'https://rxdb.info/rx-database.html' },

@@ -1,0 +1,3933 @@
+{
+  "schemaVersion": 1,
+  "scope": "Local candidate only. Not a hosted GitHub Actions or publishing attestation.",
+  "testedCommit": "8891dabc42f220e451223bed4ebbca55e47127ae",
+  "testedTree": "d19e7b39e86004de21168bdc5a0029d834df3095",
+  "testedInputs": "All release inputs matched the tested commit. Unrelated local files were excluded.",
+  "artifact": {
+    "file": "release/0.1.3/clatech-db-0.1.3.tgz",
+    "sha256": "a32518f06bb9c9b5a9df54c14df47eb45381af72aae4a606f8e75d356e689cbc",
+    "sha512": "sha512-f6WuY01Ldos8ihFVoqDTvTLrvAOrr/0Dliobpwp2NyKfGu7uj94jEi0RMnZp2ShaxJTftS+hkqGE0QAXWQtUPw==",
+    "name": "@clatech/db",
+    "version": "0.1.3",
+    "storageVersion": "17.6.0",
+    "exports": 56
+  },
+  "summary": {
+    "packageRuntimeLanes": 11,
+    "packageRuntimeProbesPassed": 123,
+    "packageRuntimeProbesSkipped": 23,
+    "browserScenariosPassed": 45,
+    "storageProbesPassed": 30
+  },
+  "core": {
+    "environment": {
+      "os": "Linux 7.0.0-43-generic x64",
+      "node": "24.22.3",
+      "npm": "11.19.1"
+    },
+    "checks": [
+      {
+        "command": "npm run lint",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "command": "npm run check-types",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "command": "npm run build",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "command": "npm run test:fast:memory -- --jobs 2",
+        "status": "PASS",
+        "exitCode": 0,
+        "passing": 1833
+      },
+      {
+        "command": "npm run test:fast:dexie -- --jobs 2",
+        "status": "PASS",
+        "exitCode": 0,
+        "passing": 1837
+      },
+      {
+        "command": "node --test scripts/compatibility/test/run.test.mjs scripts/storage-compat-fixtures/verify-storage-compat.test.mjs",
+        "status": "PASS",
+        "exitCode": 0,
+        "passing": 25
+      },
+      {
+        "command": "node scripts/release-supply-chain-fixtures/workflow-policy.mjs",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "command": "node scripts/release-supply-chain-fixtures/compatibility-workflow-policy.mjs",
+        "status": "PASS",
+        "exitCode": 0
+      },
+      {
+        "command": "node scripts/check-changelog-entries.js",
+        "status": "PASS",
+        "exitCode": 0
+      }
+    ]
+  },
+  "consumers": [
+    {
+      "target": "node-20.0.0",
+      "command": "node scripts/compatibility/run.mjs --artifact $REPO/release/0.1.3/clatech-db-0.1.3.tgz --sha256 $SHA256 --lane [object Object] --path $NODE_20_0_0_PATH --scratch $SCRATCH/tmp --out $SCRATCH/verified-013/node-20.0.0",
+      "exitCode": 0,
+      "environment": {
+        "os": "Linux 7.0.0-43-generic x64",
+        "manager": {
+          "available": true,
+          "version": "9.6.4"
+        },
+        "runtime": {
+          "available": true,
+          "version": "20.0.0"
+        }
+      },
+      "lane": {
+        "id": "npm-legacy",
+        "packageManager": "npm",
+        "runtime": "node",
+        "linker": "node-modules"
+      },
+      "startedAt": "2026-11-26T16:53:07.243Z",
+      "durationMs": 11357,
+      "status": "PASS",
+      "summary": {
+        "total": 13,
+        "passed": 6,
+        "failed": 0,
+        "skipped": 7,
+        "unsupported": 0,
+        "required": 6,
+        "requiredPassed": 6,
+        "verdict": "PASS",
+        "supported": true
+      },
+      "limitations": [
+        "The Node 20.0.0 floor smoke only checks artifact installation, ESM and CommonJS imports, and basic CRUD. It is not a full runtime matrix result."
+      ],
+      "probes": [
+        {
+          "id": "toolchain",
+          "status": "PASS",
+          "required": true,
+          "exitCode": null,
+          "command": null,
+          "reason": null,
+          "durationMs": 0
+        },
+        {
+          "id": "install",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "npm install --ignore-scripts --no-audit --no-fund",
+          "reason": null,
+          "durationMs": 9817
+        },
+        {
+          "id": "package-layout",
+          "status": "PASS",
+          "required": true,
+          "exitCode": null,
+          "command": null,
+          "reason": null,
+          "durationMs": 0
+        },
+        {
+          "id": "rxjs-peer",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node peer.mjs",
+          "reason": null,
+          "durationMs": 67
+        },
+        {
+          "id": "esm",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node esm.mjs",
+          "reason": null,
+          "durationMs": 405
+        },
+        {
+          "id": "commonjs",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node commonjs.cjs",
+          "reason": null,
+          "durationMs": 339
+        },
+        {
+          "id": "typescript-nodenext",
+          "status": "SKIP",
+          "required": false,
+          "exitCode": null,
+          "command": null,
+          "reason": "Outside the Node 20.0.0 floor smoke; declaration resolution runs on the maintained Node lanes.",
+          "durationMs": 0
+        },
+        {
+          "id": "typescript-bundler",
+          "status": "SKIP",
+          "required": false,
+          "exitCode": null,
+          "command": null,
+          "reason": "Outside the Node 20.0.0 floor smoke; declaration resolution runs on the maintained Node lanes.",
+          "durationMs": 0
+        },
+        {
+          "id": "vite",
+          "status": "SKIP",
+          "required": false,
+          "exitCode": null,
+          "command": null,
+          "reason": "Vite 6 requires a newer Node.js line than the declared 20.0.0 floor, so its bundle check is not part of this smoke.",
+          "durationMs": 0
+        },
+        {
+          "id": "integrations",
+          "status": "SKIP",
+          "required": false,
+          "exitCode": null,
+          "command": null,
+          "reason": "Dexie-simulated IndexedDB and migrations run on the maintained Node lanes, not in the floor smoke.",
+          "durationMs": 0
+        },
+        {
+          "id": "replication-lifecycle",
+          "status": "SKIP",
+          "required": false,
+          "exitCode": null,
+          "command": null,
+          "reason": "Replication lifecycle coverage runs on the maintained Node lanes, not in the floor smoke.",
+          "durationMs": 0
+        },
+        {
+          "id": "collections",
+          "status": "SKIP",
+          "required": false,
+          "exitCode": null,
+          "command": null,
+          "reason": "Collection-count coverage runs on the maintained Node lanes, not in the floor smoke.",
+          "durationMs": 0
+        },
+        {
+          "id": "cleanup",
+          "status": "SKIP",
+          "required": false,
+          "exitCode": null,
+          "command": null,
+          "reason": "Resource cleanup coverage runs on the maintained Node lanes, not in the floor smoke.",
+          "durationMs": 0
+        }
+      ]
+    },
+    {
+      "target": "node-20.20.2",
+      "command": "node scripts/compatibility/run.mjs --artifact $REPO/release/0.1.3/clatech-db-0.1.3.tgz --sha256 $SHA256 --lane [object Object] --path $NODE_20_20_2_PATH --scratch $SCRATCH/tmp --out $SCRATCH/verified-013/node-20.20.2",
+      "exitCode": 0,
+      "environment": {
+        "os": "Linux 7.0.0-43-generic x64",
+        "manager": {
+          "available": true,
+          "version": "10.8.2"
+        },
+        "runtime": {
+          "available": true,
+          "version": "20.20.2"
+        }
+      },
+      "lane": {
+        "id": "npm-legacy",
+        "packageManager": "npm",
+        "runtime": "node",
+        "linker": "node-modules"
+      },
+      "startedAt": "2026-11-26T16:53:18.732Z",
+      "durationMs": 7734,
+      "status": "PASS",
+      "summary": {
+        "total": 13,
+        "passed": 6,
+        "failed": 0,
+        "skipped": 7,
+        "unsupported": 0,
+        "required": 6,
+        "requiredPassed": 6,
+        "verdict": "PASS",
+        "supported": true
+      },
+      "limitations": [
+        "The Node 20.0.0 floor smoke only checks artifact installation, ESM and CommonJS imports, and basic CRUD. It is not a full runtime matrix result."
+      ],
+      "probes": [
+        {
+          "id": "toolchain",
+          "status": "PASS",
+          "required": true,
+          "exitCode": null,
+          "command": null,
+          "reason": null,
+          "durationMs": 0
+        },
+        {
+          "id": "install",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "npm install --ignore-scripts --no-audit --no-fund",
+          "reason": null,
+          "durationMs": 6336
+        },
+        {
+          "id": "package-layout",
+          "status": "PASS",
+          "required": true,
+          "exitCode": null,
+          "command": null,
+          "reason": null,
+          "durationMs": 0
+        },
+        {
+          "id": "rxjs-peer",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node peer.mjs",
+          "reason": null,
+          "durationMs": 95
+        },
+        {
+          "id": "esm",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node esm.mjs",
+          "reason": null,
+          "durationMs": 472
+        },
+        {
+          "id": "commonjs",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node commonjs.cjs",
+          "reason": null,
+          "durationMs": 376
+        },
+        {
+          "id": "typescript-nodenext",
+          "status": "SKIP",
+          "required": false,
+          "exitCode": null,
+          "command": null,
+          "reason": "Outside the Node 20.0.0 floor smoke; declaration resolution runs on the maintained Node lanes.",
+          "durationMs": 0
+        },
+        {
+          "id": "typescript-bundler",
+          "status": "SKIP",
+          "required": false,
+          "exitCode": null,
+          "command": null,
+          "reason": "Outside the Node 20.0.0 floor smoke; declaration resolution runs on the maintained Node lanes.",
+          "durationMs": 0
+        },
+        {
+          "id": "vite",
+          "status": "SKIP",
+          "required": false,
+          "exitCode": null,
+          "command": null,
+          "reason": "Vite 6 requires a newer Node.js line than the declared 20.0.0 floor, so its bundle check is not part of this smoke.",
+          "durationMs": 0
+        },
+        {
+          "id": "integrations",
+          "status": "SKIP",
+          "required": false,
+          "exitCode": null,
+          "command": null,
+          "reason": "Dexie-simulated IndexedDB and migrations run on the maintained Node lanes, not in the floor smoke.",
+          "durationMs": 0
+        },
+        {
+          "id": "replication-lifecycle",
+          "status": "SKIP",
+          "required": false,
+          "exitCode": null,
+          "command": null,
+          "reason": "Replication lifecycle coverage runs on the maintained Node lanes, not in the floor smoke.",
+          "durationMs": 0
+        },
+        {
+          "id": "collections",
+          "status": "SKIP",
+          "required": false,
+          "exitCode": null,
+          "command": null,
+          "reason": "Collection-count coverage runs on the maintained Node lanes, not in the floor smoke.",
+          "durationMs": 0
+        },
+        {
+          "id": "cleanup",
+          "status": "SKIP",
+          "required": false,
+          "exitCode": null,
+          "command": null,
+          "reason": "Resource cleanup coverage runs on the maintained Node lanes, not in the floor smoke.",
+          "durationMs": 0
+        }
+      ]
+    },
+    {
+      "target": "node-22.23.5",
+      "command": "node scripts/compatibility/run.mjs --artifact $REPO/release/0.1.3/clatech-db-0.1.3.tgz --sha256 $SHA256 --lane [object Object] --path $NODE_22_23_5_PATH --scratch $SCRATCH/tmp --out $SCRATCH/verified-013/node-22.23.5",
+      "exitCode": 0,
+      "environment": {
+        "os": "Linux 7.0.0-43-generic x64",
+        "manager": {
+          "available": true,
+          "version": "11.19.1"
+        },
+        "runtime": {
+          "available": true,
+          "version": "22.23.5"
+        }
+      },
+      "lane": {
+        "id": "npm-node",
+        "packageManager": "npm",
+        "runtime": "node",
+        "linker": "node-modules"
+      },
+      "startedAt": "2026-11-26T16:53:26.627Z",
+      "durationMs": 21615,
+      "status": "PASS",
+      "summary": {
+        "total": 13,
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0,
+        "unsupported": 0,
+        "required": 13,
+        "requiredPassed": 13,
+        "verdict": "PASS",
+        "supported": true
+      },
+      "limitations": [
+        "No additional lane limitations were recorded. This is not a claim that untested targets are supported."
+      ],
+      "probes": [
+        {
+          "id": "toolchain",
+          "status": "PASS",
+          "required": true,
+          "exitCode": null,
+          "command": null,
+          "reason": null,
+          "durationMs": 0
+        },
+        {
+          "id": "install",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "npm install --ignore-scripts --no-audit --no-fund",
+          "reason": null,
+          "durationMs": 9814
+        },
+        {
+          "id": "package-layout",
+          "status": "PASS",
+          "required": true,
+          "exitCode": null,
+          "command": null,
+          "reason": null,
+          "durationMs": 1
+        },
+        {
+          "id": "rxjs-peer",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node peer.mjs",
+          "reason": null,
+          "durationMs": 62
+        },
+        {
+          "id": "esm",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node esm.mjs",
+          "reason": null,
+          "durationMs": 485
+        },
+        {
+          "id": "commonjs",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node commonjs.cjs",
+          "reason": null,
+          "durationMs": 360
+        },
+        {
+          "id": "typescript-nodenext",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node node_modules/typescript/bin/tsc --noEmit -p typescript/tsconfig.nodenext.json",
+          "reason": null,
+          "durationMs": 1949
+        },
+        {
+          "id": "typescript-bundler",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node node_modules/typescript/bin/tsc --noEmit -p typescript/tsconfig.bundler.json",
+          "reason": null,
+          "durationMs": 2051
+        },
+        {
+          "id": "vite",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node verify-vite.mjs",
+          "reason": null,
+          "durationMs": 3588
+        },
+        {
+          "id": "integrations",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node verify-integrations.mjs",
+          "reason": null,
+          "durationMs": 646
+        },
+        {
+          "id": "replication-lifecycle",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node replication-lifecycle.mjs",
+          "reason": null,
+          "durationMs": 726
+        },
+        {
+          "id": "collections",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node collections.mjs",
+          "reason": null,
+          "durationMs": 972
+        },
+        {
+          "id": "cleanup",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node cleanup.mjs",
+          "reason": null,
+          "durationMs": 407
+        }
+      ]
+    },
+    {
+      "target": "node-24.22.3",
+      "command": "node scripts/compatibility/run.mjs --artifact $REPO/release/0.1.3/clatech-db-0.1.3.tgz --sha256 $SHA256 --lane [object Object] --path $NODE_24_22_3_PATH --scratch $SCRATCH/tmp --out $SCRATCH/verified-013/node-24.22.3",
+      "exitCode": 0,
+      "environment": {
+        "os": "Linux 7.0.0-43-generic x64",
+        "manager": {
+          "available": true,
+          "version": "11.19.1"
+        },
+        "runtime": {
+          "available": true,
+          "version": "24.22.3"
+        }
+      },
+      "lane": {
+        "id": "npm-node",
+        "packageManager": "npm",
+        "runtime": "node",
+        "linker": "node-modules"
+      },
+      "startedAt": "2026-11-26T16:53:48.417Z",
+      "durationMs": 18327,
+      "status": "PASS",
+      "summary": {
+        "total": 13,
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0,
+        "unsupported": 0,
+        "required": 13,
+        "requiredPassed": 13,
+        "verdict": "PASS",
+        "supported": true
+      },
+      "limitations": [
+        "No additional lane limitations were recorded. This is not a claim that untested targets are supported."
+      ],
+      "probes": [
+        {
+          "id": "toolchain",
+          "status": "PASS",
+          "required": true,
+          "exitCode": null,
+          "command": null,
+          "reason": null,
+          "durationMs": 0
+        },
+        {
+          "id": "install",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "npm install --ignore-scripts --no-audit --no-fund",
+          "reason": null,
+          "durationMs": 7907
+        },
+        {
+          "id": "package-layout",
+          "status": "PASS",
+          "required": true,
+          "exitCode": null,
+          "command": null,
+          "reason": null,
+          "durationMs": 0
+        },
+        {
+          "id": "rxjs-peer",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node peer.mjs",
+          "reason": null,
+          "durationMs": 70
+        },
+        {
+          "id": "esm",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node esm.mjs",
+          "reason": null,
+          "durationMs": 385
+        },
+        {
+          "id": "commonjs",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node commonjs.cjs",
+          "reason": null,
+          "durationMs": 328
+        },
+        {
+          "id": "typescript-nodenext",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node node_modules/typescript/bin/tsc --noEmit -p typescript/tsconfig.nodenext.json",
+          "reason": null,
+          "durationMs": 1846
+        },
+        {
+          "id": "typescript-bundler",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node node_modules/typescript/bin/tsc --noEmit -p typescript/tsconfig.bundler.json",
+          "reason": null,
+          "durationMs": 1613
+        },
+        {
+          "id": "vite",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node verify-vite.mjs",
+          "reason": null,
+          "durationMs": 3069
+        },
+        {
+          "id": "integrations",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node verify-integrations.mjs",
+          "reason": null,
+          "durationMs": 585
+        },
+        {
+          "id": "replication-lifecycle",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node replication-lifecycle.mjs",
+          "reason": null,
+          "durationMs": 701
+        },
+        {
+          "id": "collections",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node collections.mjs",
+          "reason": null,
+          "durationMs": 939
+        },
+        {
+          "id": "cleanup",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node cleanup.mjs",
+          "reason": null,
+          "durationMs": 360
+        }
+      ]
+    },
+    {
+      "target": "node-26.13.1",
+      "command": "node scripts/compatibility/run.mjs --artifact $REPO/release/0.1.3/clatech-db-0.1.3.tgz --sha256 $SHA256 --lane [object Object] --path $NODE_26_13_1_PATH --scratch $SCRATCH/tmp --out $SCRATCH/verified-013/node-26.13.1",
+      "exitCode": 0,
+      "environment": {
+        "os": "Linux 7.0.0-43-generic x64",
+        "manager": {
+          "available": true,
+          "version": "11.19.1"
+        },
+        "runtime": {
+          "available": true,
+          "version": "26.13.1"
+        }
+      },
+      "lane": {
+        "id": "npm-node",
+        "packageManager": "npm",
+        "runtime": "node",
+        "linker": "node-modules"
+      },
+      "startedAt": "2026-11-26T16:54:06.889Z",
+      "durationMs": 18563,
+      "status": "PASS",
+      "summary": {
+        "total": 13,
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0,
+        "unsupported": 0,
+        "required": 13,
+        "requiredPassed": 13,
+        "verdict": "PASS",
+        "supported": true
+      },
+      "limitations": [
+        "No additional lane limitations were recorded. This is not a claim that untested targets are supported."
+      ],
+      "probes": [
+        {
+          "id": "toolchain",
+          "status": "PASS",
+          "required": true,
+          "exitCode": null,
+          "command": null,
+          "reason": null,
+          "durationMs": 0
+        },
+        {
+          "id": "install",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "npm install --ignore-scripts --no-audit --no-fund",
+          "reason": null,
+          "durationMs": 8126
+        },
+        {
+          "id": "package-layout",
+          "status": "PASS",
+          "required": true,
+          "exitCode": null,
+          "command": null,
+          "reason": null,
+          "durationMs": 0
+        },
+        {
+          "id": "rxjs-peer",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node peer.mjs",
+          "reason": null,
+          "durationMs": 67
+        },
+        {
+          "id": "esm",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node esm.mjs",
+          "reason": null,
+          "durationMs": 478
+        },
+        {
+          "id": "commonjs",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node commonjs.cjs",
+          "reason": null,
+          "durationMs": 390
+        },
+        {
+          "id": "typescript-nodenext",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node node_modules/typescript/bin/tsc --noEmit -p typescript/tsconfig.nodenext.json",
+          "reason": null,
+          "durationMs": 2039
+        },
+        {
+          "id": "typescript-bundler",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node node_modules/typescript/bin/tsc --noEmit -p typescript/tsconfig.bundler.json",
+          "reason": null,
+          "durationMs": 1965
+        },
+        {
+          "id": "vite",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node verify-vite.mjs",
+          "reason": null,
+          "durationMs": 2671
+        },
+        {
+          "id": "integrations",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node verify-integrations.mjs",
+          "reason": null,
+          "durationMs": 453
+        },
+        {
+          "id": "replication-lifecycle",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node replication-lifecycle.mjs",
+          "reason": null,
+          "durationMs": 619
+        },
+        {
+          "id": "collections",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node collections.mjs",
+          "reason": null,
+          "durationMs": 925
+        },
+        {
+          "id": "cleanup",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node cleanup.mjs",
+          "reason": null,
+          "durationMs": 347
+        }
+      ]
+    },
+    {
+      "target": "pnpm-node",
+      "command": "node scripts/compatibility/run.mjs --artifact $REPO/release/0.1.3/clatech-db-0.1.3.tgz --sha256 $SHA256 --lane [object Object] --path $PNPM_NODE_PATH --scratch $SCRATCH/tmp --out $SCRATCH/verified-013/pnpm-node",
+      "exitCode": 0,
+      "environment": {
+        "os": "Linux 7.0.0-43-generic x64",
+        "manager": {
+          "available": true,
+          "version": "11.23.0"
+        },
+        "runtime": {
+          "available": true,
+          "version": "24.22.3"
+        }
+      },
+      "lane": {
+        "id": "pnpm-node",
+        "packageManager": "pnpm",
+        "runtime": "node",
+        "linker": "isolated"
+      },
+      "startedAt": "2026-11-26T16:53:07.251Z",
+      "durationMs": 12107,
+      "status": "PASS",
+      "summary": {
+        "total": 13,
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0,
+        "unsupported": 0,
+        "required": 13,
+        "requiredPassed": 13,
+        "verdict": "PASS",
+        "supported": true
+      },
+      "limitations": [
+        "No additional lane limitations were recorded. This is not a claim that untested targets are supported."
+      ],
+      "probes": [
+        {
+          "id": "toolchain",
+          "status": "PASS",
+          "required": true,
+          "exitCode": null,
+          "command": null,
+          "reason": null,
+          "durationMs": 0
+        },
+        {
+          "id": "install",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "pnpm install --ignore-scripts --reporter=append-only",
+          "reason": null,
+          "durationMs": 2445
+        },
+        {
+          "id": "package-layout",
+          "status": "PASS",
+          "required": true,
+          "exitCode": null,
+          "command": null,
+          "reason": null,
+          "durationMs": 1
+        },
+        {
+          "id": "rxjs-peer",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node peer.mjs",
+          "reason": null,
+          "durationMs": 55
+        },
+        {
+          "id": "esm",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node esm.mjs",
+          "reason": null,
+          "durationMs": 343
+        },
+        {
+          "id": "commonjs",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node commonjs.cjs",
+          "reason": null,
+          "durationMs": 299
+        },
+        {
+          "id": "typescript-nodenext",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node node_modules/typescript/bin/tsc --noEmit -p typescript/tsconfig.nodenext.json",
+          "reason": null,
+          "durationMs": 1580
+        },
+        {
+          "id": "typescript-bundler",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node node_modules/typescript/bin/tsc --noEmit -p typescript/tsconfig.bundler.json",
+          "reason": null,
+          "durationMs": 1257
+        },
+        {
+          "id": "vite",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node verify-vite.mjs",
+          "reason": null,
+          "durationMs": 2592
+        },
+        {
+          "id": "integrations",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node verify-integrations.mjs",
+          "reason": null,
+          "durationMs": 570
+        },
+        {
+          "id": "replication-lifecycle",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node replication-lifecycle.mjs",
+          "reason": null,
+          "durationMs": 688
+        },
+        {
+          "id": "collections",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node collections.mjs",
+          "reason": null,
+          "durationMs": 961
+        },
+        {
+          "id": "cleanup",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node cleanup.mjs",
+          "reason": null,
+          "durationMs": 357
+        }
+      ]
+    },
+    {
+      "target": "bun-node",
+      "command": "node scripts/compatibility/run.mjs --artifact $REPO/release/0.1.3/clatech-db-0.1.3.tgz --sha256 $SHA256 --lane [object Object] --path $BUN_NODE_PATH --scratch $SCRATCH/tmp --out $SCRATCH/verified-013/bun-node",
+      "exitCode": 0,
+      "environment": {
+        "os": "Linux 7.0.0-43-generic x64",
+        "manager": {
+          "available": true,
+          "version": "1.3.14"
+        },
+        "runtime": {
+          "available": true,
+          "version": "24.22.3"
+        }
+      },
+      "lane": {
+        "id": "bun-node",
+        "packageManager": "bun",
+        "runtime": "node",
+        "linker": "node-modules"
+      },
+      "startedAt": "2026-11-26T16:53:19.500Z",
+      "durationMs": 11490,
+      "status": "PASS",
+      "summary": {
+        "total": 13,
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0,
+        "unsupported": 0,
+        "required": 13,
+        "requiredPassed": 13,
+        "verdict": "PASS",
+        "supported": true
+      },
+      "limitations": [
+        "Bun installs the artifact; every probe executes on the Node.js runtime of this lane."
+      ],
+      "probes": [
+        {
+          "id": "toolchain",
+          "status": "PASS",
+          "required": true,
+          "exitCode": null,
+          "command": null,
+          "reason": null,
+          "durationMs": 0
+        },
+        {
+          "id": "install",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "bun install --ignore-scripts",
+          "reason": null,
+          "durationMs": 1257
+        },
+        {
+          "id": "package-layout",
+          "status": "PASS",
+          "required": true,
+          "exitCode": null,
+          "command": null,
+          "reason": null,
+          "durationMs": 1
+        },
+        {
+          "id": "rxjs-peer",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node peer.mjs",
+          "reason": null,
+          "durationMs": 70
+        },
+        {
+          "id": "esm",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node esm.mjs",
+          "reason": null,
+          "durationMs": 395
+        },
+        {
+          "id": "commonjs",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node commonjs.cjs",
+          "reason": null,
+          "durationMs": 375
+        },
+        {
+          "id": "typescript-nodenext",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node node_modules/typescript/bin/tsc --noEmit -p typescript/tsconfig.nodenext.json",
+          "reason": null,
+          "durationMs": 1727
+        },
+        {
+          "id": "typescript-bundler",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node node_modules/typescript/bin/tsc --noEmit -p typescript/tsconfig.bundler.json",
+          "reason": null,
+          "durationMs": 1784
+        },
+        {
+          "id": "vite",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node verify-vite.mjs",
+          "reason": null,
+          "durationMs": 3059
+        },
+        {
+          "id": "integrations",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node verify-integrations.mjs",
+          "reason": null,
+          "durationMs": 596
+        },
+        {
+          "id": "replication-lifecycle",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node replication-lifecycle.mjs",
+          "reason": null,
+          "durationMs": 668
+        },
+        {
+          "id": "collections",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node collections.mjs",
+          "reason": null,
+          "durationMs": 953
+        },
+        {
+          "id": "cleanup",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node cleanup.mjs",
+          "reason": null,
+          "durationMs": 414
+        }
+      ]
+    },
+    {
+      "target": "bun-bun",
+      "command": "node scripts/compatibility/run.mjs --artifact $REPO/release/0.1.3/clatech-db-0.1.3.tgz --sha256 $SHA256 --lane [object Object] --path $BUN_BUN_PATH --scratch $SCRATCH/tmp --out $SCRATCH/verified-013/bun-bun",
+      "exitCode": 0,
+      "environment": {
+        "os": "Linux 7.0.0-43-generic x64",
+        "manager": {
+          "available": true,
+          "version": "1.3.14"
+        },
+        "runtime": {
+          "available": true,
+          "version": "1.3.14"
+        }
+      },
+      "lane": {
+        "id": "bun-bun",
+        "packageManager": "bun",
+        "runtime": "bun",
+        "linker": "node-modules"
+      },
+      "startedAt": "2026-11-26T16:53:31.143Z",
+      "durationMs": 4342,
+      "status": "PASS",
+      "summary": {
+        "total": 14,
+        "passed": 11,
+        "failed": 0,
+        "skipped": 3,
+        "unsupported": 0,
+        "required": 11,
+        "requiredPassed": 11,
+        "verdict": "PASS",
+        "supported": true
+      },
+      "limitations": [
+        "Dexie runs against simulated IndexedDB under Bun. This is not native persistent IndexedDB evidence."
+      ],
+      "probes": [
+        {
+          "id": "toolchain",
+          "status": "PASS",
+          "required": true,
+          "exitCode": null,
+          "command": null,
+          "reason": null,
+          "durationMs": 0
+        },
+        {
+          "id": "install",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "bun install --ignore-scripts",
+          "reason": null,
+          "durationMs": 326
+        },
+        {
+          "id": "package-layout",
+          "status": "PASS",
+          "required": true,
+          "exitCode": null,
+          "command": null,
+          "reason": null,
+          "durationMs": 0
+        },
+        {
+          "id": "rxjs-peer",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "bun peer.mjs",
+          "reason": null,
+          "durationMs": 82
+        },
+        {
+          "id": "esm",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "bun esm.mjs",
+          "reason": null,
+          "durationMs": 372
+        },
+        {
+          "id": "commonjs",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "bun commonjs.cjs",
+          "reason": null,
+          "durationMs": 399
+        },
+        {
+          "id": "typescript-native",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "bun typescript/check-native.ts",
+          "reason": null,
+          "durationMs": 357
+        },
+        {
+          "id": "integrations",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "bun verify-integrations.mjs",
+          "reason": null,
+          "durationMs": 553
+        },
+        {
+          "id": "replication-lifecycle",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "bun replication-lifecycle.mjs",
+          "reason": null,
+          "durationMs": 680
+        },
+        {
+          "id": "collections",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "bun collections.mjs",
+          "reason": null,
+          "durationMs": 981
+        },
+        {
+          "id": "cleanup",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "bun cleanup.mjs",
+          "reason": null,
+          "durationMs": 355
+        },
+        {
+          "id": "typescript-nodenext",
+          "status": "SKIP",
+          "required": false,
+          "exitCode": null,
+          "command": null,
+          "reason": "Declaration resolution is asserted on the Node lanes; the Bun runtime lane executes TypeScript directly.",
+          "durationMs": 0
+        },
+        {
+          "id": "typescript-bundler",
+          "status": "SKIP",
+          "required": false,
+          "exitCode": null,
+          "command": null,
+          "reason": "Declaration resolution is asserted on the Node lanes; the Bun runtime lane executes TypeScript directly.",
+          "durationMs": 0
+        },
+        {
+          "id": "vite",
+          "status": "SKIP",
+          "required": false,
+          "exitCode": null,
+          "command": null,
+          "reason": "Vite builds are asserted on the Node lanes; Bun bundler compatibility is not part of this lane.",
+          "durationMs": 0
+        }
+      ]
+    },
+    {
+      "target": "yarn-node",
+      "command": "node scripts/compatibility/run.mjs --artifact $REPO/release/0.1.3/clatech-db-0.1.3.tgz --sha256 $SHA256 --lane [object Object] --path $YARN_NODE_PATH --scratch $SCRATCH/tmp --out $SCRATCH/verified-013/yarn-node",
+      "exitCode": 0,
+      "environment": {
+        "os": "Linux 7.0.0-43-generic x64",
+        "manager": {
+          "available": true,
+          "version": "4.19.0"
+        },
+        "runtime": {
+          "available": true,
+          "version": "24.22.3"
+        }
+      },
+      "lane": {
+        "id": "yarn-node",
+        "packageManager": "yarn",
+        "runtime": "node",
+        "linker": "node-modules"
+      },
+      "startedAt": "2026-11-26T16:53:35.666Z",
+      "durationMs": 15964,
+      "status": "PASS",
+      "summary": {
+        "total": 13,
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0,
+        "unsupported": 0,
+        "required": 13,
+        "requiredPassed": 13,
+        "verdict": "PASS",
+        "supported": true
+      },
+      "limitations": [
+        "No additional lane limitations were recorded. This is not a claim that untested targets are supported."
+      ],
+      "probes": [
+        {
+          "id": "toolchain",
+          "status": "PASS",
+          "required": true,
+          "exitCode": null,
+          "command": null,
+          "reason": null,
+          "durationMs": 0
+        },
+        {
+          "id": "install",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "yarn install --no-immutable",
+          "reason": null,
+          "durationMs": 4485
+        },
+        {
+          "id": "package-layout",
+          "status": "PASS",
+          "required": true,
+          "exitCode": null,
+          "command": null,
+          "reason": null,
+          "durationMs": 0
+        },
+        {
+          "id": "rxjs-peer",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node peer.mjs",
+          "reason": null,
+          "durationMs": 70
+        },
+        {
+          "id": "esm",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node esm.mjs",
+          "reason": null,
+          "durationMs": 553
+        },
+        {
+          "id": "commonjs",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node commonjs.cjs",
+          "reason": null,
+          "durationMs": 470
+        },
+        {
+          "id": "typescript-nodenext",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node node_modules/typescript/bin/tsc --noEmit -p typescript/tsconfig.nodenext.json",
+          "reason": null,
+          "durationMs": 1913
+        },
+        {
+          "id": "typescript-bundler",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node node_modules/typescript/bin/tsc --noEmit -p typescript/tsconfig.bundler.json",
+          "reason": null,
+          "durationMs": 1776
+        },
+        {
+          "id": "vite",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node verify-vite.mjs",
+          "reason": null,
+          "durationMs": 3093
+        },
+        {
+          "id": "integrations",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node verify-integrations.mjs",
+          "reason": null,
+          "durationMs": 605
+        },
+        {
+          "id": "replication-lifecycle",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node replication-lifecycle.mjs",
+          "reason": null,
+          "durationMs": 729
+        },
+        {
+          "id": "collections",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node collections.mjs",
+          "reason": null,
+          "durationMs": 990
+        },
+        {
+          "id": "cleanup",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "node cleanup.mjs",
+          "reason": null,
+          "durationMs": 383
+        }
+      ]
+    },
+    {
+      "target": "yarn-pnp",
+      "command": "node scripts/compatibility/run.mjs --artifact $REPO/release/0.1.3/clatech-db-0.1.3.tgz --sha256 $SHA256 --lane [object Object] --path $YARN_PNP_PATH --scratch $SCRATCH/tmp --out $SCRATCH/verified-013/yarn-pnp",
+      "exitCode": 0,
+      "environment": {
+        "os": "Linux 7.0.0-43-generic x64",
+        "manager": {
+          "available": true,
+          "version": "4.19.0"
+        },
+        "runtime": {
+          "available": true,
+          "version": "24.22.3"
+        }
+      },
+      "lane": {
+        "id": "yarn-pnp",
+        "packageManager": "yarn",
+        "runtime": "node",
+        "linker": "pnp"
+      },
+      "startedAt": "2026-11-26T16:53:51.784Z",
+      "durationMs": 28970,
+      "status": "PASS",
+      "summary": {
+        "total": 13,
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0,
+        "unsupported": 0,
+        "required": 13,
+        "requiredPassed": 13,
+        "verdict": "PASS",
+        "supported": true
+      },
+      "limitations": [
+        "Plug'n'Play results apply only to the explicit modern Yarn version recorded in this report."
+      ],
+      "probes": [
+        {
+          "id": "toolchain",
+          "status": "PASS",
+          "required": true,
+          "exitCode": null,
+          "command": null,
+          "reason": null,
+          "durationMs": 0
+        },
+        {
+          "id": "install",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "yarn install --no-immutable",
+          "reason": null,
+          "durationMs": 2670
+        },
+        {
+          "id": "package-layout",
+          "status": "PASS",
+          "required": true,
+          "exitCode": null,
+          "command": null,
+          "reason": null,
+          "durationMs": 1019
+        },
+        {
+          "id": "rxjs-peer",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "yarn node peer.mjs",
+          "reason": null,
+          "durationMs": 942
+        },
+        {
+          "id": "esm",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "yarn node esm.mjs",
+          "reason": null,
+          "durationMs": 1889
+        },
+        {
+          "id": "commonjs",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "yarn node commonjs.cjs",
+          "reason": null,
+          "durationMs": 1518
+        },
+        {
+          "id": "typescript-nodenext",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "yarn tsc --noEmit -p typescript/tsconfig.nodenext.json",
+          "reason": null,
+          "durationMs": 3036
+        },
+        {
+          "id": "typescript-bundler",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "yarn tsc --noEmit -p typescript/tsconfig.bundler.json",
+          "reason": null,
+          "durationMs": 2573
+        },
+        {
+          "id": "vite",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "yarn node verify-vite.mjs",
+          "reason": null,
+          "durationMs": 5193
+        },
+        {
+          "id": "integrations",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "yarn node verify-integrations.mjs",
+          "reason": null,
+          "durationMs": 2226
+        },
+        {
+          "id": "replication-lifecycle",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "yarn node replication-lifecycle.mjs",
+          "reason": null,
+          "durationMs": 2537
+        },
+        {
+          "id": "collections",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "yarn node collections.mjs",
+          "reason": null,
+          "durationMs": 2735
+        },
+        {
+          "id": "cleanup",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "yarn node cleanup.mjs",
+          "reason": null,
+          "durationMs": 2075
+        }
+      ]
+    },
+    {
+      "target": "deno",
+      "command": "node scripts/compatibility/run.mjs --artifact $REPO/release/0.1.3/clatech-db-0.1.3.tgz --sha256 $SHA256 --lane [object Object] --path $DENO_PATH --scratch $SCRATCH/tmp --out $SCRATCH/verified-013/deno",
+      "exitCode": 0,
+      "environment": {
+        "os": "Linux 7.0.0-43-generic x64",
+        "manager": {
+          "available": true,
+          "version": "2.8.3"
+        },
+        "runtime": {
+          "available": true,
+          "version": "2.8.3"
+        }
+      },
+      "lane": {
+        "id": "deno",
+        "packageManager": "deno",
+        "runtime": "deno",
+        "linker": "deno-node-modules"
+      },
+      "startedAt": "2026-11-26T16:54:20.903Z",
+      "durationMs": 3890,
+      "status": "PASS",
+      "summary": {
+        "total": 15,
+        "passed": 9,
+        "failed": 0,
+        "skipped": 6,
+        "unsupported": 0,
+        "required": 9,
+        "requiredPassed": 9,
+        "verdict": "PASS",
+        "supported": true
+      },
+      "limitations": [
+        "Deno resolves the extracted candidate through a file: package dependency with the artifact runtime dependencies declared explicitly. npm specifier consumption of a published package is a separate check and is not covered here.",
+        "DenoKV is the deprecated storage plugin. The smoke uses an in-memory Deno.openKv instance with --unstable-kv and is not evidence for Deno Deploy or file-backed KV.",
+        "Deno runs with --allow-read and --allow-env only; no shell, network, or all-permissions flag is used for the fixtures."
+      ],
+      "probes": [
+        {
+          "id": "toolchain",
+          "status": "PASS",
+          "required": true,
+          "exitCode": null,
+          "command": null,
+          "reason": null,
+          "durationMs": 0
+        },
+        {
+          "id": "install",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "deno install",
+          "reason": null,
+          "durationMs": 154
+        },
+        {
+          "id": "package-layout",
+          "status": "PASS",
+          "required": true,
+          "exitCode": null,
+          "command": null,
+          "reason": null,
+          "durationMs": 0
+        },
+        {
+          "id": "esm",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "deno run --allow-read --allow-env esm.mjs",
+          "reason": null,
+          "durationMs": 517
+        },
+        {
+          "id": "commonjs",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "deno run --allow-read --allow-env commonjs.cjs",
+          "reason": null,
+          "durationMs": 385
+        },
+        {
+          "id": "collections",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "deno run --allow-read --allow-env collections.mjs",
+          "reason": null,
+          "durationMs": 1259
+        },
+        {
+          "id": "replication-lifecycle",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "deno run --allow-read --allow-env replication-lifecycle.mjs",
+          "reason": null,
+          "durationMs": 598
+        },
+        {
+          "id": "denokv",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "deno run --allow-read --allow-env --unstable-kv denokv.mjs",
+          "reason": null,
+          "durationMs": 384
+        },
+        {
+          "id": "cleanup",
+          "status": "PASS",
+          "required": true,
+          "exitCode": 0,
+          "command": "deno run --allow-read --allow-env cleanup.mjs",
+          "reason": null,
+          "durationMs": 289
+        },
+        {
+          "id": "rxjs-peer",
+          "status": "SKIP",
+          "required": false,
+          "exitCode": null,
+          "command": null,
+          "reason": "Single-copy peer resolution is a node_modules assertion; the Deno lane checks RxJS through the ESM fixture.",
+          "durationMs": 0
+        },
+        {
+          "id": "integrations",
+          "status": "SKIP",
+          "required": false,
+          "exitCode": null,
+          "command": null,
+          "reason": "Dexie-simulated IndexedDB is not part of the Deno lane; the lane uses Memory Storage.",
+          "durationMs": 0
+        },
+        {
+          "id": "vite",
+          "status": "SKIP",
+          "required": false,
+          "exitCode": null,
+          "command": null,
+          "reason": "Vite builds are asserted on the Node lanes.",
+          "durationMs": 0
+        },
+        {
+          "id": "typescript-nodenext",
+          "status": "SKIP",
+          "required": false,
+          "exitCode": null,
+          "command": null,
+          "reason": "TypeScript declaration resolution is asserted on the Node lanes.",
+          "durationMs": 0
+        },
+        {
+          "id": "typescript-bundler",
+          "status": "SKIP",
+          "required": false,
+          "exitCode": null,
+          "command": null,
+          "reason": "TypeScript declaration resolution is asserted on the Node lanes.",
+          "durationMs": 0
+        },
+        {
+          "id": "typescript-native",
+          "status": "SKIP",
+          "required": false,
+          "exitCode": null,
+          "command": null,
+          "reason": "Bun-only TypeScript execution.",
+          "durationMs": 0
+        }
+      ]
+    }
+  ],
+  "browsers": [
+    {
+      "command": "node scripts/browser-integration/run.mjs --artifact $REPO/release/0.1.3/clatech-db-0.1.3.tgz --sha256 $SHA256 --browser chromium --out $SCRATCH/verified-013/browsers/chromium --work-dir $SCRATCH/tmp",
+      "exitCode": 0,
+      "environment": {
+        "os": "Linux 7.0.0-43-generic x64",
+        "node": "24.22.3",
+        "npm": "11.19.1",
+        "engine": "chromium",
+        "version": "159.0.8154.6",
+        "build": 1255,
+        "playwright": "1.65.1",
+        "vite": "8.4.0",
+        "rxjs": "7.8.2"
+      },
+      "startedAt": "2026-11-26T16:53:07.314Z",
+      "finishedAt": "2026-11-26T16:53:46.573Z",
+      "status": "PASS",
+      "counts": {
+        "PASS": 15,
+        "FAIL": 0,
+        "SKIP": 0,
+        "UNSUPPORTED": 0
+      },
+      "scenarios": [
+        {
+          "id": "s6-crud",
+          "slice": "suite",
+          "title": "Create a database, insert, query, update and delete documents",
+          "status": "PASS",
+          "durationMs": 595,
+          "details": [
+            "collections: col_1"
+          ],
+          "error": null
+        },
+        {
+          "id": "s6-reactivity",
+          "slice": "suite",
+          "title": "Reactive queries emit on insert, update and delete",
+          "status": "PASS",
+          "durationMs": 657,
+          "details": [
+            "emissions: 0,2,2,3,2"
+          ],
+          "error": null
+        },
+        {
+          "id": "s6-collections-14",
+          "slice": "suite",
+          "title": "Open and use a database with 14 collections",
+          "status": "PASS",
+          "durationMs": 1097,
+          "details": [
+            "tracked open collections: 14"
+          ],
+          "error": null
+        },
+        {
+          "id": "s6-collections-20",
+          "slice": "suite",
+          "title": "Open and use a database with 20 collections",
+          "status": "PASS",
+          "durationMs": 1500,
+          "details": [
+            "tracked open collections: 20"
+          ],
+          "error": null
+        },
+        {
+          "id": "s6-collections-50",
+          "slice": "suite",
+          "title": "Open and use a database with 50 collections",
+          "status": "PASS",
+          "durationMs": 3436,
+          "details": [
+            "tracked open collections: 50"
+          ],
+          "error": null
+        },
+        {
+          "id": "s6-collections-100",
+          "slice": "suite",
+          "title": "Open and use a database with 100 collections",
+          "status": "PASS",
+          "durationMs": 7326,
+          "details": [
+            "tracked open collections: 100"
+          ],
+          "error": null
+        },
+        {
+          "id": "s6-page-reload",
+          "slice": "suite",
+          "title": "Documents persist across a page reload at the same origin",
+          "status": "PASS",
+          "durationMs": 431,
+          "details": [],
+          "error": null
+        },
+        {
+          "id": "s6-browser-restart",
+          "slice": "suite",
+          "title": "Documents persist across an orderly browser restart with a persistent profile",
+          "status": "PASS",
+          "durationMs": 1059,
+          "details": [
+            "closed the browser at $SCRATCH/tmp/cla-db-browser-chromium-M51nk7/profiles/restart"
+          ],
+          "error": null
+        },
+        {
+          "id": "s6-schema-migration",
+          "slice": "suite",
+          "title": "Schema migration upgrades stored documents and is not repeated",
+          "status": "PASS",
+          "durationMs": 795,
+          "details": [
+            "migrated tags: [\"migrated\",\"migrated\"]"
+          ],
+          "error": null
+        },
+        {
+          "id": "s6-resource-cleanup",
+          "slice": "suite",
+          "title": "Opening and closing databases releases collections and subscriptions",
+          "status": "PASS",
+          "durationMs": 755,
+          "details": [
+            "open collections after three cycles: 0"
+          ],
+          "error": null
+        },
+        {
+          "id": "s7-initial-sync",
+          "slice": "offline",
+          "title": "Initial replication converges against the controlled backend",
+          "status": "PASS",
+          "durationMs": 191,
+          "details": [
+            "server counters: {\"docCount\":2,\"pullRequests\":1,\"pushRequests\":1,\"pushesAccepted\":2,\"conflictsReturned\":0,\"writesById\":{\"sync-1\":1,\"sync-2\":1}}"
+          ],
+          "error": null
+        },
+        {
+          "id": "s7-offline-edit-reload",
+          "slice": "offline",
+          "title": "Offline edits survive an offline page reload served by the app shell",
+          "status": "PASS",
+          "durationMs": 563,
+          "details": [
+            "offline replication errors: 1"
+          ],
+          "error": null
+        },
+        {
+          "id": "s7-reconnect-convergence",
+          "slice": "offline",
+          "title": "Replication converges after reconnect without duplicates",
+          "status": "PASS",
+          "durationMs": 456,
+          "details": [
+            "server counters after reconnect: {\"docCount\":3,\"pullRequests\":3,\"pushRequests\":2,\"pushesAccepted\":4,\"conflictsReturned\":0,\"writesById\":{\"rec-1\":2,\"rec-2\":1,\"rec-3\":1}}"
+          ],
+          "error": null
+        },
+        {
+          "id": "s7-conflict-resolution",
+          "slice": "offline",
+          "title": "A concurrent offline edit resolves deterministically to the master state",
+          "status": "PASS",
+          "durationMs": 882,
+          "details": [
+            "server before convergence: {\"induced\":{\"push\":0,\"pull\":0,\"failedRequests\":0},\"attempts\":{\"push\":6,\"pull\":11},\"collections\":{\"sync_i4g80xw5:col_1\":{\"docCount\":2,\"pullRequests\":2,\"pushRequests\":1,\"pushesAccepted\":2,\"conflictsReturned\":0,\"writesById\":{\"sync-1\":1,\"sync-2\":1}},\"offline_7r06dw8o:col_1\":{\"docCount\":2,\"pullRequests\":2,\"pushRequests\":1,\"pushesAccepted\":2,\"conflictsReturned\":0,\"writesById\":{\"off-1\":1,\"off-2\":1}},\"reconnect_2yf9w2eb:col_1\":{\"docCount\":3,\"pullRequests\":4,\"pushRequests\":2,\"pushesAccepted\":4,\"conflictsReturned\":0,\"writesById\":{\"rec-1\":2,\"rec-2\":1,\"rec-3\":1}},\"conflict_6bcy8n76:col_1\":{\"docCount\":1,\"pullRequests\":3,\"pushRequests\":2,\"pushesAccepted\":2,\"conflictsReturned\":0,\"writesById\":{\"conflict-1\":2}}}}",
+            "client A document: {\"id\":\"conflict-1\",\"title\":\"title conflict-1\",\"count\":99,\"updatedAt\":1001}",
+            "client A replication counters: {\"pullCalls\":2,\"pushCalls\":3,\"received\":0,\"sent\":1,\"conflicts\":1,\"errors\":1,\"lastError\":\"\\n\\n        RxDB Error-Code: RC_PUSH.\\n        Hint: Error messages are not included in RxDB core to reduce build size.\\n        To show the full error messages and to ensure that you do not make any mistakes when using RxDB,\\n        use the dev-mode plugin when you are in development mode: https://rxdb.info/dev-mode.html?console=error\\n        \\nFind out more about this error here: https://rxdb.info/errors.html?console=errors#RC_PUSH \\nStill stuck? Ask in the RxDB Discord: https://rxdb.info/chat \\n\\n--------------------\\nParameters:\\npushRows: [\\n  {\\n    \\\"assumedMasterState\\\": {\\n      \\\"id\\\": \\\"conflict-1\\\",\\n      \\\"title\\\": \\\"title conflict-1\\\",\\n      \\\"count\\\": 1,\\n      \\\"updatedAt\\\": 1001,\\n      \\\"_deleted\\\": false\\n    },\\n    \\\"newDocumentState\\\": {\\n      \\\"id\\\": \\\"conflict-1\\\",\\n      \\\"title\\\": \\\"title conflict-1\\\",\\n      \\\"count\\\": 42,\\n      \\\"updatedAt\\\": 1001,\\n      \\\"_deleted\\\": false\\n    }\\n  }\\n]\\nerrors: {\\\"name\\\":\\\"TypeError\\\",\\\"message\\\":\\\"Failed to fetch\\\",\\\"stack\\\":\\\"TypeError: Failed to fetch \\\\n     at Nm (http://127.0.0.1:43907/assets/index-DncRDsAn.js:30:39332) \\\\n     at Object.handler (http://127.0.0.1:43907/assets/index-DncRDsAn.js:30:40082) \\\\n     at Object.masterWrite (http://127.0.0.1:43907/assets/index-DncRDsAn.js:30:33140) \\\\n     at async http://127.0.0.1:43907/assets/index-DncRDsAn.js:22:134419 \\\\n     at async Promise.all (index 0) \\\\n     at async http://127.0.0.1:43907/assets/index-DncRDsAn.js:22:134217 \\\\n     at async http://127.0.0.1:43907/assets/index-DncRDsAn.js:22:133156\\\"}\\ndirection: \\\"push\\\"\\n\"}",
+            "server counters: {\"docCount\":1,\"pullRequests\":3,\"pushRequests\":3,\"pushesAccepted\":2,\"conflictsReturned\":1,\"writesById\":{\"conflict-1\":2}}"
+          ],
+          "error": null
+        },
+        {
+          "id": "s7-retry-no-duplicates",
+          "slice": "offline",
+          "title": "Failed pushes are retried and the document is stored exactly once",
+          "status": "PASS",
+          "durationMs": 671,
+          "details": [
+            "server counters: {\"docCount\":1,\"pullRequests\":1,\"pushRequests\":1,\"pushesAccepted\":1,\"conflictsReturned\":0,\"writesById\":{\"retry-1\":1}}",
+            "induced failures: {\"push\":0,\"pull\":0,\"failedRequests\":2}"
+          ],
+          "error": null
+        }
+      ],
+      "limitations": [
+        "WebKit is tested through the WebKit build pinned by Playwright. It is not Safari or iOS certification.",
+        "SKIP and UNSUPPORTED results are not passes and fail the gate.",
+        "The service worker caches only the app shell. It never caches /api/ traffic, so offline data is read from IndexedDB.",
+        "Recovery after an abrupt process kill is not covered. Only orderly page reload and browser restart are tested.",
+        "Performance is not measured here. This lane reports functional browser behavior only."
+      ]
+    },
+    {
+      "command": "node scripts/browser-integration/run.mjs --artifact $REPO/release/0.1.3/clatech-db-0.1.3.tgz --sha256 $SHA256 --browser firefox --out $SCRATCH/verified-013/browsers/firefox --work-dir $SCRATCH/tmp",
+      "exitCode": 0,
+      "environment": {
+        "os": "Linux 7.0.0-43-generic x64",
+        "node": "24.22.3",
+        "npm": "11.19.1",
+        "engine": "firefox",
+        "version": "159.0",
+        "build": 1572,
+        "playwright": "1.65.1",
+        "vite": "8.4.0",
+        "rxjs": "7.8.2"
+      },
+      "startedAt": "2026-11-26T16:53:47.220Z",
+      "finishedAt": "2026-11-26T16:54:57.990Z",
+      "status": "PASS",
+      "counts": {
+        "PASS": 15,
+        "FAIL": 0,
+        "SKIP": 0,
+        "UNSUPPORTED": 0
+      },
+      "scenarios": [
+        {
+          "id": "s6-crud",
+          "slice": "suite",
+          "title": "Create a database, insert, query, update and delete documents",
+          "status": "PASS",
+          "durationMs": 1256,
+          "details": [
+            "collections: col_1"
+          ],
+          "error": null
+        },
+        {
+          "id": "s6-reactivity",
+          "slice": "suite",
+          "title": "Reactive queries emit on insert, update and delete",
+          "status": "PASS",
+          "durationMs": 1191,
+          "details": [
+            "emissions: 0,2,2,3,2"
+          ],
+          "error": null
+        },
+        {
+          "id": "s6-collections-14",
+          "slice": "suite",
+          "title": "Open and use a database with 14 collections",
+          "status": "PASS",
+          "durationMs": 2965,
+          "details": [
+            "tracked open collections: 14"
+          ],
+          "error": null
+        },
+        {
+          "id": "s6-collections-20",
+          "slice": "suite",
+          "title": "Open and use a database with 20 collections",
+          "status": "PASS",
+          "durationMs": 4069,
+          "details": [
+            "tracked open collections: 20"
+          ],
+          "error": null
+        },
+        {
+          "id": "s6-collections-50",
+          "slice": "suite",
+          "title": "Open and use a database with 50 collections",
+          "status": "PASS",
+          "durationMs": 10248,
+          "details": [
+            "tracked open collections: 50"
+          ],
+          "error": null
+        },
+        {
+          "id": "s6-collections-100",
+          "slice": "suite",
+          "title": "Open and use a database with 100 collections",
+          "status": "PASS",
+          "durationMs": 18214,
+          "details": [
+            "tracked open collections: 100"
+          ],
+          "error": null
+        },
+        {
+          "id": "s6-page-reload",
+          "slice": "suite",
+          "title": "Documents persist across a page reload at the same origin",
+          "status": "PASS",
+          "durationMs": 996,
+          "details": [],
+          "error": null
+        },
+        {
+          "id": "s6-browser-restart",
+          "slice": "suite",
+          "title": "Documents persist across an orderly browser restart with a persistent profile",
+          "status": "PASS",
+          "durationMs": 6404,
+          "details": [
+            "closed the browser at $SCRATCH/tmp/cla-db-browser-firefox-JyeKWm/profiles/restart"
+          ],
+          "error": null
+        },
+        {
+          "id": "s6-schema-migration",
+          "slice": "suite",
+          "title": "Schema migration upgrades stored documents and is not repeated",
+          "status": "PASS",
+          "durationMs": 1871,
+          "details": [
+            "migrated tags: [\"migrated\",\"migrated\"]"
+          ],
+          "error": null
+        },
+        {
+          "id": "s6-resource-cleanup",
+          "slice": "suite",
+          "title": "Opening and closing databases releases collections and subscriptions",
+          "status": "PASS",
+          "durationMs": 2109,
+          "details": [
+            "open collections after three cycles: 0"
+          ],
+          "error": null
+        },
+        {
+          "id": "s7-initial-sync",
+          "slice": "offline",
+          "title": "Initial replication converges against the controlled backend",
+          "status": "PASS",
+          "durationMs": 530,
+          "details": [
+            "server counters: {\"docCount\":2,\"pullRequests\":1,\"pushRequests\":1,\"pushesAccepted\":2,\"conflictsReturned\":0,\"writesById\":{\"sync-1\":1,\"sync-2\":1}}"
+          ],
+          "error": null
+        },
+        {
+          "id": "s7-offline-edit-reload",
+          "slice": "offline",
+          "title": "Offline edits survive an offline page reload served by the app shell",
+          "status": "PASS",
+          "durationMs": 1029,
+          "details": [
+            "offline replication errors: 1"
+          ],
+          "error": null
+        },
+        {
+          "id": "s7-reconnect-convergence",
+          "slice": "offline",
+          "title": "Replication converges after reconnect without duplicates",
+          "status": "PASS",
+          "durationMs": 1017,
+          "details": [
+            "server counters after reconnect: {\"docCount\":3,\"pullRequests\":2,\"pushRequests\":2,\"pushesAccepted\":4,\"conflictsReturned\":0,\"writesById\":{\"rec-1\":2,\"rec-2\":1,\"rec-3\":1}}"
+          ],
+          "error": null
+        },
+        {
+          "id": "s7-conflict-resolution",
+          "slice": "offline",
+          "title": "A concurrent offline edit resolves deterministically to the master state",
+          "status": "PASS",
+          "durationMs": 4658,
+          "details": [
+            "server before convergence: {\"induced\":{\"push\":0,\"pull\":0,\"failedRequests\":0},\"attempts\":{\"push\":6,\"pull\":7},\"collections\":{\"sync_lr1ey90e:col_1\":{\"docCount\":2,\"pullRequests\":1,\"pushRequests\":1,\"pushesAccepted\":2,\"conflictsReturned\":0,\"writesById\":{\"sync-1\":1,\"sync-2\":1}},\"offline_5v4y5zvt:col_1\":{\"docCount\":2,\"pullRequests\":1,\"pushRequests\":1,\"pushesAccepted\":2,\"conflictsReturned\":0,\"writesById\":{\"off-1\":1,\"off-2\":1}},\"reconnect_whvzxbb7:col_1\":{\"docCount\":3,\"pullRequests\":3,\"pushRequests\":2,\"pushesAccepted\":4,\"conflictsReturned\":0,\"writesById\":{\"rec-1\":2,\"rec-2\":1,\"rec-3\":1}},\"conflict_mjtzrswf:col_1\":{\"docCount\":1,\"pullRequests\":2,\"pushRequests\":2,\"pushesAccepted\":2,\"conflictsReturned\":0,\"writesById\":{\"conflict-1\":2}}}}",
+            "client A document: {\"id\":\"conflict-1\",\"title\":\"title conflict-1\",\"count\":99,\"updatedAt\":1001}",
+            "client A replication counters: {\"pullCalls\":2,\"pushCalls\":3,\"received\":0,\"sent\":1,\"conflicts\":1,\"errors\":1,\"lastError\":\"\\n\\n        RxDB Error-Code: RC_PUSH.\\n        Hint: Error messages are not included in RxDB core to reduce build size.\\n        To show the full error messages and to ensure that you do not make any mistakes when using RxDB,\\n        use the dev-mode plugin when you are in development mode: https://rxdb.info/dev-mode.html?console=error\\n        \\nFind out more about this error here: https://rxdb.info/errors.html?console=errors#RC_PUSH \\nStill stuck? Ask in the RxDB Discord: https://rxdb.info/chat \\n\\n--------------------\\nParameters:\\npushRows: [\\n  {\\n    \\\"assumedMasterState\\\": {\\n      \\\"id\\\": \\\"conflict-1\\\",\\n      \\\"title\\\": \\\"title conflict-1\\\",\\n      \\\"count\\\": 1,\\n      \\\"updatedAt\\\": 1001,\\n      \\\"_deleted\\\": false\\n    },\\n    \\\"newDocumentState\\\": {\\n      \\\"id\\\": \\\"conflict-1\\\",\\n      \\\"title\\\": \\\"title conflict-1\\\",\\n      \\\"count\\\": 42,\\n      \\\"updatedAt\\\": 1001,\\n      \\\"_deleted\\\": false\\n    }\\n  }\\n]\\nerrors: {\\\"name\\\":\\\"TypeError\\\",\\\"message\\\":\\\"NetworkError when attempting to fetch resource.\\\"}\\ndirection: \\\"push\\\"\\n\"}",
+            "server counters: {\"docCount\":1,\"pullRequests\":3,\"pushRequests\":3,\"pushesAccepted\":2,\"conflictsReturned\":1,\"writesById\":{\"conflict-1\":2}}"
+          ],
+          "error": null
+        },
+        {
+          "id": "s7-retry-no-duplicates",
+          "slice": "offline",
+          "title": "Failed pushes are retried and the document is stored exactly once",
+          "status": "PASS",
+          "durationMs": 1020,
+          "details": [
+            "server counters: {\"docCount\":1,\"pullRequests\":1,\"pushRequests\":1,\"pushesAccepted\":1,\"conflictsReturned\":0,\"writesById\":{\"retry-1\":1}}",
+            "induced failures: {\"push\":0,\"pull\":0,\"failedRequests\":2}"
+          ],
+          "error": null
+        }
+      ],
+      "limitations": [
+        "WebKit is tested through the WebKit build pinned by Playwright. It is not Safari or iOS certification.",
+        "SKIP and UNSUPPORTED results are not passes and fail the gate.",
+        "The service worker caches only the app shell. It never caches /api/ traffic, so offline data is read from IndexedDB.",
+        "Recovery after an abrupt process kill is not covered. Only orderly page reload and browser restart are tested.",
+        "Performance is not measured here. This lane reports functional browser behavior only."
+      ]
+    },
+    {
+      "command": "node scripts/browser-integration/run.mjs --artifact $REPO/release/0.1.3/clatech-db-0.1.3.tgz --sha256 $SHA256 --browser webkit --out $SCRATCH/verified-013/browsers/webkit --work-dir $SCRATCH/tmp",
+      "exitCode": 0,
+      "environment": {
+        "os": "Linux 7.0.0-43-generic x64",
+        "node": "24.22.3",
+        "npm": "11.19.1",
+        "engine": "webkit",
+        "version": "27.2",
+        "build": 2388,
+        "playwright": "1.65.1",
+        "vite": "8.4.0",
+        "rxjs": "7.8.2"
+      },
+      "startedAt": "2026-11-26T16:54:58.867Z",
+      "finishedAt": "2026-11-26T16:56:45.134Z",
+      "status": "PASS",
+      "counts": {
+        "PASS": 15,
+        "FAIL": 0,
+        "SKIP": 0,
+        "UNSUPPORTED": 0
+      },
+      "scenarios": [
+        {
+          "id": "s6-crud",
+          "slice": "suite",
+          "title": "Create a database, insert, query, update and delete documents",
+          "status": "PASS",
+          "durationMs": 967,
+          "details": [
+            "collections: col_1"
+          ],
+          "error": null
+        },
+        {
+          "id": "s6-reactivity",
+          "slice": "suite",
+          "title": "Reactive queries emit on insert, update and delete",
+          "status": "PASS",
+          "durationMs": 1170,
+          "details": [
+            "emissions: 0,2,2,3,2"
+          ],
+          "error": null
+        },
+        {
+          "id": "s6-collections-14",
+          "slice": "suite",
+          "title": "Open and use a database with 14 collections",
+          "status": "PASS",
+          "durationMs": 4488,
+          "details": [
+            "tracked open collections: 14"
+          ],
+          "error": null
+        },
+        {
+          "id": "s6-collections-20",
+          "slice": "suite",
+          "title": "Open and use a database with 20 collections",
+          "status": "PASS",
+          "durationMs": 6197,
+          "details": [
+            "tracked open collections: 20"
+          ],
+          "error": null
+        },
+        {
+          "id": "s6-collections-50",
+          "slice": "suite",
+          "title": "Open and use a database with 50 collections",
+          "status": "PASS",
+          "durationMs": 16704,
+          "details": [
+            "tracked open collections: 50"
+          ],
+          "error": null
+        },
+        {
+          "id": "s6-collections-100",
+          "slice": "suite",
+          "title": "Open and use a database with 100 collections",
+          "status": "PASS",
+          "durationMs": 56524,
+          "details": [
+            "tracked open collections: 100"
+          ],
+          "error": null
+        },
+        {
+          "id": "s6-page-reload",
+          "slice": "suite",
+          "title": "Documents persist across a page reload at the same origin",
+          "status": "PASS",
+          "durationMs": 741,
+          "details": [],
+          "error": null
+        },
+        {
+          "id": "s6-browser-restart",
+          "slice": "suite",
+          "title": "Documents persist across an orderly browser restart with a persistent profile",
+          "status": "PASS",
+          "durationMs": 1343,
+          "details": [
+            "closed the browser at $SCRATCH/tmp/cla-db-browser-webkit-mF63zM/profiles/restart"
+          ],
+          "error": null
+        },
+        {
+          "id": "s6-schema-migration",
+          "slice": "suite",
+          "title": "Schema migration upgrades stored documents and is not repeated",
+          "status": "PASS",
+          "durationMs": 1594,
+          "details": [
+            "migrated tags: [\"migrated\",\"migrated\"]"
+          ],
+          "error": null
+        },
+        {
+          "id": "s6-resource-cleanup",
+          "slice": "suite",
+          "title": "Opening and closing databases releases collections and subscriptions",
+          "status": "PASS",
+          "durationMs": 2560,
+          "details": [
+            "open collections after three cycles: 0"
+          ],
+          "error": null
+        },
+        {
+          "id": "s7-initial-sync",
+          "slice": "offline",
+          "title": "Initial replication converges against the controlled backend",
+          "status": "PASS",
+          "durationMs": 474,
+          "details": [
+            "server counters: {\"docCount\":2,\"pullRequests\":1,\"pushRequests\":1,\"pushesAccepted\":2,\"conflictsReturned\":0,\"writesById\":{\"sync-1\":1,\"sync-2\":1}}"
+          ],
+          "error": null
+        },
+        {
+          "id": "s7-offline-edit-reload",
+          "slice": "offline",
+          "title": "Offline edits survive an offline page reload served by the app shell",
+          "status": "PASS",
+          "durationMs": 656,
+          "details": [
+            "offline replication errors: 1"
+          ],
+          "error": null
+        },
+        {
+          "id": "s7-reconnect-convergence",
+          "slice": "offline",
+          "title": "Replication converges after reconnect without duplicates",
+          "status": "PASS",
+          "durationMs": 641,
+          "details": [
+            "server counters after reconnect: {\"docCount\":3,\"pullRequests\":2,\"pushRequests\":2,\"pushesAccepted\":4,\"conflictsReturned\":0,\"writesById\":{\"rec-1\":2,\"rec-2\":1,\"rec-3\":1}}"
+          ],
+          "error": null
+        },
+        {
+          "id": "s7-conflict-resolution",
+          "slice": "offline",
+          "title": "A concurrent offline edit resolves deterministically to the master state",
+          "status": "PASS",
+          "durationMs": 1528,
+          "details": [
+            "server before convergence: {\"induced\":{\"push\":0,\"pull\":0,\"failedRequests\":0},\"attempts\":{\"push\":6,\"pull\":6},\"collections\":{\"sync_88h02n9i:col_1\":{\"docCount\":2,\"pullRequests\":1,\"pushRequests\":1,\"pushesAccepted\":2,\"conflictsReturned\":0,\"writesById\":{\"sync-1\":1,\"sync-2\":1}},\"offline_i9hrbos7:col_1\":{\"docCount\":2,\"pullRequests\":1,\"pushRequests\":1,\"pushesAccepted\":2,\"conflictsReturned\":0,\"writesById\":{\"off-1\":1,\"off-2\":1}},\"reconnect_nv8kl5ce:col_1\":{\"docCount\":3,\"pullRequests\":2,\"pushRequests\":2,\"pushesAccepted\":4,\"conflictsReturned\":0,\"writesById\":{\"rec-1\":2,\"rec-2\":1,\"rec-3\":1}},\"conflict_04s0dkb7:col_1\":{\"docCount\":1,\"pullRequests\":2,\"pushRequests\":2,\"pushesAccepted\":2,\"conflictsReturned\":0,\"writesById\":{\"conflict-1\":2}}}}",
+            "client A document: {\"id\":\"conflict-1\",\"title\":\"title conflict-1\",\"count\":99,\"updatedAt\":1001}",
+            "client A replication counters: {\"pullCalls\":2,\"pushCalls\":3,\"received\":0,\"sent\":1,\"conflicts\":1,\"errors\":1,\"lastError\":\"\\n\\n        RxDB Error-Code: RC_PUSH.\\n        Hint: Error messages are not included in RxDB core to reduce build size.\\n        To show the full error messages and to ensure that you do not make any mistakes when using RxDB,\\n        use the dev-mode plugin when you are in development mode: https://rxdb.info/dev-mode.html?console=error\\n        \\nFind out more about this error here: https://rxdb.info/errors.html?console=errors#RC_PUSH \\nStill stuck? Ask in the RxDB Discord: https://rxdb.info/chat \\n\\n--------------------\\nParameters:\\npushRows: [\\n  {\\n    \\\"assumedMasterState\\\": {\\n      \\\"id\\\": \\\"conflict-1\\\",\\n      \\\"title\\\": \\\"title conflict-1\\\",\\n      \\\"count\\\": 1,\\n      \\\"updatedAt\\\": 1001,\\n      \\\"_deleted\\\": false\\n    },\\n    \\\"newDocumentState\\\": {\\n      \\\"id\\\": \\\"conflict-1\\\",\\n      \\\"title\\\": \\\"title conflict-1\\\",\\n      \\\"count\\\": 42,\\n      \\\"updatedAt\\\": 1001,\\n      \\\"_deleted\\\": false\\n    }\\n  }\\n]\\nerrors: {\\\"name\\\":\\\"TypeError\\\",\\\"message\\\":\\\"Load failed\\\"}\\ndirection: \\\"push\\\"\\n\"}",
+            "server counters: {\"docCount\":1,\"pullRequests\":3,\"pushRequests\":3,\"pushesAccepted\":2,\"conflictsReturned\":1,\"writesById\":{\"conflict-1\":2}}"
+          ],
+          "error": null
+        },
+        {
+          "id": "s7-retry-no-duplicates",
+          "slice": "offline",
+          "title": "Failed pushes are retried and the document is stored exactly once",
+          "status": "PASS",
+          "durationMs": 980,
+          "details": [
+            "server counters: {\"docCount\":1,\"pullRequests\":1,\"pushRequests\":1,\"pushesAccepted\":1,\"conflictsReturned\":0,\"writesById\":{\"retry-1\":1}}",
+            "induced failures: {\"push\":0,\"pull\":0,\"failedRequests\":2}"
+          ],
+          "error": null
+        }
+      ],
+      "limitations": [
+        "WebKit is tested through the WebKit build pinned by Playwright. It is not Safari or iOS certification.",
+        "SKIP and UNSUPPORTED results are not passes and fail the gate.",
+        "The service worker caches only the app shell. It never caches /api/ traffic, so offline data is read from IndexedDB.",
+        "Recovery after an abrupt process kill is not covered. Only orderly page reload and browser restart are tested.",
+        "Performance is not measured here. This lane reports functional browser behavior only."
+      ]
+    }
+  ],
+  "storage": {
+    "command": "node scripts/verify-storage-compat.mjs --artifact $REPO/release/0.1.3/clatech-db-0.1.3.tgz --sha256 $SHA256 --json $SCRATCH/verified-013/storage/results.json --markdown $SCRATCH/verified-013/storage/REPORT.md",
+    "exitCode": 0,
+    "schemaVersion": 1,
+    "generatedBy": "scripts/verify-storage-compat.mjs",
+    "mode": "compat",
+    "startedAt": "2026-11-26T16:53:07.225Z",
+    "durationMs": 42368,
+    "verdict": "PASS",
+    "supported": true,
+    "commit": "8891dabc42f220e451223bed4ebbca55e47127ae",
+    "environment": {
+      "node": "v24.22.3",
+      "npm": "11.19.1",
+      "os": "Linux 7.0.0-43-generic x64",
+      "cpu": "11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz",
+      "logicalCpus": 16,
+      "ramGiB": 61.5,
+      "indexedDB": "fake-indexeddb@6.2.8 (simulated, not a browser)",
+      "storageVersion": "17.6.0"
+    },
+    "candidate": {
+      "source": "artifact",
+      "fileName": "clatech-db-0.1.3.tgz",
+      "sha256": "a32518f06bb9c9b5a9df54c14df47eb45381af72aae4a606f8e75d356e689cbc",
+      "size": 2236394,
+      "version": "0.1.3",
+      "storageVersion": "17.6.0"
+    },
+    "baselines": [
+      {
+        "label": "@clatech/db@0.1.1",
+        "name": "@clatech/db",
+        "version": "0.1.1",
+        "integrity": "sha512-n5nPux+L1eEvVOeoL6zd+DBQ1LEyPaoQGmOzwJ5i0zf36/CBFdxZsmBvSXZvqXGRoongPILmtRdJalwrB760nQ==",
+        "shasum": "4f6152b3456e65e3aa7740ec60cd1f0f8712f70d",
+        "timed": true
+      },
+      {
+        "label": "@clatech/db@0.1.2",
+        "name": "@clatech/db",
+        "version": "0.1.2",
+        "integrity": "sha512-v/6LZkvJ7IBE/73IFo0pM/9KcgGspaWHtgoE8lCE/l377KCUbnAuP9/sos1aIvSiIa5d7YxQelrMF6YC1kvO6A==",
+        "shasum": "a059e3547acd6160dda3baa732b9068304334580",
+        "timed": true
+      },
+      {
+        "label": "rxdb@17.6.0",
+        "name": "rxdb",
+        "version": "17.6.0",
+        "integrity": "sha512-VmnCk/IXQ5KoUXw1ZsnsFt/DJI6DCCepE7SkHk44kybyMXczBawPuEAaShLtVQj+xrc9hVEyHOxzgPgIrnjgqQ==",
+        "shasum": "3e2b149545fc2759998971a774856a535e3dd6f9",
+        "timed": true
+      }
+    ],
+    "lineage": [
+      "@clatech/db@0.1.1",
+      "@clatech/db@0.1.2",
+      "rxdb@17.6.0",
+      "@clatech/db@0.1.3 self"
+    ],
+    "summary": {
+      "total": 30,
+      "passed": 30,
+      "failed": 0,
+      "skipped": 0,
+      "unsupported": 0,
+      "required": 30,
+      "requiredPassed": 30,
+      "verdict": "PASS",
+      "supported": true
+    },
+    "steps": [
+      {
+        "id": "artifact:identity",
+        "required": true,
+        "status": "PASS",
+        "detail": "clatech-db-0.1.3.tgz sha256 a32518f06bb9c9b5a9df54c14df47eb45381af72aae4a606f8e75d356e689cbc 2236394 bytes version 0.1.3"
+      },
+      {
+        "id": "registry:@clatech/db@0.1.1",
+        "required": true,
+        "status": "PASS",
+        "detail": "exact version, dist.integrity sha512-n5nPux+L1eEvVOeoL6zd+DBQ1LEyPaoQGmOzwJ5i0zf36/CBFdxZsmBvSXZvqXGRoongPILmtRdJalwrB760nQ==, dist.shasum 4f6152b3456e65e3aa7740ec60cd1f0f8712f70d"
+      },
+      {
+        "id": "registry:@clatech/db@0.1.2",
+        "required": true,
+        "status": "PASS",
+        "detail": "exact version, dist.integrity sha512-v/6LZkvJ7IBE/73IFo0pM/9KcgGspaWHtgoE8lCE/l377KCUbnAuP9/sos1aIvSiIa5d7YxQelrMF6YC1kvO6A==, dist.shasum a059e3547acd6160dda3baa732b9068304334580"
+      },
+      {
+        "id": "registry:rxdb@17.6.0",
+        "required": true,
+        "status": "PASS",
+        "detail": "exact version, dist.integrity sha512-VmnCk/IXQ5KoUXw1ZsnsFt/DJI6DCCepE7SkHk44kybyMXczBawPuEAaShLtVQj+xrc9hVEyHOxzgPgIrnjgqQ==, dist.shasum 3e2b149545fc2759998971a774856a535e3dd6f9"
+      },
+      {
+        "id": "install:candidate",
+        "required": true,
+        "status": "PASS",
+        "detail": "installed clatech-db-0.1.3.tgz into an isolated consumer"
+      },
+      {
+        "id": "lineage:@clatech/db@0.1.1:seed",
+        "required": true,
+        "status": "PASS",
+        "detail": "@clatech/db@0.1.1 wrote 200 documents one at a time, updated one and deleted item-0001"
+      },
+      {
+        "id": "lineage:@clatech/db@0.1.1:integrity",
+        "required": true,
+        "status": "PASS",
+        "detail": "199 baseline documents, primary keys, revisions, index order and the deletion are exact"
+      },
+      {
+        "id": "lineage:@clatech/db@0.1.1:write",
+        "required": true,
+        "status": "PASS",
+        "detail": "0.1.3 inserted and modified documents that survive a close and reopen"
+      },
+      {
+        "id": "lineage:@clatech/db@0.1.1:migration",
+        "required": true,
+        "status": "PASS",
+        "detail": "version 0 to 1 migration kept 200 documents and the deletion"
+      },
+      {
+        "id": "lineage:@clatech/db@0.1.1:reopen",
+        "required": true,
+        "status": "PASS",
+        "detail": "version 1 documents and the migrated schema persist across another close and reopen"
+      },
+      {
+        "id": "lineage:@clatech/db@0.1.1:cleanup",
+        "required": true,
+        "status": "PASS",
+        "detail": "Removal leaves no documents and no IndexedDB databases"
+      },
+      {
+        "id": "lineage:@clatech/db@0.1.2:seed",
+        "required": true,
+        "status": "PASS",
+        "detail": "@clatech/db@0.1.2 wrote 200 documents one at a time, updated one and deleted item-0001"
+      },
+      {
+        "id": "lineage:@clatech/db@0.1.2:integrity",
+        "required": true,
+        "status": "PASS",
+        "detail": "199 baseline documents, primary keys, revisions, index order and the deletion are exact"
+      },
+      {
+        "id": "lineage:@clatech/db@0.1.2:write",
+        "required": true,
+        "status": "PASS",
+        "detail": "0.1.3 inserted and modified documents that survive a close and reopen"
+      },
+      {
+        "id": "lineage:@clatech/db@0.1.2:migration",
+        "required": true,
+        "status": "PASS",
+        "detail": "version 0 to 1 migration kept 200 documents and the deletion"
+      },
+      {
+        "id": "lineage:@clatech/db@0.1.2:reopen",
+        "required": true,
+        "status": "PASS",
+        "detail": "version 1 documents and the migrated schema persist across another close and reopen"
+      },
+      {
+        "id": "lineage:@clatech/db@0.1.2:cleanup",
+        "required": true,
+        "status": "PASS",
+        "detail": "Removal leaves no documents and no IndexedDB databases"
+      },
+      {
+        "id": "lineage:rxdb@17.6.0:seed",
+        "required": true,
+        "status": "PASS",
+        "detail": "rxdb@17.6.0 wrote 200 documents one at a time, updated one and deleted item-0001"
+      },
+      {
+        "id": "lineage:rxdb@17.6.0:integrity",
+        "required": true,
+        "status": "PASS",
+        "detail": "199 baseline documents, primary keys, revisions, index order and the deletion are exact"
+      },
+      {
+        "id": "lineage:rxdb@17.6.0:write",
+        "required": true,
+        "status": "PASS",
+        "detail": "0.1.3 inserted and modified documents that survive a close and reopen"
+      },
+      {
+        "id": "lineage:rxdb@17.6.0:migration",
+        "required": true,
+        "status": "PASS",
+        "detail": "version 0 to 1 migration kept 200 documents and the deletion"
+      },
+      {
+        "id": "lineage:rxdb@17.6.0:reopen",
+        "required": true,
+        "status": "PASS",
+        "detail": "version 1 documents and the migrated schema persist across another close and reopen"
+      },
+      {
+        "id": "lineage:rxdb@17.6.0:cleanup",
+        "required": true,
+        "status": "PASS",
+        "detail": "Removal leaves no documents and no IndexedDB databases"
+      },
+      {
+        "id": "lineage:@clatech/db@0.1.3 self:seed",
+        "required": true,
+        "status": "PASS",
+        "detail": "@clatech/db@0.1.3 self wrote 200 documents one at a time, updated one and deleted item-0001"
+      },
+      {
+        "id": "lineage:@clatech/db@0.1.3 self:integrity",
+        "required": true,
+        "status": "PASS",
+        "detail": "199 baseline documents, primary keys, revisions, index order and the deletion are exact"
+      },
+      {
+        "id": "lineage:@clatech/db@0.1.3 self:write",
+        "required": true,
+        "status": "PASS",
+        "detail": "0.1.3 inserted and modified documents that survive a close and reopen"
+      },
+      {
+        "id": "lineage:@clatech/db@0.1.3 self:migration",
+        "required": true,
+        "status": "PASS",
+        "detail": "version 0 to 1 migration kept 200 documents and the deletion"
+      },
+      {
+        "id": "lineage:@clatech/db@0.1.3 self:reopen",
+        "required": true,
+        "status": "PASS",
+        "detail": "version 1 documents and the migrated schema persist across another close and reopen"
+      },
+      {
+        "id": "lineage:@clatech/db@0.1.3 self:cleanup",
+        "required": true,
+        "status": "PASS",
+        "detail": "Removal leaves no documents and no IndexedDB databases"
+      },
+      {
+        "id": "lineage:pairs",
+        "required": true,
+        "status": "PASS",
+        "detail": "4 sequential lineages: @clatech/db@0.1.1, @clatech/db@0.1.2, rxdb@17.6.0 then the candidate self-reopen"
+      }
+    ],
+    "benchmark": null,
+    "backwardCompatibility": {
+      "status": "NOT EVALUATED",
+      "reason": "Opening 0.1.3 data with 0.1.1, 0.1.2 or RxDB 17.6.0 is a separate question. No downgrade is assumed."
+    },
+    "limitations": [
+      "This lineage runs on fake-indexeddb, so it is simulated IndexedDB. Native browser IndexedDB lineage is a separate lane and stays pending until it is actually run.",
+      "One writer at a time only. No two versions write to the same database concurrently.",
+      "The migration step is a schema version 0 to 1 open in the candidate, not a migration shipped by a published release.",
+      "Timing samples come from one host under uncontrolled background load. They are not a ranking or a gate."
+    ],
+    "failure": null
+  },
+  "auxiliary": [
+    {
+      "id": "deno-npm-specifier",
+      "source": "Pre-commit detached smoke; checked artifact and lockfile integrity",
+      "environment": {
+        "os": "Linux 7.0.0-43-generic x64",
+        "node": "24.22.3",
+        "npm": "11.19.1",
+        "deno": "2.8.3"
+      },
+      "command": "deno run --cached-only --no-prompt --allow-env=NODE_ENV,TMPDIR consumer.ts",
+      "status": "PASS",
+      "exitCode": 0,
+      "limitations": [
+        "Scoped loopback registry provided exact archive. No registry publish, broad permissions, or full type check."
+      ]
+    },
+    {
+      "id": "react-vite",
+      "source": "Pre-commit detached smoke; exact checked artifact",
+      "environment": {
+        "os": "Linux 7.0.0-43-generic x64",
+        "node": "24.22.3",
+        "npm": "11.19.1",
+        "react": "19.3.1",
+        "vite": "8.4.0",
+        "playwright": "1.65.1",
+        "chromium": "159.0.8154.6"
+      },
+      "command": "npm install --ignore-scripts $ARTIFACT rxjs@7.8.2 react@19.3.1 react-dom@19.3.1 vite@8.4.0; Vite build/preview and Chromium smoke",
+      "status": "PASS",
+      "exitCode": 0,
+      "limitations": [
+        "Scoped react/Memory tree-shaking check only."
+      ]
+    },
+    {
+      "id": "bun-inherited-memory",
+      "source": "Pre-commit, unchanged core/legacy scripts",
+      "environment": {
+        "os": "Linux 7.0.0-43-generic x64",
+        "node": "24.22.3",
+        "npm": "11.19.1",
+        "bun": "1.3.14"
+      },
+      "command": "npm run test:bun:memory",
+      "status": "FAIL",
+      "exitCode": 1,
+      "limitations": [
+        "Mocha CLI could not require async unparse-args.js."
+      ]
+    },
+    {
+      "id": "bun-inherited-dexie",
+      "source": "Pre-commit, unchanged core/legacy scripts",
+      "environment": {
+        "os": "Linux 7.0.0-43-generic x64",
+        "node": "24.22.3",
+        "npm": "11.19.1",
+        "bun": "1.3.14"
+      },
+      "command": "npm run test:bun:dexie",
+      "status": "FAIL",
+      "exitCode": 0,
+      "passing": 455,
+      "failing": 1,
+      "limitations": [
+        "Legacy exit 0 masked a Mocha assertion failure; not a pass."
+      ]
+    },
+    {
+      "id": "deno-inherited",
+      "environment": {
+        "os": "Linux 7.0.0-43-generic x64",
+        "node": "24.22.3",
+        "npm": "11.19.1",
+        "deno": "2.8.3"
+      },
+      "command": "npm run test:deno:{memory,dexie,denokv}",
+      "status": "SKIP",
+      "exitCode": null,
+      "limitations": [
+        "Inherited scripts require blanket -A; detached probes used restricted permissions."
+      ]
+    },
+    {
+      "id": "hosted-compatibility",
+      "command": "GitHub Actions compatibility.yml",
+      "status": "SKIP",
+      "exitCode": null,
+      "limitations": [
+        "No push or dispatch authorized."
+      ]
+    }
+  ],
+  "benchmarks": {
+    "memory": {
+      "fixture": "scripts/compatibility-benchmarks/memory.mjs",
+      "fixtureBlob": "48a5f84eadfedb103be018cc7966cb13e3abcefe",
+      "source": "Detached worktree measurements; fixture blob matches the tested commit.",
+      "gate": "none",
+      "series": {
+        "node": {
+          "command": "node runtime.mjs",
+          "status": "PASS",
+          "exitCode": 0,
+          "environment": {
+            "os": "Linux 7.0.0-43-generic x64",
+            "version": "24.22.3"
+          },
+          "storage": "Memory",
+          "warmups": 2,
+          "iterations": 9,
+          "documentCount": 100,
+          "collectionCount": 20,
+          "series": [
+            {
+              "openMs": 0.3893120000000181,
+              "writeMs": 0.28822999999999865,
+              "readMs": 1.2755109999999945,
+              "reactiveMs": 1.2952999999999975,
+              "collectionsMs": 3.911455999999987,
+              "pushMs": 6.711255000000051
+            },
+            {
+              "openMs": 0.40962999999999283,
+              "writeMs": 0.2981800000000021,
+              "readMs": 1.5641999999999712,
+              "reactiveMs": 1.2874390000000062,
+              "collectionsMs": 4.220495999999969,
+              "pushMs": 7.435220000000015
+            },
+            {
+              "openMs": 0.4082100000000537,
+              "writeMs": 0.2925599999999804,
+              "readMs": 1.5404080000000704,
+              "reactiveMs": 1.608963000000017,
+              "collectionsMs": 3.8790389999999206,
+              "pushMs": 6.3006019999999126
+            },
+            {
+              "openMs": 0.35344500000007884,
+              "writeMs": 0.5839090000000624,
+              "readMs": 1.4548750000000155,
+              "reactiveMs": 1.2697299999999814,
+              "collectionsMs": 3.6939220000000432,
+              "pushMs": 9.483618999999976
+            },
+            {
+              "openMs": 0.31775900000002366,
+              "writeMs": 0.15381000000002132,
+              "readMs": 0.9591269999999668,
+              "reactiveMs": 0.9794660000000022,
+              "collectionsMs": 2.7412919999999303,
+              "pushMs": 5.1772379999999885
+            },
+            {
+              "openMs": 0.37606000000005224,
+              "writeMs": 0.15499099999999544,
+              "readMs": 1.1821840000000066,
+              "reactiveMs": 1.1610990000000356,
+              "collectionsMs": 3.2035680000000184,
+              "pushMs": 9.37980099999993
+            },
+            {
+              "openMs": 0.5333109999999124,
+              "writeMs": 0.14938299999994342,
+              "readMs": 1.1204340000000457,
+              "reactiveMs": 1.4860680000000457,
+              "collectionsMs": 2.8124330000000555,
+              "pushMs": 4.509080999999924
+            },
+            {
+              "openMs": 0.4641270000000759,
+              "writeMs": 0.1565970000000334,
+              "readMs": 1.0128559999999425,
+              "reactiveMs": 1.0310660000000098,
+              "collectionsMs": 2.754346000000055,
+              "pushMs": 4.877839999999992
+            },
+            {
+              "openMs": 0.30676600000003873,
+              "writeMs": 0.19305099999996855,
+              "readMs": 1.1073419999999032,
+              "reactiveMs": 0.8980450000000246,
+              "collectionsMs": 3.538234999999986,
+              "pushMs": 5.289972000000034
+            }
+          ],
+          "timings": {
+            "openMs": {
+              "median": 0.3893120000000181,
+              "p95": 0.5333109999999124
+            },
+            "writeMs": {
+              "median": 0.19305099999996855,
+              "p95": 0.5839090000000624
+            },
+            "readMs": {
+              "median": 1.1821840000000066,
+              "p95": 1.5641999999999712
+            },
+            "reactiveMs": {
+              "median": 1.2697299999999814,
+              "p95": 1.608963000000017
+            },
+            "collectionsMs": {
+              "median": 3.538234999999986,
+              "p95": 4.220495999999969
+            },
+            "pushMs": {
+              "median": 6.3006019999999126,
+              "p95": 9.483618999999976
+            }
+          },
+          "gate": "none"
+        },
+        "bun": {
+          "command": "bun runtime.mjs",
+          "status": "PASS",
+          "exitCode": 0,
+          "environment": {
+            "os": "Linux 7.0.0-43-generic x64",
+            "version": "1.3.14"
+          },
+          "storage": "Memory",
+          "warmups": 2,
+          "iterations": 9,
+          "documentCount": 100,
+          "collectionCount": 20,
+          "series": [
+            {
+              "openMs": 0.6682570000000396,
+              "writeMs": 0.3743109999999774,
+              "readMs": 1.3496530000000462,
+              "reactiveMs": 1.6605189999999652,
+              "collectionsMs": 2.8789090000000215,
+              "pushMs": 5.882674000000009
+            },
+            {
+              "openMs": 0.4451679999999669,
+              "writeMs": 0.38227000000000544,
+              "readMs": 1.2973220000000083,
+              "reactiveMs": 1.4271699999999896,
+              "collectionsMs": 2.7488779999999906,
+              "pushMs": 5.48586899999998
+            },
+            {
+              "openMs": 0.5314089999999396,
+              "writeMs": 0.361028000000033,
+              "readMs": 1.3275059999999712,
+              "reactiveMs": 1.363283000000024,
+              "collectionsMs": 2.673445000000015,
+              "pushMs": 5.017480999999975
+            },
+            {
+              "openMs": 0.49540700000000015,
+              "writeMs": 0.3560860000000048,
+              "readMs": 1.5320679999999811,
+              "reactiveMs": 1.5182949999999664,
+              "collectionsMs": 2.510721999999987,
+              "pushMs": 4.855497000000014
+            },
+            {
+              "openMs": 0.410951999999952,
+              "writeMs": 0.3114689999999882,
+              "readMs": 1.174413999999956,
+              "reactiveMs": 1.366877000000045,
+              "collectionsMs": 2.331741000000079,
+              "pushMs": 4.7439339999999675
+            },
+            {
+              "openMs": 0.4381859999999733,
+              "writeMs": 0.3256380000000263,
+              "readMs": 1.1638090000000147,
+              "reactiveMs": 1.300424000000021,
+              "collectionsMs": 3.686510999999996,
+              "pushMs": 7.110912999999982
+            },
+            {
+              "openMs": 0.5275359999999409,
+              "writeMs": 0.4753979999999274,
+              "readMs": 1.7185719999999947,
+              "reactiveMs": 1.823955000000069,
+              "collectionsMs": 2.222152000000051,
+              "pushMs": 6.595948000000021
+            },
+            {
+              "openMs": 0.4845619999999826,
+              "writeMs": 0.2529909999999518,
+              "readMs": 1.2182239999999638,
+              "reactiveMs": 1.4641599999999926,
+              "collectionsMs": 3.001604000000043,
+              "pushMs": 6.6073880000000145
+            },
+            {
+              "openMs": 0.4332799999999679,
+              "writeMs": 0.25244099999997616,
+              "readMs": 1.2600059999999758,
+              "reactiveMs": 1.4336769999999888,
+              "collectionsMs": 1.931043999999929,
+              "pushMs": 6.719190000000026
+            }
+          ],
+          "timings": {
+            "openMs": {
+              "median": 0.4845619999999826,
+              "p95": 0.6682570000000396
+            },
+            "writeMs": {
+              "median": 0.3560860000000048,
+              "p95": 0.4753979999999274
+            },
+            "readMs": {
+              "median": 1.2973220000000083,
+              "p95": 1.7185719999999947
+            },
+            "reactiveMs": {
+              "median": 1.4336769999999888,
+              "p95": 1.823955000000069
+            },
+            "collectionsMs": {
+              "median": 2.673445000000015,
+              "p95": 3.686510999999996
+            },
+            "pushMs": {
+              "median": 5.882674000000009,
+              "p95": 7.110912999999982
+            }
+          },
+          "gate": "none"
+        },
+        "deno": {
+          "command": "deno run --no-prompt --allow-env=NODE_ENV,TMPDIR --allow-read=$CONSUMER runtime.mjs",
+          "status": "PASS",
+          "exitCode": 0,
+          "environment": {
+            "os": "Linux 7.0.0-43-generic x64",
+            "version": "2.8.3"
+          },
+          "storage": "Memory",
+          "warmups": 2,
+          "iterations": 9,
+          "documentCount": 100,
+          "collectionCount": 20,
+          "series": [
+            {
+              "openMs": 0.45404500000006465,
+              "writeMs": 0.28237400000000434,
+              "readMs": 1.2048000000000911,
+              "reactiveMs": 1.2768310000000156,
+              "collectionsMs": 3.3940000000000055,
+              "pushMs": 8.167793000000074
+            },
+            {
+              "openMs": 0.4613000000000511,
+              "writeMs": 0.29555599999991955,
+              "readMs": 1.2731870000000072,
+              "reactiveMs": 1.2926939999999831,
+              "collectionsMs": 3.2538469999999506,
+              "pushMs": 6.056433000000084
+            },
+            {
+              "openMs": 0.4661670000000413,
+              "writeMs": 0.3743090000000393,
+              "readMs": 1.589935999999966,
+              "reactiveMs": 1.512927999999988,
+              "collectionsMs": 4.464332000000013,
+              "pushMs": 8.61891700000001
+            },
+            {
+              "openMs": 0.23456300000009378,
+              "writeMs": 0.2416520000000446,
+              "readMs": 0.7386380000000372,
+              "reactiveMs": 0.6812770000000228,
+              "collectionsMs": 1.7453140000000076,
+              "pushMs": 3.9197149999999965
+            },
+            {
+              "openMs": 0.2769779999999855,
+              "writeMs": 0.12680100000000039,
+              "readMs": 0.6109310000000505,
+              "reactiveMs": 0.4782280000000583,
+              "collectionsMs": 2.14998300000002,
+              "pushMs": 4.687419999999975
+            },
+            {
+              "openMs": 0.4446459999999206,
+              "writeMs": 0.135913999999957,
+              "readMs": 0.6482200000000375,
+              "reactiveMs": 0.729535000000169,
+              "collectionsMs": 1.8415889999998853,
+              "pushMs": 3.308653999999933
+            },
+            {
+              "openMs": 0.3704640000000836,
+              "writeMs": 0.14573199999995268,
+              "readMs": 0.7334649999997964,
+              "reactiveMs": 0.6781069999999545,
+              "collectionsMs": 1.7562809999999445,
+              "pushMs": 2.785041000000092
+            },
+            {
+              "openMs": 0.41260399999987385,
+              "writeMs": 0.2416769999999815,
+              "readMs": 1.06785200000013,
+              "reactiveMs": 0.7663079999999809,
+              "collectionsMs": 1.8675579999999172,
+              "pushMs": 5.07405800000015
+            },
+            {
+              "openMs": 0.30310899999994945,
+              "writeMs": 0.18865599999980986,
+              "readMs": 0.8932369999999992,
+              "reactiveMs": 0.7646480000000793,
+              "collectionsMs": 3.275732000000062,
+              "pushMs": 4.13740800000005
+            }
+          ],
+          "timings": {
+            "openMs": {
+              "median": 0.41260399999987385,
+              "p95": 0.4661670000000413
+            },
+            "writeMs": {
+              "median": 0.2416520000000446,
+              "p95": 0.3743090000000393
+            },
+            "readMs": {
+              "median": 0.8932369999999992,
+              "p95": 1.589935999999966
+            },
+            "reactiveMs": {
+              "median": 0.7646480000000793,
+              "p95": 1.512927999999988
+            },
+            "collectionsMs": {
+              "median": 2.14998300000002,
+              "p95": 4.464332000000013
+            },
+            "pushMs": {
+              "median": 4.687419999999975,
+              "p95": 8.61891700000001
+            }
+          },
+          "gate": "none"
+        },
+        "chromium": {
+          "command": "vite build; Playwright chromium evaluates window.benchmark (memory.mjs)",
+          "status": "PASS",
+          "exitCode": 0,
+          "environment": {
+            "os": "Linux 7.0.0-43-generic x64",
+            "version": "159.0.8154.6",
+            "vite": "8.4.0",
+            "playwright": "1.65.1"
+          },
+          "storage": "Memory",
+          "warmups": 2,
+          "iterations": 9,
+          "documentCount": 100,
+          "collectionCount": 20,
+          "series": [
+            {
+              "openMs": 0.29999999701976776,
+              "writeMs": 0.20000000298023224,
+              "readMs": 1.2999999970197678,
+              "reactiveMs": 1,
+              "collectionsMs": 3.2000000029802322,
+              "pushMs": 5.699999988079071
+            },
+            {
+              "openMs": 0.29999999701976776,
+              "writeMs": 0.3999999910593033,
+              "readMs": 1.2000000029802322,
+              "reactiveMs": 1,
+              "collectionsMs": 2.5,
+              "pushMs": 4.4000000059604645
+            },
+            {
+              "openMs": 0.4000000059604645,
+              "writeMs": 0.20000000298023224,
+              "readMs": 1.2999999970197678,
+              "reactiveMs": 1.2999999970197678,
+              "collectionsMs": 2.4000000059604645,
+              "pushMs": 4.5
+            },
+            {
+              "openMs": 0.3999999910593033,
+              "writeMs": 0.29999999701976776,
+              "readMs": 1.4000000059604645,
+              "reactiveMs": 0.8999999910593033,
+              "collectionsMs": 2.6000000089406967,
+              "pushMs": 4.799999997019768
+            },
+            {
+              "openMs": 0.19999998807907104,
+              "writeMs": 0.19999998807907104,
+              "readMs": 1.2000000029802322,
+              "reactiveMs": 0.7000000029802322,
+              "collectionsMs": 2.4000000059604645,
+              "pushMs": 5.699999988079071
+            },
+            {
+              "openMs": 0.29999999701976776,
+              "writeMs": 0.29999999701976776,
+              "readMs": 1,
+              "reactiveMs": 0.8999999910593033,
+              "collectionsMs": 3.1000000089406967,
+              "pushMs": 3.8999999910593033
+            },
+            {
+              "openMs": 0.3999999910593033,
+              "writeMs": 0.29999999701976776,
+              "readMs": 1.2000000029802322,
+              "reactiveMs": 1,
+              "collectionsMs": 2.699999988079071,
+              "pushMs": 6.100000008940697
+            },
+            {
+              "openMs": 0.3999999910593033,
+              "writeMs": 0.10000000894069672,
+              "readMs": 0.7000000029802322,
+              "reactiveMs": 1,
+              "collectionsMs": 1.5999999940395355,
+              "pushMs": 3.2999999970197678
+            },
+            {
+              "openMs": 0.19999998807907104,
+              "writeMs": 0.09999999403953552,
+              "readMs": 0.7999999970197678,
+              "reactiveMs": 0.5,
+              "collectionsMs": 1.8999999910593033,
+              "pushMs": 2.800000011920929
+            }
+          ],
+          "timings": {
+            "openMs": {
+              "median": 0.29999999701976776,
+              "p95": 0.4000000059604645
+            },
+            "writeMs": {
+              "median": 0.20000000298023224,
+              "p95": 0.3999999910593033
+            },
+            "readMs": {
+              "median": 1.2000000029802322,
+              "p95": 1.4000000059604645
+            },
+            "reactiveMs": {
+              "median": 1,
+              "p95": 1.2999999970197678
+            },
+            "collectionsMs": {
+              "median": 2.5,
+              "p95": 3.2000000029802322
+            },
+            "pushMs": {
+              "median": 4.5,
+              "p95": 6.100000008940697
+            }
+          },
+          "gate": "none",
+          "version": "159.0.8154.6"
+        },
+        "firefox": {
+          "command": "vite build; Playwright firefox evaluates window.benchmark (memory.mjs)",
+          "status": "PASS",
+          "exitCode": 0,
+          "environment": {
+            "os": "Linux 7.0.0-43-generic x64",
+            "version": "159.0",
+            "vite": "8.4.0",
+            "playwright": "1.65.1"
+          },
+          "storage": "Memory",
+          "warmups": 2,
+          "iterations": 9,
+          "documentCount": 100,
+          "collectionCount": 20,
+          "series": [
+            {
+              "openMs": 0,
+              "writeMs": 2,
+              "readMs": 1,
+              "reactiveMs": 1,
+              "collectionsMs": 2,
+              "pushMs": 6
+            },
+            {
+              "openMs": 1,
+              "writeMs": 1,
+              "readMs": 2,
+              "reactiveMs": 3,
+              "collectionsMs": 6,
+              "pushMs": 11
+            },
+            {
+              "openMs": 0,
+              "writeMs": 0,
+              "readMs": 2,
+              "reactiveMs": 3,
+              "collectionsMs": 8,
+              "pushMs": 15
+            },
+            {
+              "openMs": 0,
+              "writeMs": 1,
+              "readMs": 2,
+              "reactiveMs": 2,
+              "collectionsMs": 5,
+              "pushMs": 11
+            },
+            {
+              "openMs": 1,
+              "writeMs": 0,
+              "readMs": 2,
+              "reactiveMs": 2,
+              "collectionsMs": 5,
+              "pushMs": 14
+            },
+            {
+              "openMs": 1,
+              "writeMs": 1,
+              "readMs": 2,
+              "reactiveMs": 3,
+              "collectionsMs": 5,
+              "pushMs": 6
+            },
+            {
+              "openMs": 1,
+              "writeMs": 1,
+              "readMs": 2,
+              "reactiveMs": 4,
+              "collectionsMs": 9,
+              "pushMs": 11
+            },
+            {
+              "openMs": 1,
+              "writeMs": 0,
+              "readMs": 1,
+              "reactiveMs": 3,
+              "collectionsMs": 5,
+              "pushMs": 10
+            },
+            {
+              "openMs": 1,
+              "writeMs": 0,
+              "readMs": 2,
+              "reactiveMs": 3,
+              "collectionsMs": 9,
+              "pushMs": 10
+            }
+          ],
+          "timings": {
+            "openMs": {
+              "median": 1,
+              "p95": 1
+            },
+            "writeMs": {
+              "median": 1,
+              "p95": 2
+            },
+            "readMs": {
+              "median": 2,
+              "p95": 2
+            },
+            "reactiveMs": {
+              "median": 3,
+              "p95": 4
+            },
+            "collectionsMs": {
+              "median": 5,
+              "p95": 9
+            },
+            "pushMs": {
+              "median": 11,
+              "p95": 15
+            }
+          },
+          "gate": "none",
+          "version": "159.0"
+        },
+        "webkit": {
+          "command": "vite build; Playwright webkit evaluates window.benchmark (memory.mjs)",
+          "status": "PASS",
+          "exitCode": 0,
+          "environment": {
+            "os": "Linux 7.0.0-43-generic x64",
+            "version": "27.2",
+            "vite": "8.4.0",
+            "playwright": "1.65.1"
+          },
+          "storage": "Memory",
+          "warmups": 2,
+          "iterations": 9,
+          "documentCount": 100,
+          "collectionCount": 20,
+          "series": [
+            {
+              "openMs": 1,
+              "writeMs": 1,
+              "readMs": 1,
+              "reactiveMs": 2,
+              "collectionsMs": 3,
+              "pushMs": 4
+            },
+            {
+              "openMs": 1,
+              "writeMs": 1,
+              "readMs": 1,
+              "reactiveMs": 2,
+              "collectionsMs": 2,
+              "pushMs": 6
+            },
+            {
+              "openMs": 0,
+              "writeMs": 0,
+              "readMs": 1,
+              "reactiveMs": 1,
+              "collectionsMs": 2,
+              "pushMs": 4
+            },
+            {
+              "openMs": 0,
+              "writeMs": 0,
+              "readMs": 1,
+              "reactiveMs": 1,
+              "collectionsMs": 3,
+              "pushMs": 4
+            },
+            {
+              "openMs": 0,
+              "writeMs": 0,
+              "readMs": 1,
+              "reactiveMs": 1,
+              "collectionsMs": 3,
+              "pushMs": 7
+            },
+            {
+              "openMs": 0,
+              "writeMs": 0,
+              "readMs": 1,
+              "reactiveMs": 2,
+              "collectionsMs": 3,
+              "pushMs": 6
+            },
+            {
+              "openMs": 0,
+              "writeMs": 1,
+              "readMs": 2,
+              "reactiveMs": 2,
+              "collectionsMs": 3,
+              "pushMs": 6
+            },
+            {
+              "openMs": 0,
+              "writeMs": 0,
+              "readMs": 1,
+              "reactiveMs": 1,
+              "collectionsMs": 3,
+              "pushMs": 7
+            },
+            {
+              "openMs": 0,
+              "writeMs": 0,
+              "readMs": 1,
+              "reactiveMs": 2,
+              "collectionsMs": 1,
+              "pushMs": 6
+            }
+          ],
+          "timings": {
+            "openMs": {
+              "median": 0,
+              "p95": 1
+            },
+            "writeMs": {
+              "median": 0,
+              "p95": 1
+            },
+            "readMs": {
+              "median": 1,
+              "p95": 2
+            },
+            "reactiveMs": {
+              "median": 2,
+              "p95": 2
+            },
+            "collectionsMs": {
+              "median": 3,
+              "p95": 3
+            },
+            "pushMs": {
+              "median": 6,
+              "p95": 7
+            }
+          },
+          "gate": "none",
+          "version": "27.2"
+        }
+      }
+    },
+    "simulatedDexie": {
+      "source": "Pre-commit detached measurement on the exact archive",
+      "sourceBaseCommit": "94383e9432519afb46f0185e35fb48238a7167f2",
+      "command": "node scripts/verify-storage-compat.mjs --benchmark --artifact $REPO/release/0.1.3/clatech-db-0.1.3.tgz --sha256 $SHA256",
+      "status": "PASS",
+      "exitCode": 0,
+      "environment": {
+        "node": "v24.22.3",
+        "npm": "11.19.1",
+        "os": "Linux 7.0.0-43-generic x64",
+        "cpu": "11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz",
+        "logicalCpus": 16,
+        "ramGiB": 61.5,
+        "indexedDB": "fake-indexeddb@6.2.8 (simulated, not a browser)",
+        "storageVersion": "17.6.0"
+      },
+      "storage": "dexie over fake-indexeddb (simulated IndexedDB)",
+      "warmups": 2,
+      "iterations": 9,
+      "documents": 200,
+      "compared": [
+        "@clatech/db@0.1.1",
+        "@clatech/db@0.1.2",
+        "@clatech/db@0.1.3 self"
+      ],
+      "runs": [
+        {
+          "label": "@clatech/db@0.1.1",
+          "storage": "dexie over fake-indexeddb",
+          "warmups": 2,
+          "iterations": 9,
+          "documents": 200,
+          "samples": [
+            {
+              "initMs": 8.12316700000008,
+              "writeMs": 14.697967999999946,
+              "readMs": 37.36142600000005,
+              "reopenMs": 7.7734140000000025,
+              "heapMiB": 5.773765563964844
+            },
+            {
+              "initMs": 6.896255999999994,
+              "writeMs": 14.408094000000006,
+              "readMs": 46.109664000000066,
+              "reopenMs": 9.551087999999936,
+              "heapMiB": 5.347869873046875
+            },
+            {
+              "initMs": 4.398981999999933,
+              "writeMs": 9.282588000000032,
+              "readMs": 36.11636999999996,
+              "reopenMs": 7.890924000000041,
+              "heapMiB": 5.348289489746094
+            },
+            {
+              "initMs": 5.4263740000001235,
+              "writeMs": 12.485749999999825,
+              "readMs": 43.694056000000046,
+              "reopenMs": 7.991711000000123,
+              "heapMiB": 4.948112487792969
+            },
+            {
+              "initMs": 5.221247999999832,
+              "writeMs": 13.408132000000023,
+              "readMs": 40.11549200000013,
+              "reopenMs": 8.395015999999941,
+              "heapMiB": 4.8153839111328125
+            },
+            {
+              "initMs": 5.261857999999847,
+              "writeMs": 13.351785999999947,
+              "readMs": 45.703504000000066,
+              "reopenMs": 7.72524599999997,
+              "heapMiB": 4.564231872558594
+            },
+            {
+              "initMs": 5.71257700000001,
+              "writeMs": 14.50609499999996,
+              "readMs": 40.45750300000009,
+              "reopenMs": 9.549097000000074,
+              "heapMiB": 4.6065673828125
+            },
+            {
+              "initMs": 5.193305999999893,
+              "writeMs": 10.194026000000122,
+              "readMs": 31.392175999999836,
+              "reopenMs": 7.726004000000103,
+              "heapMiB": 4.464546203613281
+            },
+            {
+              "initMs": 5.3464839999999185,
+              "writeMs": 10.014773999999989,
+              "readMs": 32.4343530000001,
+              "reopenMs": 8.22259299999996,
+              "heapMiB": 3.8204269409179688
+            }
+          ],
+          "summary": {
+            "initMs": {
+              "median": 5.3464839999999185,
+              "p95": 8.12316700000008,
+              "min": 4.398981999999933,
+              "max": 8.12316700000008
+            },
+            "writeMs": {
+              "median": 13.351785999999947,
+              "p95": 14.697967999999946,
+              "min": 9.282588000000032,
+              "max": 14.697967999999946
+            },
+            "readMs": {
+              "median": 40.11549200000013,
+              "p95": 46.109664000000066,
+              "min": 31.392175999999836,
+              "max": 46.109664000000066
+            },
+            "reopenMs": {
+              "median": 7.991711000000123,
+              "p95": 9.551087999999936,
+              "min": 7.72524599999997,
+              "max": 9.551087999999936
+            },
+            "heapMiB": {
+              "median": 4.8153839111328125,
+              "p95": 5.773765563964844,
+              "min": 3.8204269409179688,
+              "max": 5.773765563964844
+            }
+          }
+        },
+        {
+          "label": "@clatech/db@0.1.2",
+          "storage": "dexie over fake-indexeddb",
+          "warmups": 2,
+          "iterations": 9,
+          "documents": 200,
+          "samples": [
+            {
+              "initMs": 7.404201999999941,
+              "writeMs": 12.675654000000009,
+              "readMs": 44.34387700000002,
+              "reopenMs": 9.784358999999995,
+              "heapMiB": 5.782737731933594
+            },
+            {
+              "initMs": 6.1037919999999986,
+              "writeMs": 10.838427000000024,
+              "readMs": 37.84997700000008,
+              "reopenMs": 8.008072999999968,
+              "heapMiB": 5.3451690673828125
+            },
+            {
+              "initMs": 5.640821999999844,
+              "writeMs": 11.850640999999996,
+              "readMs": 40.84300700000017,
+              "reopenMs": 9.236441000000013,
+              "heapMiB": 5.3503875732421875
+            },
+            {
+              "initMs": 4.078600000000051,
+              "writeMs": 10.35412499999984,
+              "readMs": 37.7153380000002,
+              "reopenMs": 8.085995999999795,
+              "heapMiB": 4.955833435058594
+            },
+            {
+              "initMs": 7.56236100000001,
+              "writeMs": 11.658687999999984,
+              "readMs": 33.302622000000156,
+              "reopenMs": 8.737694999999803,
+              "heapMiB": 4.787376403808594
+            },
+            {
+              "initMs": 4.928261999999904,
+              "writeMs": 11.16225499999996,
+              "readMs": 29.87045000000012,
+              "reopenMs": 7.1801040000000285,
+              "heapMiB": 4.585197448730469
+            },
+            {
+              "initMs": 4.985222999999905,
+              "writeMs": 11.125637000000097,
+              "readMs": 29.077031000000034,
+              "reopenMs": 7.632256999999981,
+              "heapMiB": 4.564643859863281
+            },
+            {
+              "initMs": 3.6404589999999644,
+              "writeMs": 13.418327999999974,
+              "readMs": 34.96378200000004,
+              "reopenMs": 8.097831999999926,
+              "heapMiB": 4.4913330078125
+            },
+            {
+              "initMs": 4.49689699999999,
+              "writeMs": 12.309688999999935,
+              "readMs": 32.02046700000005,
+              "reopenMs": 8.019173000000137,
+              "heapMiB": 3.8309326171875
+            }
+          ],
+          "summary": {
+            "initMs": {
+              "median": 4.985222999999905,
+              "p95": 7.56236100000001,
+              "min": 3.6404589999999644,
+              "max": 7.56236100000001
+            },
+            "writeMs": {
+              "median": 11.658687999999984,
+              "p95": 13.418327999999974,
+              "min": 10.35412499999984,
+              "max": 13.418327999999974
+            },
+            "readMs": {
+              "median": 34.96378200000004,
+              "p95": 44.34387700000002,
+              "min": 29.077031000000034,
+              "max": 44.34387700000002
+            },
+            "reopenMs": {
+              "median": 8.085995999999795,
+              "p95": 9.784358999999995,
+              "min": 7.1801040000000285,
+              "max": 9.784358999999995
+            },
+            "heapMiB": {
+              "median": 4.787376403808594,
+              "p95": 5.782737731933594,
+              "min": 3.8309326171875,
+              "max": 5.782737731933594
+            }
+          }
+        },
+        {
+          "label": "@clatech/db@0.1.3 self",
+          "storage": "dexie over fake-indexeddb",
+          "warmups": 2,
+          "iterations": 9,
+          "documents": 200,
+          "samples": [
+            {
+              "initMs": 5.4278399999999465,
+              "writeMs": 12.904561000000058,
+              "readMs": 41.41797599999995,
+              "reopenMs": 7.994970999999964,
+              "heapMiB": 12.979759216308594
+            },
+            {
+              "initMs": 7.649923000000058,
+              "writeMs": 15.771820999999932,
+              "readMs": 41.657422,
+              "reopenMs": 9.169532000000004,
+              "heapMiB": 5.283897399902344
+            },
+            {
+              "initMs": 7.61583799999994,
+              "writeMs": 15.593021000000022,
+              "readMs": 33.61321099999998,
+              "reopenMs": 7.892757000000074,
+              "heapMiB": 5.342193603515625
+            },
+            {
+              "initMs": 3.1377260000000433,
+              "writeMs": 7.825493000000051,
+              "readMs": 30.95575800000006,
+              "reopenMs": 9.071890999999823,
+              "heapMiB": 4.983245849609375
+            },
+            {
+              "initMs": 3.913518999999951,
+              "writeMs": 7.542322000000013,
+              "readMs": 26.369177000000036,
+              "reopenMs": 7.136437999999998,
+              "heapMiB": 4.737968444824219
+            },
+            {
+              "initMs": 5.268202999999858,
+              "writeMs": 11.286262000000079,
+              "readMs": 37.53974599999992,
+              "reopenMs": 8.9552920000001,
+              "heapMiB": 4.562744140625
+            },
+            {
+              "initMs": 4.482480000000123,
+              "writeMs": 10.083642000000054,
+              "readMs": 38.491535999999996,
+              "reopenMs": 10.06277299999988,
+              "heapMiB": 4.526405334472656
+            },
+            {
+              "initMs": 3.8085499999999683,
+              "writeMs": 9.407971000000089,
+              "readMs": 41.309778999999935,
+              "reopenMs": 7.023264000000154,
+              "heapMiB": 4.482902526855469
+            },
+            {
+              "initMs": 3.967636000000084,
+              "writeMs": 10.802459999999883,
+              "readMs": 47.86077300000011,
+              "reopenMs": 8.478671000000077,
+              "heapMiB": 14.89691162109375
+            }
+          ],
+          "summary": {
+            "initMs": {
+              "median": 4.482480000000123,
+              "p95": 7.649923000000058,
+              "min": 3.1377260000000433,
+              "max": 7.649923000000058
+            },
+            "writeMs": {
+              "median": 10.802459999999883,
+              "p95": 15.771820999999932,
+              "min": 7.542322000000013,
+              "max": 15.771820999999932
+            },
+            "readMs": {
+              "median": 38.491535999999996,
+              "p95": 47.86077300000011,
+              "min": 26.369177000000036,
+              "max": 47.86077300000011
+            },
+            "reopenMs": {
+              "median": 8.478671000000077,
+              "p95": 10.06277299999988,
+              "min": 7.023264000000154,
+              "max": 10.06277299999988
+            },
+            "heapMiB": {
+              "median": 4.983245849609375,
+              "p95": 14.89691162109375,
+              "min": 4.482902526855469,
+              "max": 14.89691162109375
+            }
+          }
+        }
+      ],
+      "gate": "none: local samples only, no ranking and no CI threshold"
+    }
+  },
+  "audits": {
+    "candidate": {
+      "command": "node scripts/check-release-supply-chain.mjs --artifact $REPO/release/0.1.3/clatech-db-0.1.3.tgz release/0.1.3/sbom.cdx.json",
+      "environment": {
+        "os": "Linux 7.0.0-43-generic x64",
+        "node": "24.22.3",
+        "npm": "11.19.1"
+      },
+      "auditExit": 0,
+      "vulnerabilities": {
+        "info": 0,
+        "low": 0,
+        "moderate": 0,
+        "high": 0,
+        "critical": 0,
+        "total": 0
+      },
+      "credentialPatternAlerts": 0
+    },
+    "development": {
+      "command": "node scripts/check-release-supply-chain.mjs --dev-lock",
+      "environment": {
+        "os": "Linux 7.0.0-43-generic x64",
+        "node": "24.22.3",
+        "npm": "11.19.1"
+      },
+      "auditExit": 1,
+      "vulnerabilities": {
+        "info": 0,
+        "low": 0,
+        "moderate": 26,
+        "high": 0,
+        "critical": 0,
+        "total": 26
+      },
+      "findings": [
+        "@babel/runtime",
+        "@google-cloud/pubsub",
+        "@opentelemetry/core",
+        "@typescript-eslint/eslint-plugin",
+        "@typescript-eslint/parser",
+        "@typescript-eslint/type-utils",
+        "@typescript-eslint/typescript-estree",
+        "@typescript-eslint/utils",
+        "ajv",
+        "archiver",
+        "archiver-utils",
+        "async-test-util",
+        "event-reduce-js",
+        "exegesis",
+        "firebase-tools",
+        "gaxios",
+        "gcp-metadata",
+        "glob",
+        "google-gax",
+        "karma-webpack",
+        "minimatch",
+        "mocha",
+        "rimraf",
+        "rxdb",
+        "uuid",
+        "zip-stream"
+      ]
+    }
+  },
+  "limitations": [
+    "Node 20 is legacy smoke only.",
+    "WebKit is not Safari or iOS.",
+    "Hosted CI, live npm staging, native cross-version storage, downgrade, crash/quota scenarios and optional frameworks were not verified."
+  ]
+}

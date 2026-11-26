@@ -34,7 +34,8 @@ try {
         run('tar', ['-xzf', path.resolve(artifact)]);
         const pkg = JSON.parse(fs.readFileSync(path.join(tmp, 'package/package.json')));
         assert.equal(pkg.name, '@clatech/db');
-        assert.equal(pkg.version, '0.1.2');
+        // The artifact must carry the manifest version instead of a retired literal.
+        assert.equal(pkg.version, rootPackage.version, 'Artifact version must equal the manifest version');
         assert.equal(pkg.license, 'Apache-2.0');
         assert.ok(fs.readFileSync(path.join(tmp, 'package/LICENSE.txt'), 'utf8').includes('Apache License'));
         // Only flag high-specificity credential patterns. Never print matching content.
@@ -75,7 +76,7 @@ try {
             assert.ok(refs.has(edge.ref));
             for (const ref of edge.dependsOn || []) assert.ok(refs.has(ref), 'Dangling dependency');
         }
-        const component = bom.components.find(c => c.name === '@clatech/db' && c.version === '0.1.2');
+        const component = bom.components.find(c => c.name === '@clatech/db' && c.version === rootPackage.version);
         assert.ok(component, 'Missing artifact component');
         assert.equal(bom.components.length, inventory.length, 'BOM must cover installed production identities');
         component.hashes = [{ alg: 'SHA-256', content: identity.sha256 }, { alg: 'SHA-512', content: createHash('sha512').update(fs.readFileSync(artifact)).digest('hex') }];

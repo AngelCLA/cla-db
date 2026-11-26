@@ -3,9 +3,23 @@
 This file tracks modifications specific to the CLA DB fork (`@clatech/db`).
 For upstream RxDB history, see `CHANGELOG.md`.
 
-## [0.1.2] - Candidate, Unpublished
+## [0.1.3] - Candidate, Unpublished
 
-This section records the unpublished candidate, not a publication approval. The registry baseline for this review is CLA DB `0.1.1`.
+This section records the `0.1.3` "Universal Compatibility" candidate, not a publication approval. Version `0.1.3` is not published on npm. The registry `latest` release is `0.1.2`, verified against the registry on 2026-11-26.
+
+### Added
+
+- Package manager selector on the landing site (`web/src/components/Install.tsx`): npm, pnpm, Bun, modern Yarn, and Deno install commands for the single `@clatech/db` package, keyboard operable as a tablist with a copy control for the selected command. The section reuses the existing layout, tokens, and focus styles. Compatibility, runtime, and browser results are not claimed there; each target is reported only with its own evidence.
+
+### Changed
+
+- Install guidance distinguishes the published release from the unpublished candidate. `README.md` documents the five manager commands and states that they are install instructions rather than a per-manager support certification.
+- Correct the landing version state: `0.1.1` is no longer advertised, and `0.1.2` is no longer described as a candidate after it was published as `latest`.
+- Document proposed GitHub repository metadata (description, topics, homepage) as a proposal that requires separate maintainer authorization. No repository setting was changed.
+
+## [0.1.2] - Published
+
+Version `0.1.2` is the registry `latest` release; an earlier revision of this entry described it as an unpublished candidate before that state was corrected against the registry. Historical release evidence for this version remains in `release/0.1.2/`.
 
 ### Added
 

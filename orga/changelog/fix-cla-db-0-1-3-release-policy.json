@@ -1,0 +1,6 @@
+{
+    "$schema": "./schema.json",
+    "text": "CHANGE the release version to `0.1.3` and derive the audit artifact version from `package.json` in the pack consumer, storage compatibility, and supply-chain checks instead of pinning `0.1.2`",
+    "links": [],
+    "priority": 6
+}
