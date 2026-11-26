@@ -1,6 +1,8 @@
 # CLA DB 0.1.3 Compatibility Matrix
 
-This matrix describes the local unpublished candidate only. All detached candidate checks use the [same npm archive and hash](./PACKAGE.md). The [JSON evidence](./compatibility-results.json) records 123 passes and 23 explicit skips across 11 consumer lanes, 45 browser passes, and 30 simulated storage passes at implementation revision `8891dabc42`. PASS applies only to executed probes in the stated lane; SKIP and UNSUPPORTED are not approvals.
+`0.1.3` is published as npm `latest`, verified on 2026-11-26. [Hosted CI, compatibility, and staging succeeded](./CI.md) at revision `c4c06825382872af9551435cbbfeca0e661df565`, superseding the missing-run and staging blockers.
+
+The detailed counts below remain historical local candidate evidence, not newly measured registry results. All detached candidate checks use the [same local npm archive and hash](./PACKAGE.md), whose SHA-256 was not compared with registry bytes in this documentation task. The [JSON evidence](./compatibility-results.json) records 123 passes and 23 explicit skips across 11 consumer lanes, 45 browser passes, and 30 simulated storage passes at implementation revision `8891dabc42`. PASS applies only to executed probes in the stated lane; SKIP and UNSUPPORTED are not approvals.
 
 | Area | Locally verified | Outside the verified claim |
 | --- | --- | --- |
@@ -15,14 +17,14 @@ This matrix describes the local unpublished candidate only. All detached candida
 
 The detached React + Vite probe loaded the exact archive with Memory and verified initial render, reactive update and collection cleanup in Chromium. Its emitted modules included React and Memory, but not the checked Dexie, SQLite, WebSocket/Firestore or alternative framework imports. This is scoped tree-shaking evidence, not a guarantee about every import combination.
 
-## Open Acceptance Items
+## Remaining Limits And Historical Gates
 
 | Classification | Gap | Reason |
 | --- | --- | --- |
-| Blocking publication | Hosted compatibility and current protected-master run for the release changes | Existing 0.1.2 runs do not verify the 0.1.3 workflow. No push or dispatch was authorized. |
+| Satisfied hosted gate | Current protected-master CI and compatibility | Both succeeded at the revision linked above; local report counts remain separate. |
 | Blocking claim of full Bun support | Inherited Bun Memory/Dexie failures | Detached evidence passes its narrower scope; do not claim the failing suites passed. No production code changed. |
-| Blocking protected staging | npm immutable-subject OIDC exchange remains unresolved | Preserve staged publishing and provenance controls; do not bypass or publish without maintainer authorization. |
-| Non-blocking for scoped local claims | Native forward-lineage, downgrade, optional frameworks, crash/quota checks, benchmark breadth | Document the separate limits. Neither native durability nor simulated forward lineage implies those outcomes. |
-| Non-blocking for the candidate package audit | 26 moderate development-only advisories | The exact detached production audit returned zero at audit time; prior advisory dispositions remain applicable to the unchanged development graph. |
+| Satisfied staging gate | Protected staging succeeded | Build and stage succeeded in run 45879171228; earlier failures remain historical in [Publishing](./PUBLISHING.md). This is not a guarantee of future OIDC behavior. |
+| Outside scoped verified claims | Native forward-lineage, downgrade, optional frameworks, crash/quota checks, benchmark breadth | Document the separate limits. Neither native durability nor simulated forward lineage implies those outcomes. |
+| Remaining development audit findings | 26 moderate development-only advisories | The exact detached production audit returned zero at audit time; prior advisory dispositions remain applicable to the unchanged development graph. |
 
 See [package managers](./PACKAGE_MANAGERS.md), [runtimes](./RUNTIMES.md), [browsers](./BROWSERS.md), [storage](./STORAGE.md), and [test evidence](./TESTS.md) for details.

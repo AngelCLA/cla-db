@@ -3,9 +3,14 @@
 This file tracks modifications specific to the CLA DB fork (`@clatech/db`).
 For upstream RxDB history, see `CHANGELOG.md`.
 
-## [0.1.3] - Candidate, Unpublished
+## [0.1.3] - 2026-11-26 (Published)
 
-This section records the `0.1.3` "Universal Compatibility" candidate, not a publication approval. Version `0.1.3` is not published on npm. The registry `latest` release is `0.1.2`, verified against the registry on 2026-11-26.
+Version `0.1.3` ("Universal Compatibility") is published as npm `latest`, verified on 2026-11-26. See [registry identity and historical local archive](./release/0.1.3/PACKAGE.md) and [publication evidence](./release/0.1.3/PUBLISHING.md).
+
+### Verification
+
+- Hosted CI, compatibility, and staging succeeded at revision `c4c06825382872af9551435cbbfeca0e661df565`; [run links](./release/0.1.3/CI.md). Earlier staging failures remain historical evidence.
+- Local candidate reports record 123 consumer passes, 23 skips, 45 browser passes, and 30 simulated storage passes. These historical counts do not certify registry bytes, full Bun support, or crash/quota durability. See the [scoped matrix](./release/0.1.3/COMPATIBILITY.md).
 
 ### Added
 
@@ -13,13 +18,12 @@ This section records the `0.1.3` "Universal Compatibility" candidate, not a publ
 
 ### Changed
 
-- Install guidance distinguishes the published release from the unpublished candidate. `README.md` documents the five manager commands and states that they are install instructions rather than a per-manager support certification.
-- Correct the landing version state: `0.1.1` is no longer advertised, and `0.1.2` is no longer described as a candidate after it was published as `latest`.
-- Document proposed GitHub repository metadata (description, topics, homepage) as a proposal that requires separate maintainer authorization. No repository setting was changed.
+- Align README, roadmap, release records, landing copy, and documentation version display with published `0.1.3`. The five manager commands remain install instructions, not per-manager support certification.
+- Record the canonical repository/homepage as `https://github.com/AngelCLA/cla-db` and the independent-fork description. The GitHub description and homepage were applied separately and read back on 2026-11-26; topics were not changed.
 
 ## [0.1.2] - Published
 
-Version `0.1.2` is the registry `latest` release; an earlier revision of this entry described it as an unpublished candidate before that state was corrected against the registry. Historical release evidence for this version remains in `release/0.1.2/`.
+Version `0.1.2` is a previous published release, superseded as npm `latest` by `0.1.3`. An earlier revision described it as an unpublished candidate before that state was corrected against the registry. Historical release evidence remains in `release/0.1.2/`.
 
 ### Added
 

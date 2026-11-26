@@ -91,7 +91,7 @@ const config: Config = {
                 'operatingSystem': 'Storage-dependent; see consumer compatibility evidence',
                 'description': 'A minimal Apache 2.0 fork of RxDB maintained by CLA Tech. Local-first reactive NoSQL for JavaScript with explicitly configured replication. Platform support depends on storage and runtime.',
                 'url': 'https://db.claangel.site',
-                'softwareVersion': rxdbVersion + ' candidate (npm latest: 0.1.1)',
+                'softwareVersion': rxdbVersion + ' (published; npm latest: 0.1.3)',
                 'license': 'https://github.com/AngelCLA/cla-db/blob/master/LICENSE.txt',
                 'downloadUrl': 'https://www.npmjs.com/package/@clatech/db',
                 'softwareHelp': {

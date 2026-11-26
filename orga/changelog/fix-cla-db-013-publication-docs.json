@@ -1,0 +1,6 @@
+{
+    "$schema": "./schema.json",
+    "text": "FIX CLA DB 0.1.3 publication status, hosted CI evidence, official repository metadata, and landing version assertions",
+    "links": [],
+    "priority": 2
+}

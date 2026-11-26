@@ -32,7 +32,7 @@ const tokensCss = readFileSync(resolve(webRoot, 'src/styles/tokens.css'), 'utf8'
 const documentShell = readFileSync(resolve(webRoot, 'index.html'), 'utf8');
 check(documentShell.includes('lang="es"') && documentShell.includes('name="viewport"'), 'landing must declare Spanish and responsive viewport');
 check(documentShell.includes('property="og:title"') && documentShell.includes('property="og:description"') && documentShell.includes('name="twitter:card"'), 'landing must provide social metadata');
-check(html.includes('npm install @clatech/db rxjs') && html.includes('0.1.3') && html.includes('sin publicar'), 'installation must distinguish the published package from the unpublished candidate');
+check(html.includes('npm install @clatech/db rxjs') && html.includes('La versión 0.1.3 está publicada en npm como latest.'), 'installation must identify 0.1.3 as the published npm latest');
 const systemDoc = readFileSync(resolve(repoRoot, 'design/system.md'), 'utf8');
 
 // 1. Section contract from the artboard.
@@ -41,13 +41,13 @@ const requiredCopy: readonly (readonly [string, string])[] = [
     ['nav link', 'Características'],
     ['nav link', 'Arquitectura'],
     ['nav link', 'Documentación'],
-    ['hero badge', 'v0.1.2'],
+    ['hero badge', 'v0.1.3'],
     ['hero title lead', 'Tus datos,'],
     ['hero title accent', 'local-first.'],
     ['hero lede', 'supera el límite de 13 colecciones'],
     ['hero cta', 'Empezar ahora'],
     ['hero cta', 'Ver ejemplo'],
-    ['hero caption', 'CLA DB CORE // V0.1.2'],
+    ['hero caption', 'CLA DB CORE // V0.1.3'],
     ['stack bar', 'STACK NATIVO'],
     ['stack item', 'JavaScript'],
     ['stack item', 'TypeScript'],
@@ -242,11 +242,11 @@ check(installSection.includes('Copiar'), 'install selector must offer a copy con
 check(!/<form\b/.test(installSection), 'install selector must not submit forms');
 
 // Version state: verified on the registry before correcting the copy.
-for (const stale of ['v0.1.1', 'V0.1.1']) {
+for (const stale of ['v0.1.1', 'V0.1.1', 'v0.1.2', 'V0.1.2']) {
     check(!html.includes(stale), `landing must not advertise the outdated ${stale} version`);
 }
-check(!html.includes('La candidata 0.1.2'), 'the published 0.1.2 must not be described as a candidate');
-check(html.includes('0.1.2') && html.includes('0.1.3'), 'installation copy must state the published version and the pending candidate');
+check(!html.includes('sin publicar') && !html.includes('candidata 0.1.3'), 'the published 0.1.3 must not be described as unpublished');
+check(html.includes('0.1.3 está publicada en npm como latest'), 'installation copy must state the published version and latest tag');
 for (const overclaim of ['verificado en pnpm', 'verificado en Bun', 'verificado en Yarn', 'verificado en Deno', 'soportado en todos']) {
     check(!html.includes(overclaim), `install copy must not claim unverified support: ${overclaim}`);
 }

@@ -1,9 +1,8 @@
 /**
  * Install guidance for the landing site (S11).
  *
- * Verified registry state on 2026-11-26: `@clatech/db@0.1.2` is `latest` and
- * `0.1.3` returns E404, so 0.1.2 is published and 0.1.3 is an unpublished
- * candidate. The commands below are install instructions for the single npm
+ * Verified registry state on 2026-11-26: `@clatech/db@0.1.3` is published
+ * as `latest`. The commands below are install instructions for the single npm
  * package; they are not a per-manager support certification.
  */
 
@@ -58,8 +57,8 @@ export const installTargetById = (id: PackageManagerId): InstallTarget =>
 export const installSection = {
     kicker: '// Instalación',
     title: 'Un paquete, cinco comandos',
-    lede: 'Un único paquete oficial, @clatech/db, más su peer rxjs. npm publica la versión 0.1.2 como latest; la candidata 0.1.3 sigue sin publicar.',
-    boundary: 'Cada comando describe cómo instala esa herramienta. No es una certificación por gestor: la evidencia de la candidata 0.1.3 se registra con la release.',
+    lede: 'Un único paquete oficial, @clatech/db, más su peer rxjs. La versión 0.1.3 está publicada en npm como latest.',
+    boundary: 'Cada comando describe cómo instala esa herramienta. No es una certificación por gestor: la evidencia y los límites de 0.1.3 se registran con la release.',
     selectorLabel: 'Gestor de paquetes',
     copyLabel: 'Copiar',
     messages: {

@@ -14,7 +14,7 @@ CLA DB is an Apache 2.0 fork of [RxDB](https://github.com/pubkey/rxdb) maintaine
 ## Prerequisites
 
 - The package retains Node.js `>=20`; use Node 24 and npm 11 for the locked development toolchain.
-- CI selects Node 22 and 24 LTS lines. Local release checks on Node 24 do not prove the unrun matrix or the Node 20 engine floor.
+- Protected CI selects Node 22 and 24 LTS lines. The [0.1.3 CI record](release/0.1.3/CI.md) links successful hosted runs; the separate [compatibility matrix](release/0.1.3/COMPATIBILITY.md) scopes Node 20 smoke and other target evidence. Local Node 24 checks alone do not prove the engine range.
 
 Install dependencies:
 
@@ -78,9 +78,9 @@ Commit root and `web/` npm locks when their manifests change. Generate locks wit
 
 For the landing site, build the root first, then run `npm ci --ignore-scripts --no-audit --no-fund`, `npm run build`, and `npm run check` in `web/`. Its check executes the displayed root-library example and verifies the install selector contract.
 
-User-facing install guidance lives in `README.md` and `web/src/install.ts`, which feed the landing selector. When you change an install command or the published/candidate version state, update both places and run `npm run check` in `web/`. Verify the registry state first: the commands are install instructions for the single npm package, never a per-manager support claim.
+User-facing install guidance lives in `README.md` and `web/src/install.ts`; the latter feeds the landing selector. When changing an install command or publication state, sync those files, the version copy in `web/src/content.ts`, and the display in `docs-src/docusaurus.config.ts`, then run `npm run check` in `web/`. Verify registry state first: `0.1.3` was npm `latest` on 2026-11-26. Commands are install instructions for the single npm package, never a per-manager support claim.
 
-See [dependency audit commands and limitations](release/0.1.2/DEPENDENCIES.md) and the [manual publication procedure](release/0.1.2/PUBLISHING.md). Never dispatch publication as a validation step. Security reports follow [SECURITY.md](SECURITY.md), not the public bug template.
+See [dependency audit commands and limitations](release/0.1.3/DEPENDENCIES.md) and the [publication evidence and manual procedure](release/0.1.3/PUBLISHING.md). Never dispatch publication as a validation step. Security reports follow [SECURITY.md](SECURITY.md), not the public bug template.
 
 ## Reporting Bugs
 
