@@ -4,11 +4,24 @@
 
 ## Install
 
+One official package, `@clatech/db`, with `rxjs` as its peer dependency. Version `0.1.2` is the current `latest` release on npm. Version `0.1.3` is a candidate that is not published.
+
 ```bash
+# npm
 npm install @clatech/db rxjs
+# pnpm
+pnpm add @clatech/db rxjs
+# Bun
+bun add @clatech/db rxjs
+# Yarn 4 with node_modules
+yarn add @clatech/db rxjs
+# Deno 2, npm specifiers written to deno.json
+deno add npm:@clatech/db npm:rxjs
 ```
 
-The latest published registry version is **0.1.1**. This branch prepares **0.1.2**, an unpublished preview, not a release declared ready. To evaluate that candidate, build and pack the checkout, then install its tarball in a separate application:
+Every manager installs the same npm artifact. The commands describe how each tool installs a package; they are not a per-manager support certification. The `latest` tag and the unpublished candidate were checked against the registry on 2026-11-26.
+
+To evaluate the unpublished candidate, build and pack this checkout, then install the tarball it produces in a separate application:
 
 ```bash
 # In the fork checkout
@@ -16,10 +29,12 @@ npm install
 npm run build
 npm pack
 # In your application, replacing /path/to/checkout with its actual location
-npm install /path/to/checkout/clatech-db-0.1.2.tgz rxjs
+npm install /path/to/checkout/clatech-db-0.1.3.tgz rxjs
 ```
 
-See [package evidence](./release/0.1.2/PACKAGE.md), [compatibility evidence](./release/0.1.2/COMPATIBILITY.md), and [network audit](./release/0.1.2/NETWORK_AUDIT.md). These are bounded observations, not final release certification.
+The packed file is named after `package.json#version`, so it is `clatech-db-0.1.3.tgz` when the version is `0.1.3`. Package-manager, runtime, browser, framework, and storage results are recorded per candidate in `release/0.1.3/` once the release controller has run them. Until that evidence exists, no target is announced as verified or supported.
+
+See [0.1.2 package evidence](./release/0.1.2/PACKAGE.md), [compatibility evidence](./release/0.1.2/COMPATIBILITY.md), and [network audit](./release/0.1.2/NETWORK_AUDIT.md). Those documents describe the previous release, not this candidate.
 
 ## Quick Start With JavaScript
 
@@ -104,7 +119,7 @@ console.log((await db.customers.findOne('saved').exec()).name); // Saved custome
 await db.close();
 ```
 
-Browser quotas, eviction, private browsing, and crashes affect durability. Candidate reopen tests use **fake-indexeddb in Node.js**, not real browser disk I/O. See the [exact compatibility boundaries](./release/0.1.2/COMPATIBILITY.md).
+Browser quotas, eviction, private browsing, and crashes affect durability. The 0.1.2 candidate reopened databases with **fake-indexeddb in Node.js**, which is not real browser disk I/O. Real-browser IndexedDB evidence belongs to the 0.1.3 candidate and is reported with that release when it exists. See the [exact compatibility boundaries](./release/0.1.2/COMPATIBILITY.md) for the previous release.
 
 ## Custom Replication
 
@@ -172,7 +187,7 @@ The inherited SQLite trial is **not CLA DB's own production adapter**. Source li
 
 The public package version is decoupled from storage compatibility version **17.6.0**. CLA DB preserves the RxDB public interfaces and internal storage prefixes; this is an intended compatibility boundary, not a blanket guarantee for every plugin or runtime. The fork removes the artificial 13-collection limit and preserves `OPEN_COLLECTIONS` cleanup tracking. Physical memory, handles, and initialization costs still limit workloads.
 
-The package declares Node.js `>=20`. Current isolated consumer evidence used Node.js 24, ESM, CommonJS, TypeScript, Vite, memory, and simulated IndexedDB. Browser applications can use Dexie where IndexedDB exists. Electron, React Native, Capacitor, Deno, and Bun are inherited integration targets, not a tested platform matrix for 0.1.2. Choose storage and platform dependencies explicitly. No comparative speed claim is made.
+The package declares Node.js `>=20`. Isolated consumer evidence for 0.1.2 used Node.js 24, ESM, CommonJS, TypeScript, Vite, memory, and simulated IndexedDB. Browser applications can use Dexie where IndexedDB exists. Electron, React Native, Capacitor, Deno, and Bun remain integration targets rather than a verified platform matrix, and no target is announced as supported before its exact evidence exists. Choose storage and platform dependencies explicitly. No comparative speed claim is made.
 
 ## Documentation And Contribution
 
@@ -182,6 +197,15 @@ The package declares Node.js `>=20`. Current isolated consumer evidence used Nod
 - [Contributing](./CONTRIBUTING.md): workflow and verification commands.
 - [Site evidence](./release/0.1.2/SITES.md): `web/` is the Spanish CLA Tech landing; `docs-src/` is inherited technical/API reference, including upstream-only material, not a second marketing implementation.
 - [Upstream API reference](https://rxdb.info/): examples may use `rxdb` imports or Premium features not supplied here.
+
+## Repository Metadata (Proposed, Requires Authorization)
+
+GitHub repository settings are not part of this branch, and nothing in this work changed them. The proposal below is documentation only. Applying it is a separate action that needs explicit maintainer authorization and its own review.
+
+- **Description**: "Open-source, reactive, local-first JavaScript database without artificial collection limits. An independent RxDB fork maintained by CLA Tech."
+- **Topics**: `local-first`, `offline-first`, `javascript`, `typescript`, `nosql`, `reactive`, `rxjs`, `indexeddb`.
+- **Homepage**: the deployed landing site URL, after a deployment that someone authorized and verified.
+- **Status**: proposed, not applied. Repository metadata is outside the release branch.
 
 ## License And Attribution
 

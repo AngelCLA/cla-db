@@ -1,0 +1,108 @@
+/* CLA-DB: install guidance reuses the landing tokens and primitives. */
+.lede {
+    max-width: 76ch;
+    color: var(--color-text-gray);
+    font-size: var(--font-size-m);
+}
+
+.selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--font-size-xs);
+    margin: var(--font-size-xl) 0;
+}
+
+.tab {
+    font: inherit;
+    font-size: var(--font-size-s);
+    font-weight: bold;
+    color: var(--color-text);
+    background-color: var(--color-bg-dark);
+    border: 1px solid var(--color-bg);
+    border-radius: var(--radius-button);
+    padding: var(--button-padding);
+    cursor: pointer;
+}
+
+.tab:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.tab[aria-selected="true"] {
+    color: var(--color-bg-dark);
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.tab[aria-selected="true"]:hover {
+    color: var(--color-bg-dark);
+}
+
+/* The panel holds the copy button, so keyboard focus lands on real controls. */
+.tab:focus-visible,
+.copy:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+}
+
+.panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--font-size-xs) var(--font-size-l);
+    padding: var(--font-size-l);
+}
+
+.command {
+    grid-column: 1;
+    grid-row: 1;
+    margin: 0;
+    overflow-x: auto;
+    color: var(--color-code-fg);
+    font-size: var(--font-size-m);
+    line-height: 1.6;
+}
+
+.copy {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+    white-space: nowrap;
+}
+
+.note {
+    grid-column: 1 / -1;
+    color: var(--color-text-gray);
+    font-size: var(--font-size-s);
+}
+
+.status {
+    grid-column: 1 / -1;
+    min-height: var(--font-size-m);
+    color: var(--color-primary);
+    font-size: var(--font-size-xs);
+}
+
+.boundary {
+    max-width: 76ch;
+    margin-top: var(--font-size-l);
+    color: var(--color-text-gray);
+    font-size: var(--font-size-s);
+}
+
+@media (max-width: 60rem) {
+    .panel {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .command,
+    .copy {
+        grid-column: 1;
+    }
+
+    .copy {
+        grid-row: 2;
+        justify-self: start;
+    }
+}

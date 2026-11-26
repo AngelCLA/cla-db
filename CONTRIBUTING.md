@@ -76,7 +76,9 @@ Preserved from upstream RxDB guidelines:
 
 Commit root and `web/` npm locks when their manifests change. Generate locks with ordinary npm tooling and `--ignore-scripts`; do not hand-edit resolutions or run automatic audit fixes. Install in a disposable checkout when verifying locks so that shared `node_modules` is not replaced. Suppressed lifecycle scripts can affect native integration tests; do not enable them indiscriminately.
 
-For the landing site, build the root first, then run `npm ci --ignore-scripts --no-audit --no-fund`, `npm run build`, and `npm run check` in `web/`. Its check executes the displayed root-library example.
+For the landing site, build the root first, then run `npm ci --ignore-scripts --no-audit --no-fund`, `npm run build`, and `npm run check` in `web/`. Its check executes the displayed root-library example and verifies the install selector contract.
+
+User-facing install guidance lives in `README.md` and `web/src/install.ts`, which feed the landing selector. When you change an install command or the published/candidate version state, update both places and run `npm run check` in `web/`. Verify the registry state first: the commands are install instructions for the single npm package, never a per-manager support claim.
 
 See [dependency audit commands and limitations](release/0.1.2/DEPENDENCIES.md) and the [manual publication procedure](release/0.1.2/PUBLISHING.md). Never dispatch publication as a validation step. Security reports follow [SECURITY.md](SECURITY.md), not the public bug template.
 

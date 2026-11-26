@@ -1,0 +1,5 @@
+{
+    "text": "ADD Package manager selector with npm, pnpm, Bun, Yarn and Deno install commands to the CLA DB landing page, and state the published and unpublished version states.",
+    "links": [],
+    "priority": 1
+}

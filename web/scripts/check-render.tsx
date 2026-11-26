@@ -5,6 +5,7 @@
  * Checks Spanish copy, CTA destinations, hero artwork structure and token
  * provenance. CSS checks supplement, but do not replace, browser visual proof.
  */
+import type { PackageManagerId } from '../src/install';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
@@ -31,7 +32,7 @@ const tokensCss = readFileSync(resolve(webRoot, 'src/styles/tokens.css'), 'utf8'
 const documentShell = readFileSync(resolve(webRoot, 'index.html'), 'utf8');
 check(documentShell.includes('lang="es"') && documentShell.includes('name="viewport"'), 'landing must declare Spanish and responsive viewport');
 check(documentShell.includes('property="og:title"') && documentShell.includes('property="og:description"') && documentShell.includes('name="twitter:card"'), 'landing must provide social metadata');
-check(html.includes('npm install @clatech/db rxjs') && html.includes('0.1.2') && html.includes('tarball de evaluación'), 'installation must distinguish published package and candidate preview');
+check(html.includes('npm install @clatech/db rxjs') && html.includes('0.1.3') && html.includes('sin publicar'), 'installation must distinguish the published package from the unpublished candidate');
 const systemDoc = readFileSync(resolve(repoRoot, 'design/system.md'), 'utf8');
 
 // 1. Section contract from the artboard.
@@ -40,13 +41,13 @@ const requiredCopy: readonly (readonly [string, string])[] = [
     ['nav link', 'Características'],
     ['nav link', 'Arquitectura'],
     ['nav link', 'Documentación'],
-    ['hero badge', 'v0.1.1'],
+    ['hero badge', 'v0.1.2'],
     ['hero title lead', 'Tus datos,'],
     ['hero title accent', 'local-first.'],
     ['hero lede', 'supera el límite de 13 colecciones'],
     ['hero cta', 'Empezar ahora'],
     ['hero cta', 'Ver ejemplo'],
-    ['hero caption', 'CLA DB CORE // V0.1.1'],
+    ['hero caption', 'CLA DB CORE // V0.1.2'],
     ['stack bar', 'STACK NATIVO'],
     ['stack item', 'JavaScript'],
     ['stack item', 'TypeScript'],
@@ -145,6 +146,120 @@ for (const [, href, label] of documentationLinks) {
 }
 check(html.includes('hasta 100 colecciones') && html.includes('persistencia') && html.includes('migraciones'), 'verification copy must distinguish collection coverage from persistence and migration checks');
 check(html.includes('cambia los imports') && html.includes('sin mezclar módulos'), 'compatibility copy must explain package imports and the single-module constraint');
+
+// Install selector (S11): user-facing commands for the single npm package.
+type InstallModule = typeof import('../src/install');
+const installModule: InstallModule | null = await import('../src/install').catch(() => null);
+check(installModule !== null, 'install selector logic must live in web/src/install.ts');
+const installTargets = installModule?.installTargets ?? [];
+const expectedCommands: readonly (readonly [PackageManagerId, string])[] = [
+    ['npm', 'npm install @clatech/db rxjs'],
+    ['pnpm', 'pnpm add @clatech/db rxjs'],
+    ['bun', 'bun add @clatech/db rxjs'],
+    ['yarn', 'yarn add @clatech/db rxjs'],
+    ['deno', 'deno add npm:@clatech/db npm:rxjs']
+];
+check(
+    installTargets.map(target => target.id).join(',') === expectedCommands.map(([id]) => id).join(','),
+    'install targets must be exactly npm, pnpm, bun, yarn and deno in that order'
+);
+for (const [id, command] of expectedCommands) {
+    const target = installTargets.find(candidate => candidate.id === id);
+    check(target?.command === command, `install command for ${id} must be exactly "${command}"`);
+    check(Boolean(target?.label.trim()), `install target ${id} must have a visible label`);
+    check(Boolean(target?.note.trim()), `install target ${id} must explain its boundary`);
+}
+const unverifiedClaims = ['verificado', 'certificado', 'soportado oficialmente'];
+for (const target of installTargets) {
+    check(target.command.includes('@clatech/db') && target.command.includes('rxjs'), `install command for ${target.id} must use the single npm package and rxjs`);
+    check(!unverifiedClaims.some(claim => target.note.includes(claim)), `install note for ${target.id} must not claim unverified support`);
+}
+check(installModule?.defaultInstallTargetId === 'npm', 'npm must stay the default install target');
+
+// Keyboard behaviour of the tablist, exercised through the shared logic.
+const nextInstallTargetId = installModule?.nextInstallTargetId;
+check(Boolean(nextInstallTargetId), 'install selector must expose keyboard navigation logic');
+if (nextInstallTargetId) {
+    const keyboardCases: readonly (readonly [PackageManagerId, string, PackageManagerId | null])[] = [
+        ['npm', 'ArrowRight', 'pnpm'],
+        ['deno', 'ArrowRight', 'npm'],
+        ['npm', 'ArrowLeft', 'deno'],
+        ['yarn', 'Home', 'npm'],
+        ['yarn', 'End', 'deno'],
+        ['pnpm', 'Tab', null],
+        ['pnpm', 'Enter', null],
+        ['pnpm', ' ', null],
+        ['pnpm', 'a', null]
+    ];
+    for (const [id, key, expected] of keyboardCases) {
+        check(nextInstallTargetId(id, key) === expected, `key ${key} on ${id} must move selection to ${String(expected)}`);
+    }
+    check(nextInstallTargetId('unknown' as PackageManagerId, 'ArrowRight') === null, 'an unknown selected id must not move selection');
+}
+
+// Copy behaviour: the control copies the command of the selected target.
+const copyInstallCommand = installModule?.copyInstallCommand;
+check(Boolean(copyInstallCommand), 'install selector must expose a command copy action');
+if (copyInstallCommand) {
+    const written: string[] = [];
+    const outcome = await copyInstallCommand('pnpm', {
+        writeText(text: string) {
+            written.push(text);
+            return Promise.resolve();
+        }
+    });
+    check(outcome === 'copied', `copying the selected command must report "copied"; observed ${outcome}`);
+    check(written.length === 1 && written[0] === expectedCommands[1][1], `copy must write the selected command exactly once; observed ${JSON.stringify(written)}`);
+    const missing = await copyInstallCommand('bun', undefined);
+    check(missing === 'unavailable', `copy without a clipboard API must report "unavailable"; observed ${missing}`);
+    const denied = await copyInstallCommand('bun', { writeText: () => Promise.reject(new Error('denied')) });
+    check(denied === 'failed', `a rejected clipboard write must report "failed"; observed ${denied}`);
+}
+
+// Rendered selector contract: real buttons, roving tabindex, labelled panel.
+const installSection = html.match(/<section\b[^>]*id="instalacion"[^>]*>([\s\S]*?)<\/section>/)?.[1] ?? '';
+check(installSection.length > 0, 'missing #instalacion install section');
+check(/<div\b(?=[^>]*role="tablist")(?=[^>]*aria-label="Gestor de paquetes")[^>]*>/.test(installSection), 'install selector must expose a labelled tablist');
+const installTabs = [...installSection.matchAll(/<button\b([^>]*)>([\s\S]*?)<\/button>/g)];
+const tabButtons = installTabs.filter(tab => /role="tab"/.test(tab[1]));
+check(tabButtons.length === expectedCommands.length, `install tablist must render ${expectedCommands.length} tabs; observed ${tabButtons.length}`);
+check(/<button\b(?=[^>]*type="button")/.test(installSection), 'install selector controls must be real buttons');
+const selectedTabs = tabButtons.filter(tab => /aria-selected="true"/.test(tab[1]));
+check(selectedTabs.length === 1, 'exactly one install tab must be selected');
+check(selectedTabs[0]?.[0].includes('npm') ?? false, 'the selected install tab must be npm');
+check(!/tabindex="-1"|tabIndex="-1"/.test(selectedTabs[0]?.[1] ?? ''), 'the selected tab must stay in the tab order');
+for (const tab of tabButtons) {
+    check(/aria-controls="install-panel-[a-z]+"/.test(tab[1]), 'every install tab must control a panel');
+    check(/id="install-tab-[a-z]+"/.test(tab[1]), 'every install tab must carry a stable id');
+}
+check(tabButtons.filter(tab => !/aria-selected="true"/.test(tab[1])).every(tab => /tabindex="-1"/.test(tab[1])), 'unselected install tabs must be removed from the tab order');
+const installPanel = installSection.match(/<div\b([^>]*role="tabpanel"[^>]*)>([\s\S]*?)<\/div>/);
+check(installPanel !== null, 'install selector must render a tabpanel');
+check(/aria-labelledby="install-tab-npm"/.test(installPanel?.[1] ?? '') && /id="install-panel-npm"/.test(installPanel?.[1] ?? ''), 'the rendered panel must be labelled by its tab and named by the tab aria-controls');
+check((installPanel?.[2] ?? '').includes(expectedCommands[0][1]), 'the rendered panel must show the npm install command');
+check(/role="status"/.test(installSection) || /aria-live="polite"/.test(installSection), 'copy feedback must be announced politely');
+check(installSection.includes('Copiar'), 'install selector must offer a copy control');
+check(!/<form\b/.test(installSection), 'install selector must not submit forms');
+
+// Version state: verified on the registry before correcting the copy.
+for (const stale of ['v0.1.1', 'V0.1.1']) {
+    check(!html.includes(stale), `landing must not advertise the outdated ${stale} version`);
+}
+check(!html.includes('La candidata 0.1.2'), 'the published 0.1.2 must not be described as a candidate');
+check(html.includes('0.1.2') && html.includes('0.1.3'), 'installation copy must state the published version and the pending candidate');
+for (const overclaim of ['verificado en pnpm', 'verificado en Bun', 'verificado en Yarn', 'verificado en Deno', 'soportado en todos']) {
+    check(!html.includes(overclaim), `install copy must not claim unverified support: ${overclaim}`);
+}
+
+let installCss = '';
+try {
+    installCss = readFileSync(resolve(webRoot, 'src/components/Install.module.css'), 'utf8');
+} catch {
+    check(false, 'install selector styles must live in web/src/components/Install.module.css');
+}
+check(installCss.includes(':focus-visible'), 'install selector must keep visible keyboard focus styles');
+check(installCss.includes('@media (max-width: 60rem)'), 'install selector must have a narrow-screen layout');
+check(!/#[0-9a-fA-F]{3,8}\b|rgba?\(|hsla?\(|font-family\s*:|animation\s*:|https?:|@import|url\(/.test(installCss), 'install selector styles must reuse tokens without new colors, fonts, motion or assets');
 
 const illustrations = html.match(/role="img"/g) ?? [];
 check(illustrations.length >= 1, 'missing the isometric illustration with role="img"');
@@ -253,4 +368,4 @@ if (failures.length > 0) {
     process.exit(1);
 }
 
-console.log(`PASS: ${requiredCopy.length} copy checks, ${requiredAnchors.length} preserved anchors, ${technicalSections.length} technical sections, ${documentationLinks.length} documentation links, ${hexInTokens.size} color tokens verified against design/system.md`);
+console.log(`PASS: ${requiredCopy.length} copy checks, ${requiredAnchors.length} preserved anchors, ${technicalSections.length} technical sections, ${documentationLinks.length} documentation links, ${tabButtons.length} install tabs and ${installTargets.length} install commands, ${hexInTokens.size} color tokens verified against design/system.md`);

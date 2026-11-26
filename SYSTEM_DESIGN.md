@@ -3,7 +3,7 @@
 ## Overview
 
 CLA DB (`@clatech/db`) is a minimal, Apache 2.0 fork of [RxDB](https://github.com/pubkey/rxdb) maintained by CLA Tech.
-It provides a reactive, local-first NoSQL database engine for JavaScript and TypeScript. Browser and Node.js usage depends on the selected storage. Electron, React Native, Capacitor, Deno, and Bun remain inherited integration targets, not a verified 0.1.2 support matrix. See [consumer and compatibility evidence](./release/0.1.2/COMPATIBILITY.md).
+It provides a reactive, local-first NoSQL database engine for JavaScript and TypeScript. Browser and Node.js usage depends on the selected storage. Electron, React Native, Capacitor, Deno, and Bun remain integration targets, not a verified 0.1.3 support matrix. See [consumer and compatibility evidence](./release/0.1.2/COMPATIBILITY.md) for the published `0.1.2` release.
 
 - **Fork repository**: `https://github.com/AngelCLA/cla-db`
 - **Upstream repository**: `https://github.com/pubkey/rxdb`
@@ -14,7 +14,7 @@ It provides a reactive, local-first NoSQL database engine for JavaScript and Typ
 
 1. **Minimal fork, maximum compatibility**: Keep diffs against upstream RxDB small, isolated, and clearly marked with `// CLA-DB:` comments.
 2. **Public API compatibility**: Preserve RxDB public APIs, plugin architecture (`addRxPlugin`), storage interfaces (`RxStorage` / `RxStorageInstance`), and replication protocol.
-3. **Storage-format compatibility**: Keep on-disk internal prefixes (`_rxdb_internal`, `rxdatabase_storage_local`, `BroadcastChannel('RxDB:|...')`) and `plugin.rxdb === true` intact. Decouple `package.json#version` (`0.1.2` candidate) from `RXDB_VERSION` (`17.6.0` via `package.json#claDb.upstreamVersion`) so on-disk compatibility checks in `src/rx-database-internal-store.ts` continue to recognize RxDB 17 format databases without `DM5` errors.
+3. **Storage-format compatibility**: Keep on-disk internal prefixes (`_rxdb_internal`, `rxdatabase_storage_local`, `BroadcastChannel('RxDB:|...')`) and `plugin.rxdb === true` intact. Decouple `package.json#version` (`0.1.3` candidate) from `RXDB_VERSION` (`17.6.0` via `package.json#claDb.upstreamVersion`) so on-disk compatibility checks in `src/rx-database-internal-store.ts` continue to recognize RxDB 17 format databases without `DM5` errors.
 4. **Clean-room open-source boundary**: Do not include, copy, or reverse-engineer proprietary RxDB Premium plugins or falsify Premium flags.
 5. **External extensibility**: Build future CLA Tech adapters and tooling as separate packages over public core interfaces rather than embedding them in `src/`.
 
