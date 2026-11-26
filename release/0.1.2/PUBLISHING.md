@@ -35,7 +35,8 @@ Verify these controls for the single-maintainer release policy:
 
 - The protected `master` branch requires a pull request and the `verify (22)`, `verify (24)`, and `site` checks. It blocks force pushes, deletion, and bypass. If the default branch changes, review and update both workflow guards rather than weakening them.
 - The `npm-release` environment allows deployments from `master` only, without a GitHub reviewer requirement. The approval that makes a version public happens in npm, not in GitHub.
-- In npm's package settings, verify the GitHub Actions Trusted Publisher for `@clatech/db`: owner `AngelCLA`, repository `cla-db`, workflow filename `publish.yml`, and environment `npm-release`. Keep `npm stage publish` allowed and direct `npm publish` disabled. This workflow does not need `npm dist-tag` permission or a traditional npm token.
+- In npm's package settings, verify the GitHub Actions Trusted Publisher for `@clatech/db`: owner `AngelCLA`, repository `cla-db`, workflow filename `publish.yml`, and environment `npm-release`. Keep `npm stage publish` allowed and direct `npm publish` disabled. This workflow does not need `npm dist-tag` permission or a traditional npm token. Confirm this in the npm web UI or with `npm trust list @clatech/db` from a logged-in npm session. A new configuration expires if it does not complete its first successful publish within two days.
+- The advisory disposition in [DEPENDENCIES.md](DEPENDENCIES.md#advisory-disposition) is recorded. Remaining viewer redistribution notices are a separate blocker for viewer hosting, not for this npm payload.
 - [Staged publishing](https://docs.npmjs.com/staged-publishing/) requires npm `>=11.15.0` and Node `>=22.14.0`. The workflow uses Node 24 on a GitHub-hosted `ubuntu-24.04` runner and grants `id-token: write` only to the staging job. The job stops if npm or Node is too old.
 
 ## Stage, Review, And Approve Manually

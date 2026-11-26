@@ -14,8 +14,8 @@
 
 ## Open Before Publication
 
-1. Review and explicitly disposition the `26` moderate development audit findings and the remaining redistribution questions. Scoped development overrides removed the legacy `ws` and Firestore gRPC high findings. There were no high or critical development findings in the current audit. The audited production graph returned zero known advisories; it is not the same graph.
-2. Obtain successful CI evidence on the reviewed protected revision, confirm Trusted Publisher and environment protections, and independently compare the exact bytes. A named environment is not proof that deployments are restricted to the protected branch.
+1. ~~Review and explicitly disposition the `26` moderate development audit findings~~ **Done on 2026-11-26.** See the [advisory disposition](DEPENDENCIES.md#advisory-disposition). Scoped development overrides removed the legacy `ws` and Firestore gRPC high findings. There were no high or critical development findings in the current audit. The audited production graph returned zero known advisories; it is not the same graph. Remaining redistribution questions (viewer font notices) are still open.
+2. ~~Obtain successful CI evidence on the reviewed protected revision, confirm Trusted Publisher and environment protections~~ **Done on 2026-11-26.** CI passed on protected `master` at `77a47c4c754f5aa670aec12bb96f21ad61ab060f` ([run 45775795968](https://github.com/AngelCLA/cla-db/actions/runs/45775795968)). The maintainer independently confirmed the npm Trusted Publisher binding on the same date. See [publishing procedure](PUBLISHING.md).
 3. Obtain separate authorization for publication. [GitHub release notes](RELEASE_NOTES.md) are a draft. No publication workflow was dispatched and no package, GitHub release, or tag was created.
 
 ## Limits Of This Review

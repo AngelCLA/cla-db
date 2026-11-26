@@ -64,3 +64,18 @@ The shipped legacy signaling launcher is retained but not run: it imports develo
 The approved web-only change adds development Node type declarations that a fresh standalone build lacked. Root and web locks passed disposable `npm ci`; root build, standalone web build, and web check passed on Node 24.22.3. CI now selects Node 22/24 maintained LTS lines; the retained `>=20` engine floor and remote matrix have not been validated here. The [local test report](TESTS.md) records the required suite. Remote release settings and provenance, optional production plugin peers, complete secret detection, and viewer notice compliance were not validated.
 
 Known development findings, deprecations, and metadata gaps require maintainer disposition before publication. Viewer notices need a separate review before viewer redistribution.
+
+## Advisory Disposition
+
+The maintainer reviewed the 26 moderate findings on 2026-11-26 and accepted them for this release. The findings propagate 6 source advisories through the locked development graph only; the production consumer has zero known advisories. All suggested fixes are semver-major upgrades of tooling dependencies, so none is applicable without a dependency change that this fork rules out.
+
+| Source advisory | Moderate paths in this graph | Maintenance disposition |
+| --- | --- | --- |
+| [GHSA-968p-4wvh-cqc8](https://github.com/advisories/GHSA-968p-4wvh-cqc8) (`@babel/runtime`) | Build transpilation output | Only affects generated code with named capturing groups and `.replace`. Not in the shipped consumer. |
+| [GHSA-8988-4f7v-96qf](https://github.com/advisories/GHSA-8988-4f7v-96qf) (`@opentelemetry/core`) | Firebase tooling | Unbounded memory in W3C baggage propagation. Development CLI only. |
+| [GHSA-2g4f-4pwh-qvx6](https://github.com/advisories/GHSA-2g4f-4pwh-qvx6) (`ajv` via `rxdb@16.21.1`) | Legacy migration tests | ReDoS with `$data` option. Test-only, not in the shipped consumer. |
+| [GHSA-3g3m-2fjr-6pw4](https://github.com/advisories/GHSA-3g3m-2fjr-6pw4) (`glob`) | `firebase-tools`, `mocha` | AbortSignal bypass allows traversal after timeout. Test and CLI tooling only. |
+| [GHSA-g3hv-75wg-m249](https://github.com/advisories/GHSA-g3hv-75wg-m249) (`minimatch`) | `karma-webpack`, `glob` | DoS via globparts amplification. Test tooling only. |
+| [GHSA-w5hq-g745-h8pq](https://github.com/advisories/GHSA-w5hq-g745-h8pq) (`uuid`) | `firebase-tools` | Missing bounds check in v3/v5/v6 with explicit `buf`. CLI tooling only. |
+
+Accepted risk: these advisories affect development tooling paths, not the shipped package. A future fork release may revisit them, but the fork scope does not include mass tooling upgrades.
