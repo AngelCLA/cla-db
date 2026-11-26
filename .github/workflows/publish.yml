@@ -1,9 +1,9 @@
-name: Manually publish vetted CLA DB
+name: Manually stage vetted CLA DB
 on:
   workflow_dispatch:
     inputs:
       confirmation:
-        description: 'Type PUBLISH @clatech/db@0.1.2'
+        description: 'Type STAGE @clatech/db@0.1.2 (no public release)'
         required: true
         type: string
       sha256:
@@ -19,7 +19,7 @@ jobs:
   build:
     if: >-
       github.repository == 'AngelCLA/cla-db' && github.ref == 'refs/heads/master' &&
-      github.ref_protected && inputs.confirmation == 'PUBLISH @clatech/db@0.1.2'
+      github.ref_protected && inputs.confirmation == 'STAGE @clatech/db@0.1.2'
     permissions:
       contents: read
     runs-on: ubuntu-24.04
@@ -50,11 +50,11 @@ jobs:
           path: clatech-db-0.1.2.tgz
           if-no-files-found: error
           retention-days: 3
-  publish:
+  stage:
     needs: build
     if: >-
       github.repository == 'AngelCLA/cla-db' && github.ref == 'refs/heads/master' &&
-      github.ref_protected && inputs.confirmation == 'PUBLISH @clatech/db@0.1.2'
+      github.ref_protected && inputs.confirmation == 'STAGE @clatech/db@0.1.2'
     runs-on: ubuntu-24.04
     environment: npm-release
     permissions:
@@ -68,16 +68,17 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: vetted-package
-      - name: Verify toolchain, immutable bytes and publish without lifecycle scripts
+      # CLA-DB: Public release still requires the maintainer's npm approval with 2FA.
+      - name: Verify toolchain and stage the exact tarball
         env:
           EXPECTED_SHA256: ${{ inputs.sha256 }}
         run: |
           [[ "$EXPECTED_SHA256" =~ ^[a-f0-9]{64}$ ]]
           test "$(printf '22.14.0\n%s\n' "$(node -p 'process.versions.node')" | sort -V | head -n1)" = '22.14.0'
-          test "$(printf '11.5.1\n%s\n' "$(npm --version)" | sort -V | head -n1)" = '11.5.1'
+          test "$(printf '11.15.0\n%s\n' "$(npm --version)" | sort -V | head -n1)" = '11.15.0'
           printf '%s  clatech-db-0.1.2.tgz\n' "$EXPECTED_SHA256" | sha256sum --check
           tar -xOf clatech-db-0.1.2.tgz package/package.json | node -e '
             let s=""; process.stdin.on("data", c => s+=c).on("end", () => {
               const p=JSON.parse(s); if(p.name!=="@clatech/db" || p.version!=="0.1.2") process.exit(1);
             });'
-          npm publish ./clatech-db-0.1.2.tgz --provenance --access public --ignore-scripts
+          npm stage publish ./clatech-db-0.1.2.tgz --provenance --access public --ignore-scripts

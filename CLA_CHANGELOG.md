@@ -15,7 +15,7 @@ This section records the unpublished candidate, not a publication approval. The 
 
 - Public package version is `0.1.2`; storage compatibility stays `17.6.0`. The foundation remains RxDB `17.6.0+522`, commit `9d5849cf4c695ffc27d60e134b2039539e77a9b0`.
 - Nine upstream commits through `d08621c7e26859e017a78a9615f5951fd4803b18` were merged via `515bb00884` / `e41bc43cfb`, not cherry-picked. [UPSTREAM.md](./UPSTREAM.md#exact-012-ancestry) lists every hash. Original RxDB history stays in `CHANGELOG.md`.
-- Root and landing installs now use separate committed lockfiles. The Node 22 and 24 CI jobs use npm `11.19.1` for the root lockfile and check a packed consumer. Publication has a separate manual workflow; its remote protections have not been activated or verified.
+- Root and landing installs now use separate committed lockfiles. The Node 22 and 24 CI jobs use npm `11.19.1` for the root lockfile and check a packed consumer. The separate manual release workflow stages the vetted tarball; the maintainer approves public release in npm with 2FA.
 
 ### Fixed
 
@@ -25,7 +25,7 @@ This section records the unpublished candidate, not a publication approval. The 
 
 ### Security
 
-- Add the [security reporting policy](SECURITY.md) and a [manual publishing procedure](./release/0.1.2/PUBLISHING.md) using artifact hash verification, npm Trusted Publishing, and provenance. Only the publish job receives OIDC permission.
+- Add the [security reporting policy](SECURITY.md) and a [manual publishing procedure](./release/0.1.2/PUBLISHING.md) using artifact hash verification, npm Trusted Publishing, and provenance. Only the staging job receives OIDC permission. It does not publish directly.
 - Keep `rxdb-old@16.21.1` for migration tests while resolving its nested `ws` dependency to the existing root `8.23.0`. Remove the affected `ws@8.18.3` resolution without changing production dependencies.
 - Resolve the development Firestore SDKs to `@grpc/grpc-js@1.13.6` without changing either Firebase version. Both SDKs passed loopback emulator checks and the Firestore replication suite passed all 11 tests.
 - The separate development audit reports 26 moderate findings, zero high and zero critical, down from 31 findings before the two scoped fixes. The remaining issues require maintainer disposition before release. See the [dependency report](./release/0.1.2/DEPENDENCIES.md) and [CycloneDX SBOM](./release/0.1.2/sbom.cdx.json).
