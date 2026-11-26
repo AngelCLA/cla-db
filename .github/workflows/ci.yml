@@ -26,6 +26,12 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: npm
           cache-dependency-path: package-lock.json
+      # CLA-DB: npm 10's peer resolution rejects the lock generated with npm 11.
+      - name: Install pinned npm for the lockfile
+        run: |
+          npm install --prefix "$RUNNER_TEMP/cla-ci-npm" --ignore-scripts --no-audit --no-fund --no-save --package-lock=false npm@11.19.1
+          test "$("$RUNNER_TEMP/cla-ci-npm/node_modules/.bin/npm" --version)" = 11.19.1
+          printf "%s\n" "$RUNNER_TEMP/cla-ci-npm/node_modules/.bin" >> "$GITHUB_PATH"
       - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/release-supply-chain-fixtures/workflow-policy.mjs
       - run: npm run lint

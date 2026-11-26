@@ -48,4 +48,4 @@ A read-only GitHub check reported that `master` was unprotected, the repository 
 
 ## Coverage Boundary
 
-CI selects maintained Node 22/24 LTS lines, without changing `engines.node >=20`. Node 20 is outside current maintained LTS coverage; this matrix does not prove its engine-floor compatibility. Local checks used Node `24.22.3` / npm `11.19.1`; remote CI and both matrix entries remain unrun here. No claim is made about all Node patch versions, native services, browsers, or future approval/provenance behavior. The root package and `web/` are locked separately; this workflow does not install or deploy the separate Docusaurus site.
+CI selects maintained Node 22/24 LTS lines and pins npm `11.19.1` for the verify matrix without changing `engines.node >=20`. Node 20 is outside this matrix. Local checks used Node `22.23.5` and `24.22.3` with npm `11.19.1`. See [CI evidence](TESTS.md) for observed jobs and remaining checks. No claim is made about all Node patch versions, native services, browsers, or future approval/provenance behavior. The root package and `web/` are locked separately; this workflow does not install or deploy the separate Docusaurus site.

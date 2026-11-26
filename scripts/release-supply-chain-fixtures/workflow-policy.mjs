@@ -15,7 +15,19 @@ export function checkWorkflows(ci, publish) {
         assert.equal(publish.on.workflow_dispatch.inputs[input].type, 'string');
     }
     assert.ok(JSON.stringify(ci).includes('npm ci --ignore-scripts'));
-    assert.ok(!JSON.stringify(ci).includes('npm install'));
+    const verifySteps = ci.jobs.verify.steps;
+    const pin = verifySteps.findIndex(step => step.name === 'Install pinned npm for the lockfile');
+    const install = verifySteps.findIndex(step => step.run === 'npm ci --ignore-scripts --no-audit --no-fund');
+    assert.ok(pin >= 0 && pin < install, 'Verify must install the pinned npm CLI before npm ci');
+    assert.equal(verifySteps[pin].run, [
+        'npm install --prefix "$RUNNER_TEMP/cla-ci-npm" --ignore-scripts --no-audit --no-fund --no-save --package-lock=false npm@11.19.1',
+        'test "$("$RUNNER_TEMP/cla-ci-npm/node_modules/.bin/npm" --version)" = 11.19.1',
+        'printf "%s\\n" "$RUNNER_TEMP/cla-ci-npm/node_modules/.bin" >> "$GITHUB_PATH"',
+        ''
+    ].join('\n'));
+    const projectCi = structuredClone(ci);
+    projectCi.jobs.verify.steps.splice(pin, 1);
+    assert.ok(!JSON.stringify(projectCi).includes('npm install'));
     assert.deepEqual(Object.keys(publish.on), ['workflow_dispatch']);
     assert.deepEqual(publish.permissions, { contents: 'read' });
     assert.deepEqual(publish.jobs.build.permissions, { contents: 'read' });

@@ -20,6 +20,6 @@
 
 ## Limits Of This Review
 
-- Node 20 and 22, real-browser storage durability, and external service integrations were not verified. Do not extend the passing local Node 24 and simulated IndexedDB evidence to those environments.
+- Local Node 22 and 24 tests passed with npm 11. The first remote Node 22 job failed before tests with npm 10; the corrective CI run still needs a verdict. Node 20, real-browser storage durability, and external service integrations were not verified.
 - The generated standalone viewer is outside the npm payload. Applicable third-party notices remain a blocker for separate viewer redistribution. Deployed sites and live network traffic were not certified.
 - Preserve the original [upstream changelog](../../CHANGELOG.md), the [fork changelog](../../CLA_CHANGELOG.md), and the [roadmap](../../ROADMAP.md) as separate records.
