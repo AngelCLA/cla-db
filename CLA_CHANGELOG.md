@@ -3,6 +3,13 @@
 This file tracks modifications specific to the CLA DB fork (`@clatech/db`).
 For upstream RxDB history, see `CHANGELOG.md`.
 
+## [Unreleased]
+
+### Changed
+
+- Identify v0.1.3 as available in the landing hero and replace the collection-limit pitch with local storage, offline operation, and backend synchronization copy.
+- Refine the landing hero with larger responsive typography, centered spacing, a subtle secondary action surface, and a larger wireframe illustration with a centered inset CLA DB label and branching traces. Preserve the existing content, theme tokens, focus styles, and single-column mobile layout.
+
 ## [0.1.3] - 2026-11-26 (Published)
 
 Version `0.1.3` ("Universal Compatibility") is published as npm `latest`, verified on 2026-11-26. See [registry identity and historical local archive](./release/0.1.3/PACKAGE.md) and [publication evidence](./release/0.1.3/PUBLISHING.md).

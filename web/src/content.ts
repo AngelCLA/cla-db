@@ -19,10 +19,10 @@ export const repoUrl = 'https://github.com/AngelCLA/cla-db';
 
 export const hero = {
     badgeVersion: 'v0.1.3',
-    badgeLabel: 'npm publicado',
+    badgeLabel: 'Disponible',
     titleLead: 'Tus datos,',
     titleAccent: 'local-first.',
-    lede: 'La base de datos NoSQL reactiva para JavaScript y TypeScript. Trabaja sin conexión y supera el límite de 13 colecciones con CLA DB.',
+    lede: 'La base de datos NoSQL reactiva para JavaScript y TypeScript. Almacena datos localmente, trabaja sin conexión y sincroniza con tu backend.',
     primaryCta: 'Empezar ahora',
     secondaryCta: 'Ver ejemplo',
     caption: 'CLA DB CORE // V0.1.3'
