@@ -44,7 +44,8 @@ const requiredCopy: readonly (readonly [string, string])[] = [
     ['hero badge', 'v0.1.3'],
     ['hero title lead', 'Tus datos,'],
     ['hero title accent', 'local-first.'],
-    ['hero lede', 'supera el límite de 13 colecciones'],
+    ['hero availability', 'Disponible'],
+    ['hero lede', 'Almacena datos localmente, trabaja sin conexión y sincroniza con tu backend.'],
     ['hero cta', 'Empezar ahora'],
     ['hero cta', 'Ver ejemplo'],
     ['hero caption', 'CLA DB CORE // V0.1.3'],
@@ -285,6 +286,9 @@ check(heroCss.includes(':focus-visible'), 'hero actions must retain visible keyb
 check(!/animation\s*:/.test(illustrationCss), 'static artwork must not introduce motion');
 check((html.match(/transform="matrix\(1 .5 -1 .5 260 /g) ?? []).length === 4, 'hero must render four isometric planes');
 check(html.includes('id="claDbGrid"') && html.includes('id="claDbHatching"'), 'hero must render grid and vertical hatching patterns');
+// CLA-DB: the reference artwork keeps its label clear of the perimeter grid.
+check(html.includes('data-core-panel="true"'), 'hero must render a solid inset label panel');
+check(html.includes('id="claDbDots"'), 'hero must render the circuit-board dot field');
 check(!/https?:|@import|url\(/.test(heroCss + illustrationCss), 'hero CSS must not load external assets');
 for (const color of (heroCss + illustrationCss).match(/#[0-9a-fA-F]{3,8}\b/g) ?? []) {
     check(systemDoc.toLowerCase().includes(color.toLowerCase()), `hero color ${color} is not recorded in design/system.md`);

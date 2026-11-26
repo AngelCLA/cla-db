@@ -2,26 +2,23 @@
 .illustration {
     display: block;
     width: 100%;
-    max-width: 29rem;
+    max-width: 32rem;
     height: auto;
 }
 
 .plateLabel {
     font-family: var(--font-family-base);
-    font-size: 11px;
+    font-size: 20px;
     font-weight: 700;
     letter-spacing: 0.14em;
-    fill: var(--color-text);
-    stroke: var(--color-bg-dark);
-    stroke-width: 3px;
-    paint-order: stroke fill;
+    fill: color-mix(in srgb, var(--color-primary) 35%, var(--color-text));
 }
 
 .traces {
     fill: var(--color-primary);
     stroke: var(--color-primary);
     stroke-width: 0.8;
-    opacity: 0.5;
+    opacity: 0.4;
 }
 
 .traces path {
