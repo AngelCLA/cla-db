@@ -1,6 +1,6 @@
-# Vet First, Publish Only After Explicit Approval
+# Stage First, Publish Only After Explicit Approval
 
-The workflows prepare a future manual release. This task has not configured repository settings, registered a Trusted Publisher, granted OIDC, dispatched Actions, or published anything. Static probes cannot prove those remote gates.
+The manual release workflow verifies and stages a tarball. It does not approve the staged package or make `0.1.2` public. A maintainer reviews the staged bytes and approves the version separately in npm with two-factor authentication (2FA). Local checks do not validate a live OIDC submission.
 
 ## Non-Publishing Vetting
 
@@ -29,22 +29,22 @@ npm audit --audit-level=moderate
 
 The development collector reports the underlying audit exit in JSON; its own success means collection succeeded, not that the graph is clean. `npm audit` currently exits 1. Review and explicitly disposition the [known findings](DEPENDENCIES.md) before any release. No automatic fixes are authorized. Preserve the vetted tarball and SHA-256 in independent review evidence. Refresh the SBOM with the artifact command's optional third argument `release/0.1.2/sbom.cdx.json` when the release bytes change. The recorded candidate hash is evidence, not an input to reuse blindly after rebuilding.
 
-## Settings Required Before Enabling Publication
+## Settings Required Before Staging
 
-A read-only GitHub check reported that `master` was unprotected, the repository had no active rulesets, and `npm-release` was not listed. A passing CI run on the review branch does not configure these gates or authorize publication. The repository uses a single-maintainer release policy. Verify these controls before publication:
+Verify these controls for the single-maintainer release policy:
 
-- Protect the official repository's default branch `master`: require a pull request and the verified CI checks, without a mandatory second-person approval. Block force pushes and branch deletion and prevent bypass where available. If the default branch changes, review and update both workflow guards rather than weakening them.
-- Create `npm-release` with a deployment branch rule for `master` only and no required reviewer. This policy does not provide independent human review. It relies on protected-branch CI, manual dispatch, explicit release confirmation, the vetted artifact hash, and the job-level OIDC boundary.
-- In npm's package settings, configure a GitHub Actions Trusted Publisher for package `@clatech/db`, owner `AngelCLA`, repository `cla-db`, workflow filename `publish.yml`, and environment `npm-release`. Use the environment restriction rather than a repository-only trust relationship. Review package publishing access and disallow long-lived token publishing where supported.
-- Follow [npm Trusted Publishing requirements](https://docs.npmjs.com/trusted-publishers/): npm `>=11.5.1`, Node `>=22.14.0`, GitHub-hosted runner, and job-level `id-token: write`. The workflow uses Node 24 on `ubuntu-24.04` and fails closed when the installed npm/Node versions are too old. There is no token fallback.
+- The protected `master` branch requires a pull request and the `verify (22)`, `verify (24)`, and `site` checks. It blocks force pushes, deletion, and bypass. If the default branch changes, review and update both workflow guards rather than weakening them.
+- The `npm-release` environment allows deployments from `master` only, without a GitHub reviewer requirement. The approval that makes a version public happens in npm, not in GitHub.
+- In npm's package settings, verify the GitHub Actions Trusted Publisher for `@clatech/db`: owner `AngelCLA`, repository `cla-db`, workflow filename `publish.yml`, and environment `npm-release`. Keep `npm stage publish` allowed and direct `npm publish` disabled. This workflow does not need `npm dist-tag` permission or a traditional npm token.
+- [Staged publishing](https://docs.npmjs.com/staged-publishing/) requires npm `>=11.15.0` and Node `>=22.14.0`. The workflow uses Node 24 on a GitHub-hosted `ubuntu-24.04` runner and grants `id-token: write` only to the staging job. The job stops if npm or Node is too old.
 
-## Later Manual Publication
+## Stage, Review, And Approve Manually
 
-1. After separate authorization, review the exact protected `master` revision and successful CI evidence. Confirm the package version is still unpublished and approve dependency/license residual risks. Retest the final artifact rather than treating this report as release approval.
-2. In the official repository's Actions UI, manually select `publish.yml` on `master`. Enter `PUBLISH @clatech/db@0.1.2` and the independently vetted tarball's lowercase 64-character SHA-256. Do not dispatch on a tag, fork, or unprotected branch.
-3. The build job installs without lifecycle scripts, runs verification, packs, audits the consumer graph, and checks the supplied hash. Its immutable v4 artifact is downloaded within the same run. A mismatch stops the release; investigate it rather than replacing the expected hash without review.
-4. Under the single-maintainer policy there is no second approval after dispatch. The maintainer checks the exact revision, CI, hash, and release authorization before dispatching. Only the separate publish job has OIDC permission. It checks the hash again and exact manifest name/version, then publishes the tarball with `--provenance --access public --ignore-scripts`. It does not check out or build repository code, install dependencies, or execute package lifecycle scripts.
-5. After publication, independently verify registry integrity, provenance association, version, and a fresh consumer installation. Stop on discrepancies. Tags, GitHub releases, deployments, and upstream notifications are not part of this workflow.
+1. After separate authorization to stage, review the exact protected `master` revision and its successful CI. Confirm the version is not already public or staged. Record the disposition of remaining dependency and license findings, and verify the artifact built from that revision.
+2. In the official repository's Actions UI, select **Manually stage vetted CLA DB** on `master`. Enter `STAGE @clatech/db@0.1.2` and the vetted tarball's lowercase 64-character SHA-256. Do not dispatch on a tag, fork, or unprotected branch.
+3. The build job installs without lifecycle scripts, verifies the package and consumer graph, and uploads the tarball when its hash matches. The staging job downloads that artifact from the same run and rechecks its hash, package name, and version. It sends that file with `npm stage publish` and provenance. It does not check out repository code, build, install dependencies, or approve a staged package.
+4. Review the staged package on npmjs.com or with `npm stage view <stage-id>`. Download its tarball with `npm stage download <stage-id>` and compare its SHA-256 with the vetted hash. Stop if it differs. After explicit approval to make this version public, the maintainer approves it in npm with 2FA. A successful Actions run alone does not make it public.
+5. Verify the published integrity, provenance, version, and a fresh consumer installation. Stop on discrepancies. Git tags, GitHub releases, deployments, and upstream notifications are outside this workflow.
 
 ## Coverage Boundary
 

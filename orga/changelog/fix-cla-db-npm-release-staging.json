@@ -1,0 +1,10 @@
+{
+  "text": "FIX the manual CLA DB release workflow to stage the verified tarball with npm Trusted Publishing. Public release requires separate maintainer approval with 2FA.",
+  "links": [
+    {
+      "url": "https://docs.npmjs.com/staged-publishing/",
+      "linkText": "npm staged publishing"
+    }
+  ],
+  "priority": 5
+}
