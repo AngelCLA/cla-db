@@ -5,6 +5,9 @@ psrqlbn-db/
 coverage/
 log.txt
 package-lock.json
+# CLA-DB: Only CI installation roots have committed npm locks.
+!/package-lock.json
+!/web/package-lock.json
 config.json
 .config.json
 .transpile_state.json

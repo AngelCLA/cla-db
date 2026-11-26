@@ -10,6 +10,9 @@ import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { App } from '../src/App';
+import { transformSync } from 'esbuild';
+import { runInNewContext } from 'node:vm';
+import { execFileSync } from 'node:child_process';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const webRoot = resolve(here, '..');
@@ -25,6 +28,10 @@ const check = (condition: boolean, message: string): void => {
 
 const html = renderToStaticMarkup(<App />);
 const tokensCss = readFileSync(resolve(webRoot, 'src/styles/tokens.css'), 'utf8');
+const documentShell = readFileSync(resolve(webRoot, 'index.html'), 'utf8');
+check(documentShell.includes('lang="es"') && documentShell.includes('name="viewport"'), 'landing must declare Spanish and responsive viewport');
+check(documentShell.includes('property="og:title"') && documentShell.includes('property="og:description"') && documentShell.includes('name="twitter:card"'), 'landing must provide social metadata');
+check(html.includes('npm install @clatech/db rxjs') && html.includes('0.1.2') && html.includes('tarball de evaluación'), 'installation must distinguish published package and candidate preview');
 const systemDoc = readFileSync(resolve(repoRoot, 'design/system.md'), 'utf8');
 
 // 1. Section contract from the artboard.
@@ -77,6 +84,23 @@ const exampleTargets = [...html.matchAll(/<div\b[^>]*id="ejemplo"[^>]*>([\s\S]*?
 check(exampleTargets.length === 1, 'the example must have exactly one #ejemplo destination');
 check(exampleTargets.some(target => target[1].includes('app.ts') && target[1].includes('@clatech/db')), '#ejemplo must identify the app.ts code window');
 check(/<a\b[^>]*href="#documentacion"[^>]*>[\s\S]*?Empezar ahora<\/a>/.test(html), 'Empezar ahora must keep linking to documentation');
+
+// CLA-DB: run exactly the displayed code, not a separately maintained fixture.
+const displayedCode = exampleTargets[0]?.[1].match(/<code[^>]*>([\s\S]*?)<\/code>/)?.[1]
+    .replace(/<[^>]+>/g, '')
+    .replace(/&#x27;/g, '\'')
+    .replace(/&quot;/g, '"')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&') ?? '';
+try {
+    const output = execFileSync(process.execPath, ['--import', 'fake-indexeddb/auto', '--input-type=module', '--eval', displayedCode], {
+        cwd: repoRoot, encoding: 'utf8', timeout: 20000, stdio: 'pipe'
+    });
+    check(output.includes('Clientes: 1'), 'displayed example must emit its inserted customer through the reactive query');
+} catch (error) {
+    check(false, `displayed example must execute with simulated IndexedDB: ${String(error)}`);
+}
 
 // S10: compact technical sections retain the existing page and CTA contract.
 const technicalSections = [
@@ -175,6 +199,50 @@ check(!/box-shadow/i.test(tokensCss), 'design system records no shadow tokens');
 const radiusValues = new Set((tokensCss.match(/--radius-[a-z-]+:\s*([^;]+);/g) ?? []).map(line => line.split(':')[1].replace(';', '').trim()));
 for (const value of radiusValues) {
     check(['0px', '4px', '8px', '10px'].includes(value), `radius ${value} is not one of the recorded radii (0px, 4px, 8px, 10px)`);
+}
+
+// CLA-DB: exercise the public tracking callback with browser APIs intercepted.
+// No requests are sent. Consent must not re-enable inherited conversions.
+const trackingSource = readFileSync(resolve(repoRoot, 'docs-src/src/components/trigger-event.tsx'), 'utf8');
+const trackingCode = transformSync(trackingSource, { loader: 'tsx', format: 'cjs' }).code;
+for (const canUseDOM of [true, false]) {
+    for (const beacon of [true, false]) {
+        const requests: unknown[] = [];
+        const stored = new Map<string, string>([['click_id', JSON.stringify({ k: 'gclid', v: 'probe', t: Date.now() })]]);
+        const before = JSON.stringify([...stored]);
+        const storage = {
+            getItem: (key: string) => stored.get(key) ?? null,
+            setItem: (key: string, value: string) => {
+                stored.set(key, value);
+            },
+            removeItem: (key: string) => {
+                stored.delete(key);
+            }
+        };
+        const module = { exports: {} as Record<string, (...args: any[]) => void> };
+        runInNewContext(trackingCode, {
+            module, exports: module.exports,
+            require: (id: string) => {
+                if (id === 'react') return { useEffect: (effect: () => void) => effect() };
+                if (id === '@docusaurus/ExecutionEnvironment') return { canUseDOM };
+                if (id === '../theme/eu-consent') return { isLikelyEuUser: () => false };
+                throw new Error(`Unexpected tracking dependency ${id}`);
+            },
+            window: { location: { hostname: 'db.claangel.site' }, gtag: (...args: unknown[]) => requests.push(args), rdt: (...args: unknown[]) => requests.push(args) },
+            document: { cookie: '' }, location: { search: '' },
+            navigator: beacon ? { sendBeacon: (...args: unknown[]) => requests.push(args) } : {},
+            fetch: (...args: unknown[]) => {
+                requests.push(args);
+                return Promise.resolve();
+            },
+            localStorage: storage, sessionStorage: storage, URLSearchParams, console: { log() {}, dir() {} }
+        });
+        module.exports.setTrackingConsent(true);
+        module.exports.triggerTrackingEvent('cla_probe', 1, 5, 'Lead');
+        module.exports.onCopy();
+        check(requests.length === 0, `CLA docs must not send conversion/analytics requests (DOM=${canUseDOM}, beacon=${beacon}); observed ${requests.length}`);
+        check(JSON.stringify([...stored]) === before, 'disabled tracking must not change stored identifiers or event counters');
+    }
 }
 
 if (failures.length > 0) {

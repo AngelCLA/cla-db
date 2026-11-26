@@ -1,0 +1,10 @@
+{
+  "text": "FIX the development Firestore dependency graph by resolving the current and legacy SDKs to the patched gRPC provider without changing either Firebase version or the production dependency graph.",
+  "links": [
+    {
+      "url": "https://github.com/advisories/GHSA-m9gg-hp2v-232j",
+      "linkText": "gRPC security advisory"
+    }
+  ],
+  "priority": 5
+}

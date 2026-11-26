@@ -1,0 +1,5 @@
+{
+    "text": "FIX CLA DB dev-mode plugin registration no longer injects an unsolicited rxdb.info marketing iframe. Preserve validation hooks, warnings, and explicit integrations.",
+    "links": [],
+    "priority": 6
+}

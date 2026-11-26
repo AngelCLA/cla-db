@@ -1,0 +1,10 @@
+{
+  "text": "FIX Node 22 verification by using the npm version that generated the root lockfile without changing project dependency resolutions.",
+  "links": [
+    {
+      "url": "https://github.com/AngelCLA/cla-db/actions/runs/45762679615",
+      "linkText": "Node 22 install failure in the review-branch CI"
+    }
+  ],
+  "priority": 5
+}

@@ -218,7 +218,10 @@ export function triggerTrackingEvent(
      */
     redditSearchTerm?: string
 ) {
-    if (!ExecutionEnvironment.canUseDOM) {
+    // CLA-DB: inherited marketing callbacks are inert on the CLA public site.
+    // Keep callers, links and explicit opt-in database viewer tooling intact.
+    const claSiteTrackingEnabled = false;
+    if (!claSiteTrackingEnabled || !ExecutionEnvironment.canUseDOM) {
         return;
     }
     /**

@@ -59,7 +59,7 @@ const config: Config = {
     headTags: [
         /**
          * CLA-DB: the RxDB GA4 consent-mode script was removed. The fork's
-         * documentation site serves no analytics. The upstream comment below
+         * documentation site disables inherited marketing callbacks. The upstream comment below
          * documents the removed behavior and returns with the next sync.
          *
          * Google Consent Mode v2 default. For EU/EEA (and UK) regions the
@@ -79,7 +79,7 @@ const config: Config = {
          */
         { tagName: 'meta', attributes: { name: 'theme-color', content: '#ed168f' } },
         // CLA-DB: the RxDB .ico/apple-touch fallbacks and the RxDB GA4 consent
-        // script were removed; the fork serves no analytics. Favicon is SVG only.
+        // script were removed; legacy integrations remain documented. Favicon is SVG only.
         {
             tagName: 'script',
             attributes: { type: 'application/ld+json' },
@@ -88,10 +88,10 @@ const config: Config = {
                 '@type': 'SoftwareApplication',
                 'name': 'CLA DB',
                 'applicationCategory': 'DeveloperApplication',
-                'operatingSystem': 'Any',
-                'description': 'A minimal Apache 2.0 fork of RxDB: a fast, local-first, reactive NoSQL database for JavaScript applications with offline support and explicit replication. Works across browsers, Node.js, Electron, React Native, and Capacitor.',
+                'operatingSystem': 'Storage-dependent; see consumer compatibility evidence',
+                'description': 'A minimal Apache 2.0 fork of RxDB maintained by CLA Tech. Local-first reactive NoSQL for JavaScript with explicitly configured replication. Platform support depends on storage and runtime.',
                 'url': 'https://db.claangel.site',
-                'softwareVersion': rxdbVersion,
+                'softwareVersion': rxdbVersion + ' candidate (npm latest: 0.1.1)',
                 'license': 'https://github.com/AngelCLA/cla-db/blob/master/LICENSE.txt',
                 'downloadUrl': 'https://www.npmjs.com/package/@clatech/db',
                 'softwareHelp': {

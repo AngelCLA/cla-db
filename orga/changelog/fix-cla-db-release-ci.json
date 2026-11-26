@@ -1,0 +1,10 @@
+{
+  "text": "FIX CLA DB release checks with locked CI installs, detached artifact dependency and license audits, a CycloneDX graph, security policy, and a separately guarded manual Trusted Publishing workflow. Document known development findings and unverified redistribution boundaries.",
+  "links": [
+    {
+      "url": "https://github.com/AngelCLA/cla-db",
+      "linkText": "CLA DB release documentation"
+    }
+  ],
+  "priority": 5
+}

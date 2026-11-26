@@ -13,13 +13,13 @@ CLA DB is an Apache 2.0 fork of [RxDB](https://github.com/pubkey/rxdb) maintaine
 
 ## Prerequisites
 
-- Node.js `>= 20` (tested on Node 22)
-- npm `>= 10`
+- The package retains Node.js `>=20`; use Node 24 and npm 11 for the locked development toolchain.
+- CI selects Node 22 and 24 LTS lines. Local release checks on Node 24 do not prove the unrun matrix or the Node 20 engine floor.
 
 Install dependencies:
 
 ```sh
-npm install
+npm ci --ignore-scripts --no-audit --no-fund
 ```
 
 ## Development Workflow
@@ -30,11 +30,11 @@ Run these checks locally before opening a pull request:
 # 1. Lint TypeScript/JavaScript files
 npm run lint
 
-# 2. Type-check
-npm run check-types
-
-# 3. Build CJS, ESM, TypeScript declarations, and plugin shims
+# 2. Build CJS, ESM, TypeScript declarations, and plugin shims
 npm run build
+
+# 3. Type-check against the generated declarations
+npm run check-types
 
 # 4. Run fast unit test suites
 npm run test:fast:memory
@@ -71,6 +71,14 @@ Preserved from upstream RxDB guidelines:
 
 - Record every CLA DB fork change in `CLA_CHANGELOG.md` under the target release section.
 - Do not publish npm packages or GitHub releases automatically from pull requests.
+
+## Supply-Chain And Release Checks
+
+Commit root and `web/` npm locks when their manifests change. Generate locks with ordinary npm tooling and `--ignore-scripts`; do not hand-edit resolutions or run automatic audit fixes. Install in a disposable checkout when verifying locks so that shared `node_modules` is not replaced. Suppressed lifecycle scripts can affect native integration tests; do not enable them indiscriminately.
+
+For the landing site, build the root first, then run `npm ci --ignore-scripts --no-audit --no-fund`, `npm run build`, and `npm run check` in `web/`. Its check executes the displayed root-library example.
+
+See [dependency audit commands and limitations](release/0.1.2/DEPENDENCIES.md) and the [manual publication procedure](release/0.1.2/PUBLISHING.md). Never dispatch publication as a validation step. Security reports follow [SECURITY.md](SECURITY.md), not the public bug template.
 
 ## Reporting Bugs
 

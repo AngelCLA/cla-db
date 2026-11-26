@@ -1,7 +1,30 @@
 {
   "name": "@clatech/db",
   "description": "CLA DB - A minimal Apache 2.0 local-first reactive NoSQL database fork of RxDB maintained by CLA Tech",
-  "version": "0.1.1",
+  "version": "0.1.2",
+  "files": [
+    "dist/cjs/",
+    "dist/esm/",
+    "dist/types/",
+    "dist/dbviewer/",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/plugins/flutter/dart/lib/",
+    "src/plugins/flutter/dart/pubspec.yaml",
+    "plugins/",
+    "LICENSE*",
+    "NOTICE*",
+    "COPYING*",
+    "AUTHORS*",
+    "THIRD-PARTY*",
+    "THIRD_PARTY*",
+    "CHANGELOG.md",
+    "UPSTREAM.md",
+    "babel.config.js",
+    "scripts/start-cloud-signaling-server.mjs",
+    "scripts/cloud-signaling-script.sh",
+    "scripts/acme-challenge/.gittouch"
+  ],
   "author": "CLA Tech",
   "repository": {
     "type": "git",
@@ -726,6 +749,13 @@
     "webpack-dev-server": "6.1.0"
   },
   "overrides": {
+    "@firebase/firestore": {
+      "@grpc/grpc-js": "1.13.6"
+    },
+    "rxdb-old@16.21.1": {
+      ".": "$rxdb-old",
+      "ws": "$ws"
+    },
     "eslint": "10.15.0",
     "webpack-dev-server": "6.1.0",
     "dexie": "4.4.2",

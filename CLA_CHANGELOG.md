@@ -3,10 +3,55 @@
 This file tracks modifications specific to the CLA DB fork (`@clatech/db`).
 For upstream RxDB history, see `CHANGELOG.md`.
 
-## [Unreleased]
+## [0.1.2] - Candidate, Unpublished
+
+This section records the unpublished candidate, not a publication approval. The registry baseline for this review is CLA DB `0.1.1`.
+
+### Added
+
+- Isolated packed-consumer integration coverage and cross-version Dexie reopen evidence for published CLA DB `0.1.1` and RxDB `17.6.0`, using fake IndexedDB. See [package evidence](./release/0.1.2/PACKAGE.md) and [compatibility evidence](./release/0.1.2/COMPATIBILITY.md).
+
+### Changed
+
+- Public package version is `0.1.2`; storage compatibility stays `17.6.0`. The foundation remains RxDB `17.6.0+522`, commit `9d5849cf4c695ffc27d60e134b2039539e77a9b0`.
+- Nine upstream commits through `d08621c7e26859e017a78a9615f5951fd4803b18` were merged via `515bb00884` / `e41bc43cfb`, not cherry-picked. [UPSTREAM.md](./UPSTREAM.md#exact-012-ancestry) lists every hash. Original RxDB history stays in `CHANGELOG.md`.
+- Root and landing installs now use separate committed lockfiles. The Node 22 and 24 CI jobs use npm `11.19.1` for the root lockfile and check a packed consumer. Publication has a separate manual workflow; its remote protections have not been activated or verified.
+
+### Fixed
+
+- **Inherited upstream fixes:** `d8ab5eb220` handles primary keys such as `constructor` and `__proto__` during replication/migration; `f53c02d937` restores Google Drive/OneDrive WebRTC reconnect after restart; `31492a4972` prevents storing documents rejected by DOC20 through DOC23; `b3fc33f42c` closes replication change streams on pause and opens new ones on start. These are upstream changes, not CLA Tech implementations.
+- **Fork-specific fixes:** dev-mode registration no longer invokes the inherited marketing iframe. Public documentation tracking callbacks are inert, including the conversion-worker path that lacked a hostname guard. Validation, Premium handling, links, and explicit viewer tooling are preserved.
+- Correct the landing's malformed `createRxDatabase` call and supply missing imports, schema, reactive output, and cleanup. The check executes code extracted from rendered markup.
+
+### Security
+
+- Add the [security reporting policy](SECURITY.md) and a [manual publishing procedure](./release/0.1.2/PUBLISHING.md) using artifact hash verification, npm Trusted Publishing, and provenance. Only the publish job receives OIDC permission.
+- Keep `rxdb-old@16.21.1` for migration tests while resolving its nested `ws` dependency to the existing root `8.23.0`. Remove the affected `ws@8.18.3` resolution without changing production dependencies.
+- Resolve the development Firestore SDKs to `@grpc/grpc-js@1.13.6` without changing either Firebase version. Both SDKs passed loopback emulator checks and the Firestore replication suite passed all 11 tests.
+- The separate development audit reports 26 moderate findings, zero high and zero critical, down from 31 findings before the two scoped fixes. The remaining issues require maintainer disposition before release. See the [dependency report](./release/0.1.2/DEPENDENCIES.md) and [CycloneDX SBOM](./release/0.1.2/sbom.cdx.json).
+
+### Documentation
 
 - Expand the Spanish landing with offline workflows, backend replication, storage options, and reactive data modeling. Link to CLA DB and upstream RxDB documentation.
 - Refine the Spanish landing page hero and link its example button to the code sample.
+- Put registry installation first in the consumer README, separate the candidate tarball preview, and provide runnable JavaScript/TypeScript, reactive, persistent, and custom replication examples.
+- Document exact inherited SQLite trial restrictions: 500 live documents per instance, 500 counted internal `all()` calls, no query indexes or attachments. No unrestricted CLA SQLite adapter is included.
+- Qualify platform and compatibility claims, document site responsibilities and residual integrations, and align the roadmap through `1.0.0` with external adapter packages.
+
+### Testing
+
+- The required local checks passed in clean locked copies on Node 24, including `1,918` Memory and `1,922` Dexie tests. The detached packed consumer passed its export, module, type, persistence, migration, and replication checks. See the [test report](./release/0.1.2/TESTS.md).
+- Cross-version reopen and benchmarks use simulated IndexedDB, not browser disk I/O.
+- T4 observed RED/GREEN for automatic site conversions and the malformed displayed snippet. README and rendered landing examples passed in an isolated candidate installation. Landing structural checks, production build, and lint passed; Docusaurus built with inherited broken-anchor warnings. See [exact site evidence](./release/0.1.2/SITES.md).
+
+### Distribution
+
+- Explicit package allowlist preserves public exports, generated shims, source-map resources, license, attribution, and original history while excluding website, design, agent, and internal development files. The [rebuilt tarball](./release/0.1.2/PACKAGE.md) contains `2,071` files, at `2,235,721` compressed and `12,782,832` unpacked bytes.
+
+### Known Limitations
+
+- This is a pre-1.0 candidate. Real-browser durability, the full Node engine range, and credentialed service integrations are not certified. The standalone viewer is not in the npm candidate; verify its third-party notices before separate redistribution.
+- The documentation build retains an inherited smartphone iframe pointing at `http://0.0.0.0:4200/` and a LinkedIn release-note embed. The standalone viewer retains hostname-guarded upstream conversion code. No zero-telemetry or deployment-wide audit claim is made. See [NETWORK_AUDIT.md](./release/0.1.2/NETWORK_AUDIT.md).
 
 ## [0.1.1] - 2026-11-25
 
