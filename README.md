@@ -4,7 +4,7 @@
 
 ## Install
 
-One official package, `@clatech/db`, with `rxjs` as its peer dependency. Version `0.1.2` is the current `latest` release on npm. Version `0.1.3` is a candidate that is not published.
+One official package, `@clatech/db`, with `rxjs` as its peer dependency. Version **`0.1.3` is published on npm as `latest`**, verified on 2026-11-26.
 
 ```bash
 # npm
@@ -19,22 +19,9 @@ yarn add @clatech/db rxjs
 deno add npm:@clatech/db npm:rxjs
 ```
 
-Every manager installs the same npm artifact. The commands describe how each tool installs a package; they are not a per-manager support certification. The `latest` tag and the unpublished candidate were checked against the registry on 2026-11-26.
+Every manager installs the same npm artifact. The commands describe how each tool installs a package; they are not a per-manager support certification. See the [0.1.3 package and registry identity](./release/0.1.3/PACKAGE.md), [compatibility evidence and limits](./release/0.1.3/COMPATIBILITY.md), and [network audit](./release/0.1.3/NETWORK_AUDIT.md).
 
-To evaluate the unpublished candidate, build and pack this checkout, then install the tarball it produces in a separate application:
-
-```bash
-# In the fork checkout
-npm install
-npm run build
-npm pack
-# In your application, replacing /path/to/checkout with its actual location
-npm install /path/to/checkout/clatech-db-0.1.3.tgz rxjs
-```
-
-The packed file is named after `package.json#version`, so it is `clatech-db-0.1.3.tgz` when the version is `0.1.3`. Package-manager, runtime, browser, framework, and storage results are recorded per candidate in `release/0.1.3/` once the release controller has run them. Until that evidence exists, no target is announced as verified or supported.
-
-See [0.1.2 package evidence](./release/0.1.2/PACKAGE.md), [compatibility evidence](./release/0.1.2/COMPATIBILITY.md), and [network audit](./release/0.1.2/NETWORK_AUDIT.md). Those documents describe the previous release, not this candidate.
+[CI, compatibility, and staging succeeded](./release/0.1.3/CI.md) at revision `c4c06825382872af9551435cbbfeca0e661df565`. The registry reports a provenance attestation; this documentation update did not cryptographically verify it. [Publication evidence](./release/0.1.3/PUBLISHING.md) distinguishes registry identity from historical local candidate hashes.
 
 ## Quick Start With JavaScript
 
@@ -119,7 +106,7 @@ console.log((await db.customers.findOne('saved').exec()).name); // Saved custome
 await db.close();
 ```
 
-Browser quotas, eviction, private browsing, and crashes affect durability. The 0.1.2 candidate reopened databases with **fake-indexeddb in Node.js**, which is not real browser disk I/O. Real-browser IndexedDB evidence belongs to the 0.1.3 candidate and is reported with that release when it exists. See the [exact compatibility boundaries](./release/0.1.2/COMPATIBILITY.md) for the previous release.
+Browser quotas, eviction, private browsing, and crashes affect durability. The 0.1.3 local evidence records **45 browser passes**, 15 each in Chromium, Firefox, and WebKit, including native IndexedDB restart checks. This is not durability certification. Cross-version reopen checks still use fake-indexeddb in Node.js. See the [exact compatibility boundaries](./release/0.1.3/COMPATIBILITY.md).
 
 ## Custom Replication
 
@@ -172,12 +159,12 @@ For live synchronization, supply a suitable pull stream or resync trigger and de
 | Status | Storage / feature | Boundary |
 | --- | --- | --- |
 | Inherited, included | Memory (`plugins/storage-memory`) | Ephemeral state and tests |
-| Inherited, included | Dexie (`plugins/storage-dexie`) | Persistent browser IndexedDB; candidate proof is simulated |
+| Inherited, included | Dexie (`plugins/storage-dexie`) | Persistent browser IndexedDB; scoped native-browser and simulated checks |
 | Inherited, included | localStorage (`plugins/storage-localstorage`) | Requires browser localStorage; limited by browser quotas |
 | Inherited, included | FoundationDB, MongoDB, DenoKV | Require their respective runtime, drivers, and services; not certified by this release's memory checks |
 | Inherited, included | Remote / remote WebSocket | Bridges to explicitly configured storage, not a standalone persistence engine |
 | Inherited trial | SQLite (`plugins/storage-sqlite`) | Evaluation only, restrictions below |
-| Inherited, experimental | Google Drive / Microsoft OneDrive replication | Requires explicit service configuration; no credentialed service validation in this candidate evidence |
+| Inherited, experimental | Google Drive / Microsoft OneDrive replication | Requires explicit service configuration; no credentialed service validation in this release evidence |
 | Planned external packages | Cloudflare Workers + D1, independent SQLite, OPFS, DevTools | Not implemented in this release; see [roadmap](./ROADMAP.md) |
 | Premium, not included | Proprietary RxDB Premium plugins | Removing the collection cap does not unlock Premium or alter license validation |
 
@@ -187,7 +174,7 @@ The inherited SQLite trial is **not CLA DB's own production adapter**. Source li
 
 The public package version is decoupled from storage compatibility version **17.6.0**. CLA DB preserves the RxDB public interfaces and internal storage prefixes; this is an intended compatibility boundary, not a blanket guarantee for every plugin or runtime. The fork removes the artificial 13-collection limit and preserves `OPEN_COLLECTIONS` cleanup tracking. Physical memory, handles, and initialization costs still limit workloads.
 
-The package declares Node.js `>=20`. Isolated consumer evidence for 0.1.2 used Node.js 24, ESM, CommonJS, TypeScript, Vite, memory, and simulated IndexedDB. Browser applications can use Dexie where IndexedDB exists. Electron, React Native, Capacitor, Deno, and Bun remain integration targets rather than a verified platform matrix, and no target is announced as supported before its exact evidence exists. Choose storage and platform dependencies explicitly. No comparative speed claim is made.
+The package declares Node.js `>=20`. The [0.1.3 matrix](./release/0.1.3/COMPATIBILITY.md) records scoped Node, package-manager, Deno, Bun, browser, and framework probes. Full inherited Bun Memory/Dexie suites still fail; narrower detached passes do not imply full Bun support. Electron, React Native, and Capacitor remain unverified integration targets. Choose storage and platform dependencies explicitly. No comparative speed claim is made.
 
 ## Documentation And Contribution
 
@@ -198,15 +185,13 @@ The package declares Node.js `>=20`. Isolated consumer evidence for 0.1.2 used N
 - [Site evidence](./release/0.1.2/SITES.md): `web/` is the Spanish CLA Tech landing; `docs-src/` is inherited technical/API reference, including upstream-only material, not a second marketing implementation.
 - [Upstream API reference](https://rxdb.info/): examples may use `rxdb` imports or Premium features not supplied here.
 
-## Repository Metadata (Proposed, Requires Authorization)
+## Official Repository
 
-GitHub repository settings are not part of this branch, and nothing in this work changed them. The proposal below is documentation only. Applying it is a separate action that needs explicit maintainer authorization and its own review.
-
+- **Repository and GitHub homepage**: [AngelCLA/cla-db](https://github.com/AngelCLA/cla-db).
 - **Description**: "Open-source, reactive, local-first JavaScript database without artificial collection limits. An independent RxDB fork maintained by CLA Tech."
-- **Topics**: `local-first`, `offline-first`, `javascript`, `typescript`, `nosql`, `reactive`, `rxjs`, `indexeddb`.
-- **Homepage**: the deployed landing site URL, after a deployment that someone authorized and verified.
-- **Status**: proposed, not applied. Repository metadata is outside the release branch.
+
+The description and homepage were applied separately in GitHub settings and read back on 2026-11-26. Topics were not changed.
 
 ## License And Attribution
 
-Derived from RxDB by Daniel Meyer (`pubkey`) and contributors. The original [Apache License 2.0](./LICENSE.txt), copyrights, and upstream history are preserved. Fork modifications are recorded separately by CLA Tech. CLA DB is independent and is not affiliated with or endorsed by RxDB or RxDB Premium. See [package evidence](./release/0.1.2/PACKAGE.md) for the inspected NOTICE boundary; final third-party license and security disposition belongs to the release audit.
+Derived from RxDB by Daniel Meyer (`pubkey`) and contributors. The original [Apache License 2.0](./LICENSE.txt), copyrights, and upstream history are preserved. Fork modifications are recorded separately by CLA Tech. CLA DB is independent and is not affiliated with or endorsed by RxDB or RxDB Premium. See [package evidence](./release/0.1.3/PACKAGE.md) for the inspected NOTICE boundary; final third-party license and security disposition belongs to the release audit.

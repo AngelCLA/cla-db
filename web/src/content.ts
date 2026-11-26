@@ -18,14 +18,14 @@ export const navLinks: readonly NavLink[] = [
 export const repoUrl = 'https://github.com/AngelCLA/cla-db';
 
 export const hero = {
-    badgeVersion: 'v0.1.2',
+    badgeVersion: 'v0.1.3',
     badgeLabel: 'npm publicado',
     titleLead: 'Tus datos,',
     titleAccent: 'local-first.',
     lede: 'La base de datos NoSQL reactiva para JavaScript y TypeScript. Trabaja sin conexión y supera el límite de 13 colecciones con CLA DB.',
     primaryCta: 'Empezar ahora',
     secondaryCta: 'Ver ejemplo',
-    caption: 'CLA DB CORE // V0.1.2'
+    caption: 'CLA DB CORE // V0.1.3'
 } as const;
 
 export type StackItem = {
@@ -70,7 +70,7 @@ export const features: readonly Feature[] = [
     {
         icon: 'check',
         title: 'Persistencia verificada',
-        text: 'La suite incluye hasta 100 colecciones, CRUD y migraciones. Las pruebas de persistencia usan fake-indexeddb en Node.js; no certifican durabilidad en navegadores reales.'
+        text: 'La evidencia local de 0.1.3 incluye hasta 100 colecciones, CRUD, persistencia y migraciones: 45 pruebas de navegador aprobadas en Chromium, Firefox y WebKit. No certifica durabilidad ante fallos o cuotas; la reapertura entre versiones usa fake-indexeddb.'
     },
     {
         icon: 'code',
@@ -101,7 +101,7 @@ export const architecture = {
 export const docs = {
     kicker: '// Documentación',
     title: 'Empieza en cinco minutos',
-    lede: 'La versión publicada es 0.1.2 y la candidata 0.1.3 sigue sin publicar: se evalúa como tarball local antes de cualquier anuncio. Arriba tienes los comandos de instalación. El README enlaza la evidencia y distingue funciones heredadas, experimentales, planificadas y Premium no incluidas.',
+    lede: 'La versión 0.1.3 está publicada en npm como latest, verificado el 26 de noviembre de 2026. Arriba tienes los comandos de instalación. El README enlaza la evidencia y distingue funciones heredadas, experimentales, planificadas y Premium no incluidas.',
     links: [
         { label: 'Quickstart de CLA DB (README)', href: `${repoUrl}/blob/master/README.md` },
         { label: 'API de RxDatabase (RxDB upstream)', href: 'https://rxdb.info/rx-database.html' },

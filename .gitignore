@@ -39,3 +39,8 @@ ERROR-MESSAGES.md
 /docs/
 rxdb-sbom.cdx.json
 rxdb-sbom.spdx.json
+# CLA-DB: local release candidate tarballs and vendored test tarballs
+*.tgz
+# CLA-DB: generated playwright-core package extraction
+/package/
+

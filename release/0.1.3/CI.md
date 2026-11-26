@@ -2,6 +2,18 @@
 
 [Compatibility CI](../../.github/workflows/compatibility.yml) builds and packs once per run. The `pack` job uploads `cla-package`, containing the tarball and `SHA256SUMS`. Each consumer and browser job verifies the downloaded bytes against that file and the pack job's SHA-256 output before installing the candidate. The runners verify the SHA-256 again when given the artifact.
 
+## Observed Hosted Results (November 26, 2026)
+
+All three successful runs used protected `master` revision `c4c06825382872af9551435cbbfeca0e661df565`:
+
+| Workflow | Observed result | Run |
+| --- | --- | --- |
+| CI | Success | [45867231957](https://github.com/AngelCLA/cla-db/actions/runs/45867231957) |
+| Compatibility | Success | [45867232185](https://github.com/AngelCLA/cla-db/actions/runs/45867232185) |
+| Manual staging | Build and stage success | [45879171228](https://github.com/AngelCLA/cla-db/actions/runs/45879171228) |
+
+These results supersede the earlier missing-hosted-run and staging blockers. A successful compatibility workflow does not turn skipped probes into passes or resolve the inherited full Bun suite failures. Historical local report counts and hashes remain separate evidence. The registry now reports `0.1.3` as `latest`; see [publication evidence](./PUBLISHING.md). No workflow was dispatched for this documentation update.
+
 ## Review the Evidence
 
 1. Open the run for the commit under review. Check the `pack` job's output and the SHA-256 used by the consumer jobs.

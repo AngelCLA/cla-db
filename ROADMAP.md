@@ -9,15 +9,16 @@ CLA DB keeps its core fork minimal. New adapters and operational tooling are pla
 - Validate packed distribution, cross-version reopen behavior, local operation, and documentation with bounded, reproducible evidence.
 - Audit security, licenses, package contents, and safe publication procedures.
 
-`0.1.2` is the current registry `latest`. Earlier foundation work and its historical checks remain in [CLA_CHANGELOG.md](./CLA_CHANGELOG.md).
+`0.1.2` is a previous published release. Earlier foundation work and its historical checks remain in [CLA_CHANGELOG.md](./CLA_CHANGELOG.md).
 
-## v0.1.3 - Universal Compatibility (Candidate, Unpublished)
+## v0.1.3 - Universal Compatibility (Published November 26, 2026)
 
 - One official package, `@clatech/db`. npm, pnpm, Bun, Yarn, and Deno all install the same distribution artifact, and no duplicate package is published to another registry.
 - Record package-manager, runtime, browser, framework, and storage compatibility per target, each with the exact command, tool versions, and artifact hash that produced the result.
 - Extend simulated IndexedDB evidence to real-browser IndexedDB, and add an offline-first reference application outside the core.
 - Keep the core surface minimal. Compatibility tooling lives in test infrastructure, not in `src/`.
-- A target counts as supported only when its evidence exists. The candidate stays unpublished until an authorized publication step runs.
+- `0.1.3` is npm `latest`, verified on 2026-11-26. Hosted CI, compatibility, and staging succeeded at revision `c4c06825382872af9551435cbbfeca0e661df565`; see [CI evidence](./release/0.1.3/CI.md) and [publication evidence](./release/0.1.3/PUBLISHING.md).
+- The [compatibility matrix](./release/0.1.3/COMPATIBILITY.md) records 45 local browser passes and scoped consumer/storage results. Full Bun suites, skipped targets, and crash/quota durability remain outside the verified claim.
 
 ## v0.2.0 - Cloudflare Workers And D1 (Planned)
 

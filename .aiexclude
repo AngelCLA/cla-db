@@ -7,6 +7,8 @@ node_modules/
 
 docs/
 plugins/
+# Include source plugins for release audits; keep generated shims excluded.
+!/src/plugins/
 config/appwrite/
 config/supabase/
 docs-src/.docusaurus

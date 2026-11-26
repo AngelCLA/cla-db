@@ -1,6 +1,19 @@
-# Package Candidate
+# Published Package And Historical Local Candidate
 
-`@clatech/db@0.1.3` is an unpublished candidate. Use the same tarball for every compatibility check. The npm package retains the Apache 2.0 license, RxDB attribution, the public export map, and `RXDB_VERSION` / storage compatibility `17.6.0`.
+`@clatech/db@0.1.3` is published as npm `latest`, verified on 2026-11-26. The npm package retains the Apache 2.0 license, RxDB attribution, the public export map, and `RXDB_VERSION` / storage compatibility `17.6.0`.
+
+## Registry Identity
+
+- Published at `2026-11-26T19:00:46.379Z`.
+- Tarball: https://registry.npmjs.org/@clatech/db/-/db-0.1.3.tgz
+- `dist.shasum`: `987de3f2c714261554ebc03316453a3236a37a95`.
+- `dist.integrity`: `sha512-f6WuY01Ldos8ihFVoqDTvTLrvAOrr/0Dliobpwp2NyKfGu7uj94jEi0RMnZp2ShaxJTftS+hkqGE0QAXWQtUPw==`.
+
+The successful staging logs report the same shasum. A provenance attestation is present (registry reports SLSA v1), but was not cryptographically verified in this task. See [publication evidence](./PUBLISHING.md).
+
+## Historical Local Candidate
+
+The measures and SHA-256 below describe the archive used for local checks, not registry bytes. No SHA-256 comparison with the registry tarball was performed in this documentation task. Use the same tarball for every compatibility check.
 
 ```sh
 cd release/0.1.3
