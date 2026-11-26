@@ -27,7 +27,8 @@ This section records the unpublished candidate, not a publication approval. The 
 
 - Add the [security reporting policy](SECURITY.md) and a [manual publishing procedure](./release/0.1.2/PUBLISHING.md) using artifact hash verification, npm Trusted Publishing, and provenance. Only the publish job receives OIDC permission.
 - Keep `rxdb-old@16.21.1` for migration tests while resolving its nested `ws` dependency to the existing root `8.23.0`. Remove the affected `ws@8.18.3` resolution without changing production dependencies.
-- The audited production consumer graph had no known advisories. The separate development audit found 30 issues (25 moderate, 5 high), down from 31. The remaining issues require maintainer disposition before release. See the [dependency report](./release/0.1.2/DEPENDENCIES.md) and [CycloneDX SBOM](./release/0.1.2/sbom.cdx.json).
+- Resolve the development Firestore SDKs to `@grpc/grpc-js@1.13.6` without changing either Firebase version. Both SDKs passed loopback emulator checks and the Firestore replication suite passed all 11 tests.
+- The separate development audit reports 26 moderate findings, zero high and zero critical, down from 31 findings before the two scoped fixes. The remaining issues require maintainer disposition before release. See the [dependency report](./release/0.1.2/DEPENDENCIES.md) and [CycloneDX SBOM](./release/0.1.2/sbom.cdx.json).
 
 ### Documentation
 

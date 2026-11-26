@@ -2,10 +2,10 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.5.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.5",
-  "serialNumber": "urn:uuid:7685975b-5f77-4a44-94df-e562a789bfb6",
+  "serialNumber": "urn:uuid:f0505a21-4e21-4121-b0f1-40aee96c1cf2",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-11-25T22:16:26.221Z",
+    "timestamp": "2026-11-26T05:28:05.579Z",
     "lifecycles": [
       {
         "phase": "build"
@@ -21,7 +21,7 @@
     "component": {
       "bom-ref": "cla-production-audit@1.0.0",
       "type": "library",
-      "name": "cla-supply-audit-bnhQnt",
+      "name": "cla-supply-audit-CJVr8O",
       "version": "1.0.0",
       "scope": "required",
       "purl": "pkg:npm/cla-production-audit@1.0.0",
@@ -86,7 +86,7 @@
       "externalReferences": [
         {
           "type": "distribution",
-          "url": "file:/var/tmp/cla-db-ws-override.MyEnqM/pack/clatech-db-0.1.2.tgz"
+          "url": "file:/var/tmp/cla-db-grpc-release-0.1.2/pack/clatech-db-0.1.2.tgz"
         },
         {
           "type": "vcs",
@@ -104,11 +104,11 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "6bcb34477e02c14da4e54a8993716f5a72b6d309c9b6d6b7dd7a494f2c40b1ed"
+          "content": "0b96c99375184786dae397b38dbbf7571bd38612a98ad4da20e9ad53e681fa56"
         },
         {
           "alg": "SHA-512",
-          "content": "c31cc3eb2c097cafe363a02a957e026a7be7be9e7bc81b25b65d50c760d712e4ea5d1dff8045a1c7d36017cdbda020ceeb1939e71d05e6b6355705cffb2182fc"
+          "content": "bffe8b664bc9ec8044ffbdc8168d2933ff4a7201aca5a587b60a04f25084fe5dfbeca0946e702e3fdfeca2cd5a22f4a221ae5ded8c507a5acc17a602d64bcee8"
         }
       ],
       "licenses": [
@@ -422,18 +422,18 @@
       ]
     },
     {
-      "bom-ref": "@types/node@26.6.10",
+      "bom-ref": "@types/node@26.6.11",
       "type": "library",
       "name": "@types/node",
-      "version": "26.6.10",
+      "version": "26.6.11",
       "scope": "required",
       "description": "TypeScript definitions for node",
-      "purl": "pkg:npm/%40types/node@26.6.10",
+      "purl": "pkg:npm/%40types/node@26.6.11",
       "properties": [],
       "externalReferences": [
         {
           "type": "distribution",
-          "url": "https://registry.npmjs.org/@types/node/-/node-26.6.10.tgz"
+          "url": "https://registry.npmjs.org/@types/node/-/node-26.6.11.tgz"
         },
         {
           "type": "vcs",
@@ -447,7 +447,7 @@
       "hashes": [
         {
           "alg": "SHA-512",
-          "content": "589b8f1e8181f16350b9392c345ed2390a671f4d8f5de0d8cf88ae7966c14fafe14d69d2858e45dd3fe1a090377d8f7eb9845e0d9ee9c9328ac7cde341aeda1a"
+          "content": "b94c90d972c4cfe117877e25992dc684aae4aa7ffc154eca522291a64df8ec0b766e69cc556b2ce39cb3f1be051bfb54b66575b55ffe4d59084c8b4f44ec9e79"
         }
       ],
       "licenses": [
@@ -2948,7 +2948,7 @@
       "dependsOn": []
     },
     {
-      "ref": "@types/node@26.6.10",
+      "ref": "@types/node@26.6.11",
       "dependsOn": [
         "undici-types@8.9.0"
       ]
@@ -2956,13 +2956,13 @@
     {
       "ref": "@types/simple-peer@9.11.9",
       "dependsOn": [
-        "@types/node@26.6.10"
+        "@types/node@26.6.11"
       ]
     },
     {
       "ref": "@types/ws@8.18.2",
       "dependsOn": [
-        "@types/node@26.6.10"
+        "@types/node@26.6.11"
       ]
     },
     {

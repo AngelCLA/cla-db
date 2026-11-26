@@ -40,15 +40,15 @@ All sizes are bytes, not rounded KB. Published 0.1.1 numbers were supplied by th
 | --- | ---: | ---: | ---: |
 | Published 0.1.1 baseline | 2,270,333 | 12,889,867 | 2,110 |
 | Local pre-change 0.1.1 baseline | 27,272,149 | 95,484,388 | 2,734 |
-| Unpublished 0.1.2, clean locked build | 2,235,721 | 12,782,832 | 2,071 |
-| Delta vs published | -34,612 | -107,035 | -39 |
-| Delta vs local baseline | -25,036,428 | -82,701,556 | -663 |
+| Unpublished 0.1.2, clean locked build | 2,235,740 | 12,782,900 | 2,071 |
+| Delta vs published | -34,593 | -106,967 | -39 |
+| Delta vs local baseline | -25,036,409 | -82,701,488 | -663 |
 
-Direct production dependencies remain **24**. A clean locked build of `66bf60dc4d` plus the scoped legacy test override produced the real tarball `release/0.1.2/clatech-db-0.1.2.tgz`, kept outside Git. Compared with the prior audited candidate, only the `overrides` field of `package.json` changes. The other `2,070` files are byte-identical. The prior tarball is kept separately as `clatech-db-0.1.2.pre-ws-617c176b7891.tgz` and must not be used as the current candidate.
+Direct production dependencies remain **24**. A clean locked build of `34196d9ab5` plus the scoped Firestore gRPC override produced `clatech-db-0.1.2.tgz`. Its local copy is `release/0.1.2/clatech-db-0.1.2.grpc-0b96c9937518.tgz`, kept outside Git. Only `package.json` differs from the preceding package; the other `2,070` files are byte-identical. The preceding copies, `clatech-db-0.1.2.tgz` and `clatech-db-0.1.2.pre-ws-617c176b7891.tgz`, remain unchanged and are not the current candidate.
 
-- SHA-256: `6bcb34477e02c14da4e54a8993716f5a72b6d309c9b6d6b7dd7a494f2c40b1ed`
-- npm SHA-1: `1cbcbed5a9e653b20e3fe932e501306166541d15`
-- npm integrity: `sha512-wxzD6ywJfK/jY6AqlX4Canvnvp57yBsltl1Qx2DXEuTqXR3/gEWhx9NgF829oCDO6xk55x0F5rY1VwXP+yGC/A==`
+- SHA-256: `0b96c99375184786dae397b38dbbf7571bd38612a98ad4da20e9ad53e681fa56`
+- npm SHA-1: `a059e3547acd6160dda3baa732b9068304334580`
+- npm integrity: `sha512-v/6LZkvJ7IBE/73IFo0pM/9KcgGspaWHtgoE8lCE/l377KCUbnAuP9/sos1aIvSiIa5d7YxQelrMF6YC1kvO6A==`
 
 The detached consumer checks and [production audit](DEPENDENCIES.md) passed against the clean build. This records the reviewed bytes; it does not establish byte-for-byte equivalence to the older published package or authorize publication.
 

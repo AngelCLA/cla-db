@@ -749,6 +749,9 @@
     "webpack-dev-server": "6.1.0"
   },
   "overrides": {
+    "@firebase/firestore": {
+      "@grpc/grpc-js": "1.13.6"
+    },
     "rxdb-old@16.21.1": {
       ".": "$rxdb-old",
       "ws": "$ws"
