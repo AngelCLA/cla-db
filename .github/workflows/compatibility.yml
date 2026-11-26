@@ -1,0 +1,211 @@
+name: CLA DB Package and Browser Compatibility
+
+on:
+  pull_request:
+  push:
+    branches: [master, chore/release-0.1.3]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: compatibility-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NPM_VERSION: '11.19.1'
+  PLAYWRIGHT_VERSION: '1.65.1'
+
+jobs:
+  pack:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    outputs:
+      sha256: ${{ steps.artifact.outputs.sha256 }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24.22.3'
+          cache: npm
+      - name: Install the lockfile toolchain and build
+        shell: bash
+        run: |
+          set -euo pipefail
+          prefix="$RUNNER_TEMP/cla-npm"
+          npm install --prefix "$prefix" --ignore-scripts --no-audit --no-fund "npm@$NPM_VERSION"
+          export PATH="$prefix/node_modules/.bin:$PATH"
+          test "$(npm --version)" = "$NPM_VERSION"
+          npm ci
+          node scripts/release-supply-chain-fixtures/compatibility-workflow-policy.mjs
+          npm run build
+      - name: Pack a single candidate and record its SHA-256
+        id: artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PATH="$RUNNER_TEMP/cla-npm/node_modules/.bin:$PATH"
+          folder="$RUNNER_TEMP/cla-artifact"
+          mkdir "$folder"
+          npm pack --ignore-scripts --pack-destination "$folder"
+          version="$(node -p "require('./package.json').version")"
+          cd "$folder"
+          archive="clatech-db-$version.tgz"
+          sha256sum -- "$archive" > SHA256SUMS
+          read -r sha256 _ < SHA256SUMS
+          printf 'sha256=%s\n' "$sha256" >> "$GITHUB_OUTPUT"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: cla-package
+          path: |
+            ${{ runner.temp }}/cla-artifact/clatech-db-*.tgz
+            ${{ runner.temp }}/cla-artifact/SHA256SUMS
+          if-no-files-found: error
+          retention-days: 7
+
+  consumer:
+    name: ${{ matrix.lane }} (Node ${{ matrix.node }})
+    needs: pack
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { lane: npm-legacy, node: '20.0.0', npm: '9.6.4' }
+          - { lane: npm-legacy, node: '20.20.2', npm: '10.8.2' }
+          - { lane: npm-node, node: '22.23.5' }
+          - { lane: npm-node, node: '24.22.3' }
+          - { lane: npm-node, node: '26.13.1' }
+          - { lane: pnpm-node, node: '24.22.3', tool: 'pnpm@11.23.0' }
+          - { lane: bun-node, node: '24.22.3', tool: 'bun@1.3.14' }
+          - { lane: bun-bun, node: '24.22.3', tool: 'bun@1.3.14' }
+          - { lane: yarn-node, node: '24.22.3', tool: '@yarnpkg/cli-dist@4.19.0' }
+          - { lane: yarn-pnp, node: '24.22.3', tool: '@yarnpkg/cli-dist@4.19.0' }
+          - { lane: deno, node: '24.22.3', tool: '@deno/linux-x64-glibc@2.8.3' }
+    env:
+      CLA_ARTIFACT_SHA: ${{ needs.pack.outputs.sha256 }}
+      CLA_LANE: ${{ matrix.lane }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: ${{ matrix.node }}
+          package-manager-cache: false
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: cla-package
+          path: ${{ runner.temp }}/cla-artifact
+      - name: Verify the downloaded candidate
+        shell: bash
+        working-directory: ${{ runner.temp }}/cla-artifact
+        run: |
+          set -euo pipefail
+          sha256sum --strict --check SHA256SUMS
+          test -n "$CLA_ARTIFACT_SHA"
+          archives=(clatech-db-*.tgz)
+          test "${#archives[@]}" = 1
+          digest="$(sha256sum -- "${archives[0]}")"
+          test "${digest%% *}" = "$CLA_ARTIFACT_SHA"
+          printf 'CLA_ARTIFACT=%s/%s\n' "$PWD" "${archives[0]}" >> "$GITHUB_ENV"
+      - name: Install the selected toolchain outside the checkout
+        shell: bash
+        env:
+          LEGACY_NPM: ${{ matrix.npm }}
+          CLA_TOOL: ${{ matrix.tool }}
+        run: |
+          set -euo pipefail
+          if [[ -n "$LEGACY_NPM" ]]; then
+            test "$(npm --version)" = "$LEGACY_NPM"
+          else
+            prefix="$RUNNER_TEMP/cla-tools"
+            packages=("npm@$NPM_VERSION")
+            [[ -z "$CLA_TOOL" ]] || packages+=("$CLA_TOOL")
+            # Bun's npm wrapper needs its own postinstall. Use the pinned platform binary instead.
+            if [[ "$CLA_TOOL" == bun@* ]]; then
+              packages=("npm@$NPM_VERSION" "@oven/bun-linux-x64@${CLA_TOOL#bun@}")
+            fi
+            npm install --prefix "$prefix" --ignore-scripts --no-audit --no-fund "${packages[@]}"
+            export PATH="$prefix/node_modules/.bin:$PATH"
+            test "$(npm --version)" = "$NPM_VERSION"
+            printf '%s\n' "$prefix/node_modules/.bin" >> "$GITHUB_PATH"
+            if [[ "$CLA_TOOL" == @deno/* ]]; then
+              printf '%s\n' "$prefix/node_modules/@deno/linux-x64-glibc" >> "$GITHUB_PATH"
+            fi
+            if [[ "$CLA_TOOL" == bun@* ]]; then
+              printf '%s\n' "$prefix/node_modules/@oven/bun-linux-x64/bin" >> "$GITHUB_PATH"
+            fi
+          fi
+      - name: Execute the detached consumer
+        shell: bash
+        run: |
+          node scripts/compatibility/run.mjs --artifact "$CLA_ARTIFACT" --sha256 "$CLA_ARTIFACT_SHA" \
+            --lane "$CLA_LANE" --out "$RUNNER_TEMP/cla-results"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: consumer-${{ matrix.lane }}-${{ matrix.node }}
+          path: ${{ runner.temp }}/cla-results
+          if-no-files-found: warn
+          retention-days: 14
+
+  browser:
+    name: Playwright (${{ matrix.engine }})
+    needs: pack
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: [chromium, firefox, webkit]
+    env:
+      CLA_ARTIFACT_SHA: ${{ needs.pack.outputs.sha256 }}
+      CLA_BROWSER: ${{ matrix.engine }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24.22.3'
+          package-manager-cache: false
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: cla-package
+          path: ${{ runner.temp }}/cla-artifact
+      - name: Verify the downloaded candidate
+        shell: bash
+        working-directory: ${{ runner.temp }}/cla-artifact
+        run: |
+          set -euo pipefail
+          sha256sum --strict --check SHA256SUMS
+          test -n "$CLA_ARTIFACT_SHA"
+          archives=(clatech-db-*.tgz)
+          test "${#archives[@]}" = 1
+          digest="$(sha256sum -- "${archives[0]}")"
+          test "${digest%% *}" = "$CLA_ARTIFACT_SHA"
+          printf 'CLA_ARTIFACT=%s/%s\n' "$PWD" "${archives[0]}" >> "$GITHUB_ENV"
+      - name: Install the pinned Playwright browser and Linux prerequisites
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PLAYWRIGHT_BROWSERS_PATH="$RUNNER_TEMP/cla-browser-cache"
+          printf 'PLAYWRIGHT_BROWSERS_PATH=%s\n' "$PLAYWRIGHT_BROWSERS_PATH" >> "$GITHUB_ENV"
+          npm exec --yes --package="playwright@$PLAYWRIGHT_VERSION" -- playwright install --with-deps "$CLA_BROWSER"
+      - name: Execute the isolated native IndexedDB and PWA scenarios
+        shell: bash
+        run: |
+          node scripts/browser-integration/run.mjs --artifact "$CLA_ARTIFACT" --sha256 "$CLA_ARTIFACT_SHA" \
+            --browser "$CLA_BROWSER" --out "$RUNNER_TEMP/cla-results"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: browser-${{ matrix.engine }}
+          path: ${{ runner.temp }}/cla-results
+          if-no-files-found: warn
+          retention-days: 14
