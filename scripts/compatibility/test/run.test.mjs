@@ -19,7 +19,6 @@ import { summarizeProbes } from '../report.mjs';
 const compatibilityDir = path.dirname(fileURLToPath(new URL('../run.mjs', import.meta.url)));
 const repoRoot = path.resolve(compatibilityDir, '../..');
 const runScript = path.join(compatibilityDir, 'run.mjs');
-const authorizedScratchRoot = '/var/tmp/cla-db-0.1.3-compat';
 const createdDirs = [];
 
 const expectedLanes = [
@@ -33,21 +32,8 @@ const expectedLanes = [
     'deno'
 ];
 
-function scratchRoot() {
-    for (const candidate of [authorizedScratchRoot, os.tmpdir()]) {
-        try {
-            fs.mkdirSync(candidate, { recursive: true });
-            fs.accessSync(candidate, fs.constants.W_OK);
-            return candidate;
-        } catch {
-            continue;
-        }
-    }
-    throw new Error('No writable scratch root available');
-}
-
 function makeTempDir(prefix) {
-    const dir = fs.mkdtempSync(path.join(scratchRoot(), prefix));
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), prefix));
     createdDirs.push(dir);
     return dir;
 }
