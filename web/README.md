@@ -1,6 +1,6 @@
-# CLA DB landing site
+# CLA DB website
 
-Public landing page for CLA DB (`@clatech/db`). React 19 + TypeScript, built with Vite, isolated from the published package.
+Public landing and Spanish documentation for CLA DB (`@clatech/db`). React 19 + TypeScript, built with Vite, isolated from the published package.
 
 ## Commands
 
@@ -9,7 +9,7 @@ npm install
 npm run dev      # development server on http://127.0.0.1:4321
 npm run build    # type-check plus production bundle into dist/
 npm run preview  # serve the production build on http://127.0.0.1:4321
-npm run check    # structural and design-token verification
+npm run check    # rendered pages, design tokens, and runnable examples
 ```
 
 ## Design source
@@ -31,11 +31,25 @@ Mapping notes:
 1. Every section of the chosen artboard is present with its Spanish copy and anchors (`#instalacion`, `#caracteristicas`, `#arquitectura`, `#documentacion`).
 2. Every color in `src/styles/tokens.css` exists in `design/system.md`, and colors used only by the artboard never leak into the tokens.
 3. The install selector keeps its contract: `src/install.ts` exposes exactly the npm, pnpm, Bun, Yarn, and Deno commands for the single `@clatech/db` package, arrow/Home/End movement resolves to the expected target, copying writes the selected command exactly once, a missing clipboard reports `unavailable`, and a rejected write reports `failed`. The rendered markup has one labelled tablist, one selected tab in the tab order, `aria-controls` per tab, a labelled panel, and a polite status region.
-4. The published and candidate version states stay accurate: the page does not advertise an outdated published version and does not present the published `0.1.2` as a candidate.
+4. The landing menu opens `/docs`, the documentation header links back to landing sections, and Open Graph identifies the published `0.1.3` release.
+5. The documentation sidebar points to real sections, and the displayed examples execute with the CLA DB package.
 
 Limitation: the check runs in Node without a DOM, so it verifies the selector logic and the rendered ARIA contract, not real browser focus movement or the system clipboard. Keyboard interaction and clipboard behaviour in a browser need manual or browser-run verification.
 
 Install commands live in `src/install.ts` and are mirrored in the repository `README.md`. Change both together.
+
+## Direct links and Vercel
+
+Vite emits independent `dist/index.html` and `dist/docs.html` entries. With Vercel's project root set to `web/` and the Vite output set to `dist`, `vercel.json` maps `/docs` to the documentation HTML without changing the landing route.
+
+After building and starting `npm run preview`, check the production assets locally. Run the same check against the Vercel Preview URL for the revision under review:
+
+```sh
+npm run check:routes -- http://127.0.0.1:4321
+npm run check:routes -- https://<your-preview>.vercel.app
+```
+
+In the browser, paste `/docs#dexie` directly into the address bar and confirm the Dexie heading is visible. Then navigate to another section from the sidebar.
 
 ## Layout
 
@@ -44,6 +58,8 @@ src/
   App.tsx              section composition
   content.ts           landing copy (Spanish) and data
   install.ts           install commands and selector logic
+  docs-main.tsx        documentation entry and shared site chrome
+  docs/                Spanish guides and sidebar
   styles/tokens.css    design tokens from design/system.md
   styles/global.css    reset, primitives (.button, .surface, .section, .kicker)
   components/          Header, Hero, CoreIllustration, StackBar, Install, Features,

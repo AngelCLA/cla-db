@@ -23,9 +23,9 @@ const GitHubGlyph = () => (
     </svg>
 );
 
-export const Header = () => (
+export const Header = ({ page = 'landing' }: { page?: 'landing' | 'docs'; }) => (
     <header className={styles.header}>
-        <a className={styles.brand} href="#top">
+        <a className={styles.brand} href={page === 'docs' ? '/' : '#top'}>
             <ClaDbMark />
             <span>
                 CLA <span className={styles.brandAccent}>DB</span>
@@ -33,7 +33,12 @@ export const Header = () => (
         </a>
         <nav className={styles.nav} aria-label="Principal">
             {navLinks.map(link => (
-                <a key={link.href} className={styles.navLink} href={link.href}>
+                <a
+                    key={link.href}
+                    className={styles.navLink}
+                    href={page === 'docs' && link.href.startsWith('#') ? `/${link.href}` : link.href}
+                    aria-current={page === 'docs' && link.href === '/docs' ? 'page' : undefined}
+                >
                     {link.label}
                 </a>
             ))}
