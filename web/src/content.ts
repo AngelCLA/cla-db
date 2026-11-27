@@ -12,7 +12,7 @@ export const navLinks: readonly NavLink[] = [
     { label: 'Instalación', href: '#instalacion' },
     { label: 'Características', href: '#caracteristicas' },
     { label: 'Arquitectura', href: '#arquitectura' },
-    { label: 'Documentación', href: '#documentacion' }
+    { label: 'Documentación', href: '/docs' }
 ];
 
 export const repoUrl = 'https://github.com/AngelCLA/cla-db';

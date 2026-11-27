@@ -11,6 +11,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { App } from '../src/App';
+import { Header } from '../src/components/Header';
 import { transformSync } from 'esbuild';
 import { runInNewContext } from 'node:vm';
 import { execFileSync } from 'node:child_process';
@@ -32,6 +33,20 @@ const tokensCss = readFileSync(resolve(webRoot, 'src/styles/tokens.css'), 'utf8'
 const documentShell = readFileSync(resolve(webRoot, 'index.html'), 'utf8');
 check(documentShell.includes('lang="es"') && documentShell.includes('name="viewport"'), 'landing must declare Spanish and responsive viewport');
 check(documentShell.includes('property="og:title"') && documentShell.includes('property="og:description"') && documentShell.includes('name="twitter:card"'), 'landing must provide social metadata');
+const ogDescription = documentShell.match(/property="og:description" content="([^"]+)"/)?.[1] ?? '';
+check(ogDescription.includes('0.1.3') && !/0\.1\.2|candidata/.test(ogDescription), 'Open Graph must describe the published 0.1.3 release');
+const mainNavigation = html.match(/<nav\b[^>]*aria-label="Principal"[^>]*>([\s\S]*?)<\/nav>/)?.[1] ?? '';
+check(/<a\b[^>]*href="\/docs"[^>]*>Documentación<\/a>/.test(mainNavigation), 'main documentation link must open /docs directly');
+for (const [anchor, label] of [['instalacion', 'Instalación'], ['caracteristicas', 'Características'], ['arquitectura', 'Arquitectura']]) {
+    check(new RegExp(`<a\\b[^>]*href="#${anchor}"[^>]*>${label}</a>`).test(mainNavigation), `main navigation must still link to #${anchor}`);
+}
+check(/href="#top"/.test(html), 'landing brand must still return to #top');
+const docsHeader = renderToStaticMarkup(<Header page="docs" />);
+check(/href="\/"/.test(docsHeader), 'documentation brand must link back to the landing');
+for (const anchor of ['instalacion', 'caracteristicas', 'arquitectura']) {
+    check(docsHeader.includes(`href="/#${anchor}"`), `documentation header must link back to /#${anchor}`);
+}
+check(/href="\/docs"[^>]*aria-current="page"[^>]*>Documentación<\/a>/.test(docsHeader), 'documentation header must mark the current page');
 check(html.includes('npm install @clatech/db rxjs') && html.includes('La versión 0.1.3 está publicada en npm como latest.'), 'installation must identify 0.1.3 as the published npm latest');
 const systemDoc = readFileSync(resolve(repoRoot, 'design/system.md'), 'utf8');
 

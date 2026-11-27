@@ -5,7 +5,13 @@ For upstream RxDB history, see `CHANGELOG.md`.
 
 ## [Unreleased]
 
+### Added
+
+- Add Spanish CLA DB documentation at `/docs`, with a sidebar, runnable Memory and Dexie examples, release compatibility boundaries, and upstream attribution.
+
 ### Changed
+
+- Point the landing menu to `/docs` and update its Open Graph description to the published `0.1.3` release.
 
 - Identify v0.1.3 as available in the landing hero and replace the collection-limit pitch with local storage, offline operation, and backend synchronization copy.
 - Refine the landing hero with larger responsive typography, centered spacing, a subtle secondary action surface, and a larger wireframe illustration with a centered inset CLA DB label and branching traces. Preserve the existing content, theme tokens, focus styles, and single-column mobile layout.

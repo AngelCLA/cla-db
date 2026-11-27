@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Public landing site for CLA DB (@clatech/db)",
+  "description": "Public site and documentation for CLA DB (@clatech/db)",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "check": "node --import ./scripts/register-css-stub.mjs --import tsx scripts/check-render.tsx",
+    "check": "node --import ./scripts/register-css-stub.mjs --import tsx scripts/check-render.tsx && node --import ./scripts/register-css-stub.mjs --import tsx scripts/check-docs.tsx",
+    "check:routes": "node scripts/check-routes.mjs",
     "test": "npm run check"
   },
   "dependencies": {
