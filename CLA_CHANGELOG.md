@@ -15,6 +15,7 @@ For upstream RxDB history, see `CHANGELOG.md`.
 
 - Identify v0.1.3 as available in the landing hero and replace the collection-limit pitch with local storage, offline operation, and backend synchronization copy.
 - Refine the landing hero with larger responsive typography, centered spacing, a subtle secondary action surface, and a larger wireframe illustration with a centered inset CLA DB label and branching traces. Preserve the existing content, theme tokens, focus styles, and single-column mobile layout.
+- Clarify that `find()` and `findOne()` return an `RxQuery`, while `exec()` resolves to the query result.
 
 ## [0.1.3] - 2026-11-26 (Published)
 

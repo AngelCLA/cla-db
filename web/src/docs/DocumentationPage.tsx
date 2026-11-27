@@ -135,9 +135,11 @@ const customers = await db.customers.find({
     selector: { name: { $eq: 'Alice' } }
 }).exec();
 console.log(customers.map(customer => customer.name)); // ['Alice']`}</Code>
-                <p><code>find()</code> devuelve una lista; <code>findOne('alice')</code> devuelve un documento
-                    o <code>null</code>. El quickstart usa <code>firstValueFrom</code> y <code>filter</code>
-                    para esperar el resultado reactivo sin pausas arbitrarias.
+                <p><code>find()</code> y <code>findOne('alice')</code> devuelven un <code>RxQuery</code>.
+                    Al ejecutar la consulta, <code>await db.customers.find().exec()</code> devuelve una lista y
+                    <code> await db.customers.findOne('alice').exec()</code> devuelve un documento o <code>null</code>.
+                    El quickstart usa <code>firstValueFrom</code> y <code>filter</code> para esperar el resultado
+                    reactivo sin pausas arbitrarias.
                     {' '}<Upstream page="rx-query">Referencia de RxQuery</Upstream>.</p>
             </section>
 
